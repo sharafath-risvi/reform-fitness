@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Phone, Mail, MapPin, MessageCircle, ArrowUpRight, Check, FileText, Dumbbell, User } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { motion, useScroll, useTransform } from 'framer-motion'
@@ -30,6 +31,20 @@ const introCards = [
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
   const { register, handleSubmit } = useForm()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
 
   const onSubmit = (data) => {
     console.log(data)

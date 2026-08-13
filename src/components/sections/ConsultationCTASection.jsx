@@ -77,6 +77,7 @@ export default function ConsultationCTASection() {
         <div className="opacity-0">
           <Link 
             to="/contact" 
+            onClick={() => window.scrollTo(0, 0)}
             className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 rounded-md overflow-hidden cursor-pointer shadow-lg"
           >
             {/* Base Background (Beige) */}

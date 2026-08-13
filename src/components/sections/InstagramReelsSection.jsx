@@ -125,7 +125,6 @@ export default function InstagramReelsSection() {
                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
               </svg>
               Follow ReForm
-              <ExternalLink size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />
             </a>
 
             {/* Navigation Arrows (Desktop) */}

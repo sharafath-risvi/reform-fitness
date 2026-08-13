@@ -342,10 +342,10 @@ function ServiceBlock({ service, index }) {
             </div>
             
             <div className="flex items-center gap-6">
-              <a href="/contact#contact-form" className="btn-primary inline-flex group text-sm">
+              <Link to="/contact#contact-section" className="btn-primary inline-flex group text-sm">
                 <span>Start Program</span>
                 <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>
