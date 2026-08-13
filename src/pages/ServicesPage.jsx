@@ -180,7 +180,7 @@ function PremiumHero() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <Link to="/consultation" className="btn-primary inline-flex group">
+            <Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="btn-primary inline-flex group">
               <span>Book a Consultation</span>
               <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </Link>
