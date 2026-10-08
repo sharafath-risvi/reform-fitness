@@ -162,7 +162,7 @@ function FrameSequence({ containerRef, blurValue }) {
     for (let i = 1; i <= 276; i++) {
       const img = new Image()
       const frameNum = i.toString().padStart(3, '0')
-      img.src = `/videos/gym_video_frames/ezgif-frame-${frameNum}.png`
+      img.src = `/videos/gym_video_frames_webp/ezgif-frame-${frameNum}.webp`
       images.push(img)
     }
     
@@ -170,7 +170,7 @@ function FrameSequence({ containerRef, blurValue }) {
     for (let i = 1; i <= 300; i++) {
       const img = new Image()
       const frameNum = i.toString().padStart(3, '0')
-      img.src = `/videos/gym_video_2/ezgif-frame-${frameNum}.png`
+      img.src = `/videos/gym_video_2_webp/ezgif-frame-${frameNum}.webp`
       images.push(img)
     }
     
