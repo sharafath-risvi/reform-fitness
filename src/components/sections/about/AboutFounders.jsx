@@ -8,7 +8,7 @@ const founders = [
   {
     name: "Arjun Menon",
     role: "Co-Founder & Head of Rehabilitation",
-    image: "/Reform_images/DSC06294.JPG",
+    image: "/Reform_images/DSC06294.webp",
     quote: "Fitness shouldn't break you down. It should build you up to handle life's actual demands.",
     details: "With over 8 years specializing in sports injury recovery and functional mechanics, Arjun designed ReForm to bridge the gap between clinical rehabilitation and high-performance training.",
     vision: "Fitness shouldn't break you down. It should build you up to handle life's actual demands.",
@@ -19,7 +19,7 @@ const founders = [
   {
     name: "Priya Sharma",
     role: "Co-Founder & Head of Women's Wellness",
-    image: "/Reform_images/DSC06296.JPG",
+    image: "/Reform_images/DSC06296.webp",
     quote: "True transformation starts when you stop punishing your body and start nourishing it.",
     details: "Priya brings 6 years of expertise in holistic women's health, focusing on hormonal balance, pre/postnatal fitness, and creating sustainable lifestyle changes rather than quick fixes.",
     vision: "True transformation starts when you stop punishing your body and start nourishing it.",

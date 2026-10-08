@@ -75,7 +75,7 @@ const allServices = [
     includes: ['Medical history review', 'Doctor coordination', 'Progressive recovery protocol', 'Pain point assessment', 'Return-to-function milestones', 'Long-term injury prevention'],
     color: '#E8B884',
     ideal: 'Post-surgery, chronic pain, and sports injury recovery',
-    img: '/Reform_images/DSC06282.JPG'
+    img: '/Reform_images/DSC06282.webp'
   },
   {
     icon: Flower2,
@@ -115,7 +115,7 @@ const allServices = [
     includes: ['Food habit assessment', 'Macro and calorie education', 'Meal planning support', 'Grocery and cooking guidance', 'Sustainable habit building', 'Progress and adaptation reviews'],
     color: '#E8B884',
     ideal: 'Anyone wanting to improve their relationship with food',
-    img: '/Reform_images/DSC06220.JPG'
+    img: '/Reform_images/DSC06220.webp'
   },
 ]
 
@@ -622,7 +622,7 @@ function TransformationPromise() {
     <section className="relative w-full py-40 md:py-60 flex items-center justify-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
         <img 
-          src="/Reform_images/DSC06269.JPG" 
+          src="/Reform_images/DSC06269.webp" 
           alt="Transformation Promise" 
           className="w-full h-full object-cover opacity-30"
         />

@@ -8,17 +8,17 @@ const cardsData = [
   {
     title: 'Personalized',
     subtitle: 'Programs',
-    img: '/Reform_images/DSC06277.JPG',
+    img: '/Reform_images/DSC06277.webp',
   },
   {
     title: 'Certified',
     subtitle: 'Coaches',
-    img: '/Reform_images/DSC06269.JPG',
+    img: '/Reform_images/DSC06269.webp',
   },
   {
     title: 'Science-Based',
     subtitle: 'Training',
-    img: '/Reform_images/DSC06224.JPG',
+    img: '/Reform_images/DSC06224.webp',
   },
   {
     title: 'Long-Term',

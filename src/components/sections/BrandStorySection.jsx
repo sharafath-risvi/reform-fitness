@@ -5,17 +5,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const bgImages = [
-  "/Reform_images/DSC06269.JPG", 
+  "/Reform_images/DSC06269.webp", 
 ]
 
 const coreValueImages = [
   "/images/safetyfirst.jpeg",
   "/images/clientcentered.jpeg",
   "/images/professionalism.jpeg",
-  "/Reform_images/DSC06234.JPG",
-  "/Reform_images/DSC06253.JPG",
+  "/Reform_images/DSC06234.webp",
+  "/Reform_images/DSC06253.webp",
   "/images/sciencebased.jpeg",
-  "/Reform_images/DSC06292.JPG",
+  "/Reform_images/DSC06292.webp",
   "/images/longterm.jpeg",
 ]
 

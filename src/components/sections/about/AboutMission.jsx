@@ -64,7 +64,7 @@ export default function AboutMission() {
       {/* Pinned Cinematic Background */}
       <div className="absolute inset-0 w-full h-screen pointer-events-none overflow-hidden" ref={bgImageRef}>
         <img 
-          src="/Reform_images/DSC06288.JPG" 
+          src="/Reform_images/DSC06288.webp" 
           alt="ReForm Fitness Vision" 
           className="mission-bg-img w-full h-full object-cover will-change-transform opacity-40 grayscale"
         />

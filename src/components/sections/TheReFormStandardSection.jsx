@@ -69,7 +69,7 @@ export default function TheReFormStandardSection() {
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <img
           ref={bgImageRef}
-          src="/Reform_images/DSC06286.JPG"
+          src="/Reform_images/DSC06286.webp"
           alt="ReForm Fitness Values"
           className="w-full h-full object-cover will-change-transform transform-gpu"
           loading="lazy"

@@ -57,7 +57,7 @@ export default function AboutHero() {
       <div className="absolute inset-0 will-change-transform pointer-events-none">
         <img
           ref={bgImageRef}
-          src="/Reform_images/DSC06270.JPG"
+          src="/Reform_images/DSC06270.webp"
           alt="About ReForm Fitness"
           className="w-full h-full object-cover origin-center will-change-transform opacity-60"
         />

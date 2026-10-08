@@ -16,7 +16,7 @@ const trainers = [
     certifications: ['NSCA-CPT', 'ACSM', 'Corrective Exercise Specialist', 'Sports Nutrition Level 1'],
     bio: 'Arjun is the driving force behind ReForm Fitness\'s rehabilitation division. With 8 years of experience working alongside orthopedic surgeons and physiotherapists, he has guided over 200 clients back to full health after surgeries, injuries, and chronic pain conditions.',
     philosophy: '"Science gives us the method, but compassion gives us the results."',
-    image: '/Reform_images/DSC06244.JPG',
+    image: '/Reform_images/DSC06244.webp',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const trainers = [
     certifications: ['ACE-CPT', 'Pre/Postnatal Fitness Specialist', 'RYT-200 Yoga Alliance'],
     bio: 'Priya has dedicated her career to understanding and serving women\'s unique fitness needs. From young women managing PCOS to new mothers rebuilding their core, Priya brings warmth, expertise, and a deep understanding of female physiology to every session.',
     philosophy: '"Women\'s fitness is about becoming stronger, more capable, and fully alive."',
-    image: '/Reform_images/DSC06234.JPG',
+    image: '/Reform_images/DSC06234.webp',
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const trainers = [
     certifications: ['NASM-CPT', 'Senior Fitness Specialist (ACE)', 'Functional Aging Specialist'],
     bio: 'Rahul found his calling working with senior citizens after seeing his own family struggle with mobility and independence challenges. His gentle approach has helped over 150 senior clients regain confidence, mobility, and vitality.',
     philosophy: '"Age is not a barrier. With patience and science, everyone can experience vitality."',
-    image: '/Reform_images/DSC06247.JPG',
+    image: '/Reform_images/DSC06247.webp',
   },
 ]
 
@@ -166,7 +166,7 @@ export default function TrainersPage() {
           className="absolute inset-0 w-full h-full"
         >
           <img 
-            src="/Reform_images/DSC06269.JPG" 
+            src="/Reform_images/DSC06269.webp" 
             alt="ReForm Fitness Trainers" 
             className="w-full h-full object-cover object-center"
           />

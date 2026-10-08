@@ -11,38 +11,38 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Row 1 (Move Left) - Duplicated for infinite marquee (shift by -96vw)
 const row1Cards = [
-  { id: '1a', desktop: { x: '-36vw', y: '-38vh' }, mobile: { x: '-24vw', y: '-28vh' }, img: '/Reform_images/DSC06235.JPG' }, // Dumbbells
-  { id: '2a', desktop: { x: '-12vw', y: '-38vh' }, mobile: { x: '24vw', y: '-28vh' }, img: '/Reform_images/DSC06253.JPG' }, // Bench
-  { id: '3a', desktop: { x: '12vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.JPG' }, // Plates on Rack
-  { id: '4a', desktop: { x: '36vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.JPG' }, // Dark Gym
+  { id: '1a', desktop: { x: '-36vw', y: '-38vh' }, mobile: { x: '-24vw', y: '-28vh' }, img: '/Reform_images/DSC06235.webp' }, // Dumbbells
+  { id: '2a', desktop: { x: '-12vw', y: '-38vh' }, mobile: { x: '24vw', y: '-28vh' }, img: '/Reform_images/DSC06253.webp' }, // Bench
+  { id: '3a', desktop: { x: '12vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.webp' }, // Plates on Rack
+  { id: '4a', desktop: { x: '36vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.webp' }, // Dark Gym
   
   // Duplicates for seamless loop
-  { id: '1b', desktop: { x: '60vw', y: '-38vh' }, mobile: { x: '72vw', y: '-28vh' }, img: '/Reform_images/DSC06235.JPG' },
-  { id: '2b', desktop: { x: '84vw', y: '-38vh' }, mobile: { x: '120vw', y: '-28vh' }, img: '/Reform_images/DSC06253.JPG' },
-  { id: '3b', desktop: { x: '108vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.JPG' },
-  { id: '4b', desktop: { x: '132vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.JPG' },
+  { id: '1b', desktop: { x: '60vw', y: '-38vh' }, mobile: { x: '72vw', y: '-28vh' }, img: '/Reform_images/DSC06235.webp' },
+  { id: '2b', desktop: { x: '84vw', y: '-38vh' }, mobile: { x: '120vw', y: '-28vh' }, img: '/Reform_images/DSC06253.webp' },
+  { id: '3b', desktop: { x: '108vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.webp' },
+  { id: '4b', desktop: { x: '132vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.webp' },
 ]
 
 // Row 2 (Stationary)
 const row2Cards = [
-  { id: '5a', desktop: { x: '-36vw', y: '0vh' },   mobile: null, img: '/Reform_images/DSC06326.JPG' }, // Ropes
+  { id: '5a', desktop: { x: '-36vw', y: '0vh' },   mobile: null, img: '/Reform_images/DSC06326.webp' }, // Ropes
   // VIDEO MASK IS DYNAMICALLY ANIMATED TO: Desktop (-12vw, 0vh) | Mobile (-24vw, 0vh)
   { id: '6a', desktop: { x: '12vw',  y: '0vh' },   mobile: { x: '24vw', y: '0vh' }, video: '/videos/video2.mp4', isNextHero: true }, // Next Hero Video
-  { id: '7a', desktop: { x: '36vw',  y: '0vh' },   mobile: null, img: '/Reform_images/DSC06331.JPG' }, // Erg / Rowing Machine
+  { id: '7a', desktop: { x: '36vw',  y: '0vh' },   mobile: null, img: '/Reform_images/DSC06331.webp' }, // Erg / Rowing Machine
 ]
 
 // Row 3 (Move Right) - Duplicated for infinite marquee (shift by +96vw)
 const row3Cards = [
-  { id: '8a', desktop: { x: '-36vw', y: '38vh' },  mobile: { x: '-24vw', y: '28vh' }, img: '/Reform_images/DSC06221.JPG' }, // Reception / Keep
-  { id: '9a', desktop: { x: '-12vw', y: '38vh' },  mobile: { x: '24vw', y: '28vh' }, img: '/Reform_images/DSC06225.JPG' }, // Treadmills
-  { id: '10a', desktop: { x: '12vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.JPG' }, // Gym floor
-  { id: '11a', desktop: { x: '36vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.JPG' }, // Luxury Gym
+  { id: '8a', desktop: { x: '-36vw', y: '38vh' },  mobile: { x: '-24vw', y: '28vh' }, img: '/Reform_images/DSC06221.webp' }, // Reception / Keep
+  { id: '9a', desktop: { x: '-12vw', y: '38vh' },  mobile: { x: '24vw', y: '28vh' }, img: '/Reform_images/DSC06225.webp' }, // Treadmills
+  { id: '10a', desktop: { x: '12vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.webp' }, // Gym floor
+  { id: '11a', desktop: { x: '36vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.webp' }, // Luxury Gym
 
   // Duplicates for seamless loop
-  { id: '8b', desktop: { x: '-132vw', y: '38vh' },  mobile: { x: '-120vw', y: '28vh' }, img: '/Reform_images/DSC06221.JPG' },
-  { id: '9b', desktop: { x: '-108vw', y: '38vh' },  mobile: { x: '-72vw', y: '28vh' }, img: '/Reform_images/DSC06225.JPG' },
-  { id: '10b', desktop: { x: '-84vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.JPG' },
-  { id: '11b', desktop: { x: '-60vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.JPG' },
+  { id: '8b', desktop: { x: '-132vw', y: '38vh' },  mobile: { x: '-120vw', y: '28vh' }, img: '/Reform_images/DSC06221.webp' },
+  { id: '9b', desktop: { x: '-108vw', y: '38vh' },  mobile: { x: '-72vw', y: '28vh' }, img: '/Reform_images/DSC06225.webp' },
+  { id: '10b', desktop: { x: '-84vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.webp' },
+  { id: '11b', desktop: { x: '-60vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.webp' },
 ]
 
 const galleryCards = [...row1Cards, ...row2Cards, ...row3Cards]

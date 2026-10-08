@@ -54,7 +54,7 @@ export default function ConsultationCTASection() {
         ref={bgRef}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-luminosity will-change-transform opacity-0"
         style={{
-          backgroundImage: `url('/Reform_images/DSC06277.JPG')`,
+          backgroundImage: `url('/Reform_images/DSC06277.webp')`,
         }}
       />
       

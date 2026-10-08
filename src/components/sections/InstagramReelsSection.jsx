@@ -9,35 +9,35 @@ const dummyReels = [
     id: 1, 
     title: 'Personal Training', 
     category: 'Coaching',
-    image: '/Reform_images/DSC06277.JPG', 
+    image: '/Reform_images/DSC06277.webp', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 2, 
     title: 'Strength Training', 
     category: 'Form Check',
-    image: '/Reform_images/DSC06253.JPG', 
+    image: '/Reform_images/DSC06253.webp', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 3, 
     title: 'Science-Based Training', 
     category: 'Education',
-    image: '/Reform_images/DSC06256.JPG', 
+    image: '/Reform_images/DSC06256.webp', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 4, 
     title: 'Transformation Journey', 
     category: 'Results',
-    image: '/Reform_images/DSC06237.JPG', 
+    image: '/Reform_images/DSC06237.webp', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 5, 
     title: 'Long-Term Results', 
     category: 'Mindset',
-    image: '/Reform_images/DSC06225.JPG', 
+    image: '/Reform_images/DSC06225.webp', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
 ]

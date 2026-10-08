@@ -4,9 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionTagline from '../../ui/SectionTagline'
 
 const images = [
-  "/Reform_images/ourstory.JPG", // Origin/Focus
-  "/Reform_images/DSC06300.JPG", // Progression
-  "/Reform_images/DSC06281.JPG"  // Future/Community
+  "/Reform_images/ourstory.webp", // Origin/Focus
+  "/Reform_images/DSC06300.webp", // Progression
+  "/Reform_images/DSC06281.webp"  // Future/Community
 ]
 
 export default function AboutStory() {
