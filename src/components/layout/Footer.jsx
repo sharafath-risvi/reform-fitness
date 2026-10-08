@@ -54,7 +54,7 @@ export default function Footer() {
   const { ref: footerRef, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
 
   return (
-    <footer ref={footerRef} className="bg-[#0a0a0a] text-white pt-24 lg:pt-32 pb-8 border-t border-white/5 relative overflow-hidden flex flex-col">
+    <footer ref={footerRef} className="bg-[#0a0a0a] text-white pt-16 lg:pt-32 pb-8 border-t border-white/5 relative overflow-hidden flex flex-col">
       
       {/* Background ambient light */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-[#E8B884]/30 to-transparent" />
@@ -65,7 +65,7 @@ export default function Footer() {
         {/* ========================================== */}
         {/* 2. TOP FOOTER BRAND AREA                   */}
         {/* ========================================== */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12 lg:gap-8 mb-24 lg:mb-32">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 lg:gap-8 mb-16 lg:mb-32">
           
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -92,7 +92,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-left lg:text-right"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white leading-tight font-serif font-bold">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl text-white leading-tight font-serif font-bold">
               Build strength.<br />
               Move better.<br />
               <em className="text-[#E8B884] italic font-bold">Live stronger.</em>
@@ -176,7 +176,7 @@ export default function Footer() {
                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-green-brand/30 group-hover:text-green-brand transition-colors">
                     <Mail size={14} />
                   </div>
-                  <span>hello@reformfitness.com</span>
+                  <span className="break-all">hello@reformfitness.com</span>
                 </a>
               </li>
               <li>
@@ -261,7 +261,7 @@ export default function Footer() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.8 }}
-          className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 mt-auto"
+          className="flex flex-col md:flex-row items-center justify-between gap-4 pb-6 mt-auto"
         >
           <p className="text-[0.75rem] tracking-wider text-white/70 font-light text-center md:text-left">
             © {new Date().getFullYear()} ReForm Fitness. All Rights Reserved.

@@ -10,7 +10,7 @@ const trainers = [
     title: 'Head Trainer & Rehabilitation Specialist',
     specializations: ['Rehabilitation', 'Strength Training', 'Sports Injury Recovery'],
     experience: '8 Years',
-    image: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop',
+    image: '/Reform_images/DSC06248.JPG',
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const trainers = [
     title: "Women's Fitness & Yoga Expert",
     specializations: ["Women's Health", 'Pre/Postnatal Fitness', 'Yoga', 'PCOS'],
     experience: '6 Years',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop',
+    image: '/Reform_images/DSC06240.JPG',
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const trainers = [
     title: 'Senior Fitness & Mobility Coach',
     specializations: ['Senior Fitness', 'Mobility', 'Fall Prevention', 'Functional Training'],
     experience: '5 Years',
-    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069&auto=format&fit=crop',
+    image: '/Reform_images/DSC06244.JPG',
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const trainers = [
     title: 'Fat Loss & Nutrition Coach',
     specializations: ['Fat Loss', 'Body Transformation', 'Nutrition Coaching', 'Zumba'],
     experience: '5 Years',
-    image: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop',
+    image: '/Reform_images/DSC06237.JPG',
   },
 ]
 

@@ -15,19 +15,19 @@ const services = [
     id: 'personal-training',
     title: 'Personal Training',
     desc: '1-on-1 coaching with customized programming based on your unique biomechanics, lifestyle, and goals.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
+    image: '/ourexpertise/personaltraining.jpeg',
   },
   {
     id: 'home-training',
     title: 'Home Training',
     desc: 'Premium personal training brought to your living room. We bring the expertise, you bring the commitment.',
-    image: 'https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?q=80&w=1925&auto=format&fit=crop',
+    image: '/ourexpertise/hometraining.jpeg',
   },
   {
     id: 'transformation',
     title: 'Body Transformation',
     desc: 'A complete overhaul of training, nutrition, and lifestyle habits to achieve your dream physique safely.',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2070&auto=format&fit=crop',
+    image: '/ourexpertise/bodytransformation.jpeg',
   },
 ]
 
@@ -153,16 +153,16 @@ export default function ServicesSection() {
                     OUR EXPERTISE
                   </span>
                 </div>
-                <h2 className="text-5xl lg:text-7xl text-white mb-8 leading-tight font-serif drop-shadow-xl font-bold">
+                <h2 className="text-3xl sm:text-5xl lg:text-7xl text-white mb-8 leading-tight font-serif drop-shadow-xl font-bold">
                   Services <span className="text-[#E8B884] italic">& Specialties</span>
                 </h2>
-                <p className="text-white/90 text-lg lg:text-xl font-light leading-relaxed drop-shadow-md">
+                <p className="text-white/90 text-base lg:text-xl font-light leading-relaxed drop-shadow-md">
                   ReForm Fitness provides personalized, <span className="text-green-brand font-medium">science-based</span> fitness programs designed around each client's unique goals.
                 </p>
               </div>
             ) : (
               /* CARDS 02-04: Services Glassmorphism Cards */
-              <div className="relative z-10 glass-dark p-10 lg:p-20 border border-white/10 hover:border-green-brand/50 rounded-sm w-[90vw] max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between content-reveal transform hover:scale-[1.01] transition-all duration-700">
+              <div className="relative z-10 glass-dark p-5 sm:p-8 lg:p-20 border border-white/10 hover:border-green-brand/50 rounded-sm w-[90vw] max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between content-reveal transform hover:scale-[1.01] transition-all duration-700">
                  {/* Left Content */}
                  <div className="flex-1 w-full text-left z-20">
                     <div className="inline-flex items-center gap-4 mb-6">
@@ -173,10 +173,10 @@ export default function ServicesSection() {
                         OUR EXPERTISE
                       </span>
                     </div>
-                    <h3 className="font-serif text-4xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-xl font-bold">
+                    <h3 className="font-serif text-2xl sm:text-4xl lg:text-6xl text-white mb-6 leading-tight drop-shadow-xl font-bold">
                       {service.title}
                     </h3>
-                    <p className="text-white/90 text-lg lg:text-xl font-light leading-relaxed max-w-md mb-10">
+                    <p className="text-white/90 text-base lg:text-xl font-light leading-relaxed max-w-md mb-8 sm:mb-10">
                       {service.desc}
                     </p>
                     <Link to="/services" className="group/btn inline-flex items-center gap-4 text-white text-xs tracking-[0.2em] uppercase font-semibold pointer-events-auto">

@@ -8,27 +8,27 @@ const cardsData = [
   {
     title: 'Personalized',
     subtitle: 'Programs',
-    img: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop',
+    img: '/Reform_images/DSC06277.JPG',
   },
   {
     title: 'Certified',
     subtitle: 'Coaches',
-    img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop',
+    img: '/Reform_images/DSC06269.JPG',
   },
   {
     title: 'Science-Based',
     subtitle: 'Training',
-    img: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop',
+    img: '/Reform_images/DSC06224.JPG',
   },
   {
     title: 'Long-Term',
     subtitle: 'Results',
-    img: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop',
+    img: '/images/longterm.jpeg',
   },
   {
     title: 'Continuous',
     subtitle: 'Support',
-    img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
+    img: '/images/continuoussupport.jpeg',
   }
 ]
 

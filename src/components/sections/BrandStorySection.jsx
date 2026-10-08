@@ -5,18 +5,18 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const bgImages = [
-  "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2070&auto=format&fit=crop", 
+  "/Reform_images/DSC06269.JPG", 
 ]
 
 const coreValueImages = [
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=1974&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop",
+  "/images/safetyfirst.jpeg",
+  "/images/clientcentered.jpeg",
+  "/images/professionalism.jpeg",
+  "/Reform_images/DSC06234.JPG",
+  "/Reform_images/DSC06253.JPG",
+  "/images/sciencebased.jpeg",
+  "/Reform_images/DSC06292.JPG",
+  "/images/longterm.jpeg",
 ]
 
 const coreValues = [
@@ -133,7 +133,7 @@ export default function BrandStorySection() {
         tlCV.to('.cv-tagline-text', { color: '#FFFFFF', duration: 1.5 }, "<")
         tlCV.to('.cv-tagline-line', { backgroundColor: '#FFFFFF', opacity: 0.4, duration: 1.5 }, "<")
         tlCV.to({}, { duration: isMobile ? 0.5 : 1 })
-        tlCV.to('.cv-intro-container', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.5 })
+        tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.5 })
         tlCV.to({}, { duration: 0.5 })
 
         // SCENE 05: Stack Cards
@@ -239,7 +239,7 @@ export default function BrandStorySection() {
           scrollTrigger: {
             trigger: cvRef.current,
             start: 'top top',
-            end: '+=400%',
+            end: '+=250%',
             pin: true,
             scrub: 1,
           }
@@ -261,7 +261,7 @@ export default function BrandStorySection() {
           scrollTrigger: {
             trigger: cvRef.current,
             start: 'top top',
-            end: '+=250%',
+            end: '+=150%',
             pin: true,
             scrub: 1,
           }
@@ -295,10 +295,10 @@ export default function BrandStorySection() {
                 CHAPTER 01
               </span>
             </div>
-            <h2 className="text-4xl lg:text-7xl text-[#231F20] mb-8 lg:mb-10 leading-tight font-serif font-bold">
+            <h2 className="text-3xl sm:text-4xl lg:text-7xl text-[#231F20] mb-8 lg:mb-10 leading-tight font-serif font-bold">
               <SplitText text="More Than A Gym." />
             </h2>
-            <p className="text-base lg:text-2xl text-[#231F20]/70 leading-relaxed font-light mb-4 lg:mb-6">
+            <p className="text-sm sm:text-base lg:text-2xl text-[#231F20]/70 leading-relaxed font-light mb-4 lg:mb-6">
               <SplitText text="ReForm Fitness was founded on a simple truth: typical gyms fail most people. They offer equipment, but no guidance. They offer quick fixes, but no lasting change." />
             </p>
             <p className="text-base lg:text-2xl text-[#231F20]/70 leading-relaxed font-light hidden lg:block">
@@ -313,10 +313,10 @@ export default function BrandStorySection() {
                 CHAPTER 02
               </span>
             </div>
-            <h2 className="text-4xl lg:text-7xl text-white mb-8 lg:mb-10 leading-tight font-serif font-bold">
+            <h2 className="text-3xl sm:text-4xl lg:text-7xl text-white mb-8 lg:mb-10 leading-tight font-serif font-bold">
               <SplitText text="No Shortcuts. Just Results." />
             </h2>
-            <p className="text-base lg:text-2xl text-white/90 leading-relaxed font-light mb-4 lg:mb-6">
+            <p className="text-sm sm:text-base lg:text-2xl text-white/90 leading-relaxed font-light mb-4 lg:mb-6">
               <SplitText text='Instead of promising "Lose 10kg in 30 Days", we promise safe exercise, proper nutrition, and habits that compound over a lifetime.' />
             </p>
             <p className="text-base lg:text-2xl text-white/90 leading-relaxed font-light hidden lg:block">
@@ -335,7 +335,7 @@ export default function BrandStorySection() {
       <section ref={cvRef} className="relative bg-white h-screen overflow-hidden">
         
         {/* Core Values Intro Text */}
-        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none px-6">
+        <div className="cv-intro-wrapper absolute inset-0 flex items-center justify-center z-20 pointer-events-none px-6">
            <div className="cv-intro-container flex flex-col items-center text-center max-w-4xl opacity-0">
               <div className="inline-flex items-center gap-4 mb-6 lg:mb-8">
                 <div className="cv-tagline-line w-8 h-[1px] bg-[#E8B884]"></div>
@@ -344,7 +344,7 @@ export default function BrandStorySection() {
                 </span>
                 {/* Intentionally NO horizontal line on the right side */}
               </div>
-              <h2 className="text-4xl md:text-7xl lg:text-8xl mb-6 lg:mb-8 leading-tight font-serif drop-shadow-sm font-bold">
+              <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl mb-6 lg:mb-8 leading-tight font-serif drop-shadow-sm font-bold">
                 <span className="built-on-text text-[#231F20] block"><span className="text-green-brand font-bold">Built</span> on</span>
                 <span className="text-[#E8B884] block italic">Excellence</span>
               </h2>
@@ -359,10 +359,10 @@ export default function BrandStorySection() {
           
           {/* Main Background Reveal Layer */}
           <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] opacity-0 overflow-hidden bg-black scale-95">
-            <img src={coreValueImages[0]} className="w-full h-full object-cover scale-110 opacity-100 transform-gpu" loading="lazy" decoding="async" />
-            <div className="absolute inset-0 bg-black/80 transition-colors bg-overlay" />
-            <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none">
-               <h3 className="text-white text-2xl md:text-4xl font-serif tracking-widest uppercase drop-shadow-xl font-bold">{coreValues[0]}</h3>
+            <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="lazy" decoding="async" />
+            <div className="absolute inset-0 bg-black/50 transition-colors bg-overlay" />
+            <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none px-6 text-center">
+               <h3 className="text-white text-[13px] min-[375px]:text-[15px] md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold">{coreValues[0]}</h3>
             </div>
           </div>
 
@@ -372,7 +372,7 @@ export default function BrandStorySection() {
               <img src={src} className="w-full h-full object-cover opacity-95 scale-105 transform-gpu" loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-[#231F20]/75" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 cv-text px-6 text-center">
-                 <h3 className={`text-white ${["Professionalism", "Confidentiality"].includes(coreValues[i+1]) ? "text-[13px] min-[375px]:text-[15px]" : "text-lg"} md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold`}>{coreValues[i+1]}</h3>
+                 <h3 className={`text-white ${["Professionalism", "Confidentiality"].includes(coreValues[i+1]) ? "text-[11px] min-[375px]:text-[13px]" : "text-[13px] min-[375px]:text-[15px]"} md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold`}>{coreValues[i+1]}</h3>
               </div>
             </div>
           ))}

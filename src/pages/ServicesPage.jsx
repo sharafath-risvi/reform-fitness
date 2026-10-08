@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useMotionValueEvent, useTransform } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Check, Dumbbell, Flame, TrendingUp, Home, Users, Baby, HeartPulse, Flower2, Music, Activity, Apple } from 'lucide-react'
@@ -14,7 +15,7 @@ const allServices = [
     includes: ['Comprehensive fitness assessment', 'Customized workout plan', 'Nutrition lifestyle coaching', 'Weekly progress tracking', 'Monthly body composition review', 'Mindset and habit coaching'],
     color: '#E8B884',
     ideal: 'Anyone seeking a complete lifestyle change',
-    img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/bodytransformation.jpeg'
   },
   {
     icon: Flame,
@@ -24,7 +25,7 @@ const allServices = [
     includes: ['Metabolic assessment', 'Cardio and resistance training mix', 'Nutrition habit coaching', 'Progress photo tracking', 'Plateau-breaking techniques', 'Long-term maintenance planning'],
     color: '#2B6F6F',
     ideal: 'People with weight management goals',
-    img: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/fatloss.jpeg'
   },
   {
     icon: Dumbbell,
@@ -34,7 +35,7 @@ const allServices = [
     includes: ['Strength assessment', 'Progressive overload program', 'Nutrition for muscle gain', 'Recovery optimization', 'Performance benchmarks', 'Deload and periodization planning'],
     color: '#E8B884',
     ideal: 'Men and women seeking muscle development',
-    img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/musclebuilding.jpeg'
   },
   {
     icon: Home,
@@ -44,7 +45,7 @@ const allServices = [
     includes: ['Trainer visits your home', 'Equipment provided if needed', 'Fully customized sessions', 'Flexible scheduling', 'Family sessions available', 'Progress tracking app'],
     color: '#2B6F6F',
     ideal: 'Busy professionals, families, senior citizens',
-    img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/homepersonaltraining.jpeg'
   },
   {
     icon: Users,
@@ -54,7 +55,7 @@ const allServices = [
     includes: ['Hormonal health-informed programming', 'PCOS management protocols', 'Bone density training', 'Prenatal safe exercises', 'Postnatal recovery program', 'Strength and confidence building'],
     color: '#E8B884',
     ideal: 'Women of all ages and stages of life',
-    img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/womenfitness.jpeg'
   },
   {
     icon: HeartPulse,
@@ -64,7 +65,7 @@ const allServices = [
     includes: ['Balance and coordination training', 'Joint strengthening exercises', 'Fall prevention techniques', 'Mobility and flexibility work', 'Low-impact cardio sessions', 'Functional daily movement training'],
     color: '#2B6F6F',
     ideal: 'Adults aged 55 and above',
-    img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/seniorfitness.jpeg'
   },
   {
     icon: Activity,
@@ -74,7 +75,7 @@ const allServices = [
     includes: ['Medical history review', 'Doctor coordination', 'Progressive recovery protocol', 'Pain point assessment', 'Return-to-function milestones', 'Long-term injury prevention'],
     color: '#E8B884',
     ideal: 'Post-surgery, chronic pain, and sports injury recovery',
-    img: 'https://images.unsplash.com/photo-1576678927484-cc907957088c?q=80&w=1974&auto=format&fit=crop'
+    img: '/Reform_images/DSC06282.JPG'
   },
   {
     icon: Flower2,
@@ -84,7 +85,7 @@ const allServices = [
     includes: ['Breathing techniques (Pranayama)', 'Flexibility and mobility yoga', 'Meditation and mindfulness', 'Stress reduction sessions', 'Beginner to advanced levels', 'Private and group sessions'],
     color: '#2B6F6F',
     ideal: 'All fitness levels, those seeking mind-body balance',
-    img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2020&auto=format&fit=crop'
+    img: '/services_images/yoga.png'
   },
   {
     icon: Music,
@@ -94,7 +95,7 @@ const allServices = [
     includes: ['Professional Zumba instructors', 'Multiple music styles', 'All fitness levels welcome', 'Community group classes', 'Private sessions available', 'Calorie burn tracking'],
     color: '#E8B884',
     ideal: 'Anyone who wants cardio without the boredom',
-    img: 'https://images.unsplash.com/photo-1524594152303-9fd13543fe6e?q=80&w=2070&auto=format&fit=crop'
+    img: '/services_images/zumba.png'
   },
   {
     icon: Baby,
@@ -104,7 +105,7 @@ const allServices = [
     includes: ['Movement pattern assessment', 'Joint mobility protocols', 'Myofascial release techniques', 'Posture correction program', 'Flexibility progression plan', 'Pain reduction strategies'],
     color: '#2B6F6F',
     ideal: 'Desk workers, athletes, and chronic pain sufferers',
-    img: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop'
+    img: '/services_images/mobility&flexibility.png'
   },
   {
     icon: Apple,
@@ -114,7 +115,7 @@ const allServices = [
     includes: ['Food habit assessment', 'Macro and calorie education', 'Meal planning support', 'Grocery and cooking guidance', 'Sustainable habit building', 'Progress and adaptation reviews'],
     color: '#E8B884',
     ideal: 'Anyone wanting to improve their relationship with food',
-    img: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop'
+    img: '/Reform_images/DSC06220.JPG'
   },
 ]
 
@@ -145,161 +146,384 @@ const differentiators = [
   }
 ];
 
-function PremiumHero() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
+function FrameSequence({ containerRef, blurValue }) {
+  const canvasRef = useRef(null)
+  const imagesRef = useRef([])
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
   
+  // Preload all frames sequentially
+  useEffect(() => {
+    const images = []
+    
+    // Video 1
+    for (let i = 1; i <= 276; i++) {
+      const img = new Image()
+      const frameNum = i.toString().padStart(3, '0')
+      img.src = `/videos/gym_video_frames/ezgif-frame-${frameNum}.png`
+      images.push(img)
+    }
+    
+    // Video 2
+    for (let i = 1; i <= 300; i++) {
+      const img = new Image()
+      const frameNum = i.toString().padStart(3, '0')
+      img.src = `/videos/gym_video_2/ezgif-frame-${frameNum}.png`
+      images.push(img)
+    }
+    
+    imagesRef.current = images
+  }, [])
+
+  const drawFrame = (img) => {
+    const canvas = canvasRef.current
+    if (!canvas || !img || !img.width) return
+    
+    const ctx = canvas.getContext('2d')
+    const dpr = window.devicePixelRatio || 1
+    
+    const canvasWidth = canvas.width / dpr
+    const canvasHeight = canvas.height / dpr
+    
+    const isMobile = window.innerWidth < 1024
+    const coverRatio = Math.max(canvasWidth / img.width, canvasHeight / img.height)
+    const containRatio = Math.min(canvasWidth / img.width, canvasHeight / img.height)
+    
+    // On mobile, force strict 'contain' scaling to show the entire original frame 
+    // without any cropping, leaving solid black letterboxing if needed.
+    const ratio = isMobile ? containRatio : coverRatio
+    
+    const newWidth = img.width * ratio
+    const newHeight = img.height * ratio
+    const x = (canvasWidth - newWidth) / 2
+    const y = (canvasHeight - newHeight) / 2
+    
+    // Fill background with solid black
+    ctx.fillStyle = 'black'
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+    
+    // Draw the image with its exact preserved aspect ratio
+    ctx.drawImage(img, 0, 0, img.width, img.height, x, y, newWidth, newHeight)
+  }
+
+  const getVideoRatio = (latest) => {
+    if (latest <= 0.15) return 0;
+    if (latest >= 0.90) return 1;
+    return (latest - 0.15) / 0.75;
+  }
+
+  // Handle canvas sizing and initial draw
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    
+    const resizeCanvas = () => {
+      const rect = canvas.parentElement.getBoundingClientRect()
+      const dpr = window.devicePixelRatio || 1
+      canvas.width = rect.width * dpr
+      canvas.height = rect.height * dpr
+      
+      const ctx = canvas.getContext('2d')
+      ctx.scale(dpr, dpr)
+      
+      const latest = scrollYProgress.get()
+      const videoRatio = getVideoRatio(latest)
+      const frameIndex = Math.min(575, Math.max(0, Math.floor(videoRatio * 576)))
+      
+      const img = imagesRef.current[frameIndex]
+      
+      if (img && img.complete) {
+        drawFrame(img)
+      } else if (img) {
+        img.onload = () => drawFrame(img)
+      }
+    }
+    
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+    return () => window.removeEventListener('resize', resizeCanvas)
+  }, [scrollYProgress])
+
+  // Continuous draw loop on scroll to prevent canvas buffer dropping
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const videoRatio = getVideoRatio(latest)
+    const frameIndex = Math.min(575, Math.max(0, Math.floor(videoRatio * 576)))
+    
+    const img = imagesRef.current[frameIndex]
+    
+    if (img) {
+      if (img.complete) {
+        drawFrame(img)
+      } else {
+        img.onload = () => {
+          const currentLatest = scrollYProgress.get()
+          const currentVideoRatio = getVideoRatio(currentLatest)
+          const currentFrameIndex = Math.min(575, Math.max(0, Math.floor(currentVideoRatio * 576)))
+          if (frameIndex === currentFrameIndex) {
+            drawFrame(img)
+          }
+        }
+      }
+    }
+  })
+
+  const filterStyle = useTransform(blurValue, v => v > 0 ? `blur(${v}px)` : 'none')
+
   return (
-    <section ref={ref} className="relative w-full min-h-[75vh] lg:h-[85vh] flex items-center overflow-hidden bg-[#231F20] pt-32 pb-12">
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+    <motion.canvas 
+      ref={canvasRef} 
+      className="w-full h-full object-cover bg-black" 
+      style={{ 
+        width: '100%', 
+        height: '100%',
+        filter: filterStyle,
+        WebkitFilter: filterStyle
+      }}
+    />
+  )
+}
+
+function CinematicServiceTexts({ scrollYProgress, isMobile }) {
+  // Video 1 runs from 0.15 to 0.51 (276 out of 576 frames mapped across 0.75 range)
+  // 8 sequential texts mapped smoothly across this space.
+  const text1Opacity = useTransform(scrollYProgress, [0.17, 0.18, 0.20, 0.21], [0, 1, 1, 0])
+  const text2Opacity = useTransform(scrollYProgress, [0.21, 0.22, 0.23, 0.24], [0, 1, 1, 0])
+  const text3Opacity = useTransform(scrollYProgress, [0.25, 0.26, 0.27, 0.28], [0, 1, 1, 0])
+  const text4Opacity = useTransform(scrollYProgress, [0.28, 0.29, 0.31, 0.32], [0, 1, 1, 0])
+  const text5Opacity = useTransform(scrollYProgress, [0.32, 0.33, 0.345, 0.355], [0, 1, 1, 0])
+  const text6Opacity = useTransform(scrollYProgress, [0.36, 0.37, 0.39, 0.40], [0, 1, 1, 0])
+  const text7Opacity = useTransform(scrollYProgress, [0.41, 0.42, 0.43, 0.44], [0, 1, 1, 0])
+  const text8Opacity = useTransform(scrollYProgress, [0.45, 0.46, 0.47, 0.49], [0, 1, 1, 0])
+
+  const textClass = "absolute font-sans font-light tracking-[0.25em] uppercase text-3xl md:text-4xl lg:text-5xl text-white drop-shadow-2xl pointer-events-none whitespace-nowrap"
+  
+  if (isMobile) {
+    // 100% pure flexbox centering. ZERO absolute transform logic.
+    const wrapper = "absolute inset-0 flex items-center justify-center pointer-events-none"
+    const mobileText = "font-sans font-light tracking-[0.25em] uppercase text-3xl md:text-4xl lg:text-5xl text-white drop-shadow-2xl pointer-events-none whitespace-nowrap text-center"
+    
+    return (
+      <div key="mobile" className="absolute inset-0 pointer-events-none z-40 overflow-hidden">
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text1Opacity }}>
+            Body Transformation
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text2Opacity }}>
+            Injury Rehabilitation
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text3Opacity }}>
+            Muscle Building
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text4Opacity }}>
+            Home Personal Training
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text5Opacity }}>
+            Senior Fitness
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text6Opacity }}>
+            Yoga
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text7Opacity }}>
+            Women's Fitness
+          </motion.div>
+        </div>
+        <div className={wrapper}>
+          <motion.div className={mobileText} style={{ opacity: text8Opacity }}>
+            Zumba
+          </motion.div>
+        </div>
+      </div>
+    )
+  }
+
+  // Exact original desktop code
+  return (
+    <div key="desktop" className="absolute inset-0 pointer-events-none z-40 overflow-hidden">
+      <motion.div className={textClass} style={{ opacity: text1Opacity, bottom: '20%', left: '50%', x: '-50%' }}>
+        Body Transformation
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text2Opacity, top: '25%', right: '15%' }}>
+        Injury Rehabilitation
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text3Opacity, bottom: '25%', left: '10%' }}>
+        Muscle Building
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text4Opacity, top: '40%', right: '10%' }}>
+        Home Personal Training
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text5Opacity, top: '30%', left: '15%' }}>
+        Senior Fitness
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text6Opacity, bottom: '15%', right: '15%' }}>
+        Yoga
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text7Opacity, top: '50%', left: '15%' }}>
+        Women's Fitness
+      </motion.div>
+      <motion.div className={textClass} style={{ opacity: text8Opacity, bottom: '30%', left: '50%', x: '-50%' }}>
+        Zumba
+      </motion.div>
+    </div>
+  )
+}
+
+function PremiumHero() {
+  const containerRef = useRef(null)
+  
+  const [isMobile, setIsMobile] = useState(false)
+  const [scrollRange, setScrollRange] = useState(0)
+  
+  useEffect(() => {
+    const updateLayout = () => {
+      setIsMobile(window.innerWidth < 1024)
+      if (containerRef.current) {
+        setScrollRange(containerRef.current.offsetHeight - window.innerHeight)
+      }
+    }
+    updateLayout()
+    setTimeout(updateLayout, 150)
+    window.addEventListener('resize', updateLayout)
+    return () => window.removeEventListener('resize', updateLayout)
+  }, [])
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  })
+
+  const mobileY = useTransform(scrollYProgress, (v) => v * scrollRange)
+
+  // TIMELINE PHASES (ONE CONTINUOUS SCROLL PROGRESS):
+  // PHASE 1a (0.0 - 0.08): Text splits and flies outward.
+  // PHASE 1b (0.08 - 0.15): Blur reduces from 15 to 0. First frame becomes sharp.
+  // PHASE 2 (0.15 - 0.90): Video 1 and Video 2 play forward sequentially as one timeline.
+  // ENDING TRANSITION CURRENTLY DISABLED: The hero simply holds the final sharp frame until released.
+
+  // The blur applies to both the start and the end of the timeline
+  // (Original with end blur: [0, 0.08, 0.15, 0.75, 0.85], [15, 15, 0, 0, 20])
+  const blurValue = useTransform(scrollYProgress, [0, 0.08, 0.15, 1], [15, 15, 0, 0])
+  
+  // (Original with end overlay: [0, 0.08, 0.15, 0.75, 0.85], [0.4, 0.4, 0, 0, 0.5])
+  const overlayBgOpacity = useTransform(scrollYProgress, [0, 0.08, 0.15, 1], [0.4, 0.4, 0, 0])
+  
+  // Initial Content (Phase 1a)
+  const ourX = useTransform(scrollYProgress, [0, 0.08], ["0vw", "-100vw"])
+  const servicesX = useTransform(scrollYProgress, [0, 0.08], ["0vw", "100vw"])
+
+  // Final Content (Phase 4 & 5) - CURRENTLY DISABLED
+  /*
+  const contentOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 1])
+  const contentY = useTransform(scrollYProgress, [0.8, 0.9], [40, 0])
+  const contentScale = useTransform(scrollYProgress, [0.8, 0.9], [0.95, 1])
+  */
+
+  return (
+    <section ref={containerRef} className="relative w-full h-[700vh] bg-black">
+      <motion.div 
+        className={`${isMobile ? 'absolute top-0 left-0' : 'sticky top-0'} w-full h-[100svh] lg:h-screen overflow-hidden`}
+        style={isMobile ? { y: mobileY } : {}}
+      >
         
-        {/* Left Content */}
-        <div className="px-[5vw] lg:pl-[8vw] lg:pr-12">
-          <SectionTagline text="OUR SERVICES" className="mb-8" />
+        {/* EXACT SAME Element handles video AND blur. Never unmounts. */}
+        <FrameSequence containerRef={containerRef} blurValue={blurValue} />
+        
+        {/* Darken Overlay */}
+        <motion.div 
+          className="absolute inset-0 bg-black pointer-events-none"
+          style={{ opacity: overlayBgOpacity }}
+        />
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="font-serif text-5xl lg:text-7xl mb-8 leading-[1.1] font-extrabold"
-          >
-            <span className="text-white block font-extrabold">Training <span className="text-green-brand font-extrabold">Designed</span></span>
-            <span className="text-[#E8B884] block italic font-extrabold">Around You</span>
-          </motion.h1>
+        {/* Video 1 Cinematic Texts */}
+        <CinematicServiceTexts scrollYProgress={scrollYProgress} isMobile={isMobile} />
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg text-white/70 max-w-xl mb-12 font-light leading-relaxed"
-          >
-            Experience the pinnacle of personal training. Tailored strategies, elite coaching, and a premium environment dedicated to your success.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
-            <Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="btn-primary inline-flex group">
-              <span>Book a Consultation</span>
-              <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </Link>
-          </motion.div>
+        {/* INITIAL Cinematic Content Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 overflow-hidden">
+          <div className="text-center px-6 w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
+            <motion.h1 
+              className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] font-extrabold drop-shadow-2xl text-[#E8B884] italic uppercase pr-4 md:pr-10"
+              style={{ x: ourX }}
+            >
+              OUR
+            </motion.h1>
+            <motion.h1 
+              className="font-serif text-6xl md:text-8xl lg:text-9xl leading-[0.9] font-extrabold drop-shadow-2xl text-green-brand uppercase tracking-tighter"
+              style={{ x: servicesX }}
+            >
+              SERVICES
+            </motion.h1>
+          </div>
         </div>
 
-        {/* Right Geometric Composition */}
-        <div className="relative w-full h-[60vh] lg:h-[75vh] mt-12 lg:mt-0 lg:pr-[5vw]">
-          
-          {/* IMAGE 1: The Anchor (Left Tall Pill) */}
+        {/* FINAL Cinematic Content Overlay (CURRENTLY DISABLED) */}
+        {/*
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+          style={{ opacity: contentOpacity }}
+        >
           <motion.div 
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-[5%] left-[5%] w-[45%] h-[80%] rounded-[10rem] overflow-hidden shadow-2xl z-10 group"
+            className="text-center px-6 max-w-5xl mx-auto"
+            style={{ y: contentY, scale: contentScale }}
           >
-            <img 
-              src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070" 
-              alt="Strength Training" 
-              className="w-full h-full object-cover grayscale-[20%] transition-transform duration-1000 group-hover:scale-105 group-hover:grayscale-0" 
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
+            <div className="flex justify-center mb-8">
+              <SectionTagline text="OUR SERVICES" />
+            </div>
+
+            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl mb-8 leading-[1.1] font-extrabold drop-shadow-2xl">
+              <span className="text-white block font-extrabold">Training <span className="text-green-brand font-extrabold">Designed</span></span>
+              <span className="text-[#E8B884] block italic font-extrabold">Around You</span>
+            </h1>
+
+            <p className="text-lg md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 font-light leading-relaxed drop-shadow-lg">
+              Experience the pinnacle of personal training. Tailored strategies, elite coaching, and a premium environment dedicated to your success.
+            </p>
+
+            <div className="pointer-events-auto">
+              <Link to="/contact" onClick={() => window.scrollTo(0, 0)} className="btn-primary inline-flex group shadow-2xl">
+                <span>Book a Consultation</span>
+                <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </Link>
+            </div>
           </motion.div>
+        </motion.div>
+        */}
 
-          {/* IMAGE 2: The Top Accent (Top Right Organic Square) */}
-          <motion.div 
-            initial={{ opacity: 0, x: 40, scale: 0.95 }}
-            animate={inView ? { opacity: 1, x: 0, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-0 right-[5%] w-[45%] h-[45%] rounded-[3rem] overflow-hidden shadow-2xl z-0 group"
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070" 
-              alt="Personal Training" 
-              className="w-full h-full object-cover grayscale-[20%] transition-transform duration-1000 group-hover:scale-105 group-hover:grayscale-0" 
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
-          </motion.div>
-
-          {/* IMAGE 3: The Base (Bottom Right Asymmetric Form) */}
-          <motion.div 
-            initial={{ opacity: 0, y: -40, scale: 0.95 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-[5%] right-[2%] w-[50%] h-[40%] rounded-tl-[4rem] rounded-br-[4rem] rounded-tr-2xl rounded-bl-2xl overflow-hidden shadow-2xl z-20 group"
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070" 
-              alt="Mobility and Conditioning" 
-              className="w-full h-full object-cover grayscale-[20%] transition-transform duration-1000 group-hover:scale-105 group-hover:grayscale-0" 
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
-          </motion.div>
-
-          {/* IMAGE 4: The Floating Detail (Center Intersection Circle) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
-            animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-            transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute top-[35%] left-[40%] w-[30%] aspect-square rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-30 border-[6px] border-[#231F20] group"
-          >
-            <img 
-              src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069" 
-              alt="Coaching" 
-              className="w-full h-full object-cover grayscale-[20%] transition-transform duration-1000 group-hover:scale-105 group-hover:grayscale-0" 
-            />
-            <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-700" />
-          </motion.div>
-
-        </div>
-
-      </div>
+      </motion.div>
     </section>
   )
 }
 
-function ServicesIntro() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 })
 
-  return (
-    <section ref={ref} className="py-32 lg:py-48 px-6 bg-[#FAFAF8] text-center">
-      <div className="max-w-4xl mx-auto">
-        <SectionTagline text="OUR PHILOSOPHY" className="mb-8" />
-
-        <motion.h2 
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-4xl md:text-6xl text-[#231F20] mb-10 font-serif leading-tight"
-        >
-          <span className="text-green-brand font-medium">Programs</span> Designed <em className="text-[#E8B884] italic font-light">Around You</em>
-        </motion.h2>
-
-        <motion.p 
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-2xl text-[#231F20]/70 font-light leading-relaxed"
-        >
-          Every program at ReForm Fitness is <span className="text-green-brand font-medium">meticulously crafted</span> based on your unique biomechanics, goals, and lifestyle. We don't believe in templates. We combine science with personalization to deliver results that last a lifetime.
-        </motion.p>
-      </div>
-    </section>
-  )
-}
 
 function ServiceBlock({ service, index }) {
   const isEven = index % 2 !== 0
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 })
   
+  const imageInitialX = isEven ? -50 : 50;
+  const contentInitialX = isEven ? 50 : -50;
+
   return (
     <div ref={ref} className="w-full max-w-[1400px] mx-auto px-6 mb-24 lg:mb-40 overflow-hidden">
       <div className={`flex flex-col ${isEven ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-10 lg:gap-20 items-center`}>
         
         {/* Image Side */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 1, ease: "easeOut" }}
+          initial={{ opacity: 0, x: imageInitialX, y: 20 }}
+          animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="w-full lg:w-1/2 h-[50vh] lg:h-[75vh] relative overflow-hidden rounded-2xl lg:rounded-[2rem] shadow-2xl"
         >
           <img 
@@ -313,9 +537,9 @@ function ServiceBlock({ service, index }) {
         {/* Content Side */}
         <div className="w-full lg:w-1/2 py-8 lg:py-16">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, x: contentInitialX, y: 30 }}
+            animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           >
             <SectionTagline text={service.title} className="mb-6" />
             
@@ -357,7 +581,31 @@ function ServiceBlock({ service, index }) {
 
 function PremiumServicesShowcase() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 lg:py-32 bg-white">
+      <div className="max-w-[1400px] mx-auto px-6 mb-20 md:mb-32 text-center flex flex-col items-center">
+        <SectionTagline text="OUR SERVICES" className="justify-center mb-6" />
+        
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-4xl md:text-5xl lg:text-6xl text-[#231F20] font-serif leading-tight font-bold mb-8"
+        >
+          Training <em className="text-[#E8B884] italic font-light">Designed Around You</em>
+        </motion.h2>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-lg md:text-xl text-[#231F20]/70 font-light leading-relaxed max-w-3xl"
+        >
+          Every program at ReForm Fitness is <span className="text-green-brand font-medium">meticulously crafted</span> based on your unique biomechanics, goals, and lifestyle. We don't believe in templates. We combine science with personalization to deliver results that last a lifetime.
+        </motion.p>
+      </div>
+
       {allServices.map((service, index) => (
         <ServiceBlock key={service.title} service={service} index={index} />
       ))}
@@ -365,42 +613,7 @@ function PremiumServicesShowcase() {
   )
 }
 
-function WhyOurProgramsAreDifferent() {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
-  
-  return (
-    <section ref={ref} className="py-32 bg-[#FAFAF8] px-6">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <SectionTagline text="THE REFORM STANDARD" className="justify-center mb-6" />
-          <h2 className="text-4xl md:text-5xl text-[#231F20] font-serif leading-tight font-bold">
-            Why Our <span className="text-green-brand font-bold">Programs</span> Are <em className="text-[#E8B884] italic font-bold">Different</em>
-          </h2>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
-          {differentiators.map((diff, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-white p-10 lg:p-12 rounded-2xl border border-black/5 hover:border-green-brand/30 hover:shadow-[0_20px_40px_rgba(43,111,111,0.06)] transition-all duration-500 group"
-            >
-              <div className="w-12 h-12 rounded-full bg-[#FAFAF8] flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-                <div className="w-2 h-2 rounded-full bg-[#E8B884] group-hover:bg-green-brand transition-colors duration-500" />
-              </div>
-              <h4 className="text-xl text-[#231F20] mb-4 font-bold">{diff.title}</h4>
-              <p className="text-[#231F20]/60 font-light leading-relaxed">
-                {diff.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+
 
 function TransformationPromise() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 })
@@ -409,7 +622,7 @@ function TransformationPromise() {
     <section className="relative w-full py-40 md:py-60 flex items-center justify-center overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop" 
+          src="/Reform_images/DSC06269.JPG" 
           alt="Transformation Promise" 
           className="w-full h-full object-cover opacity-30"
         />
@@ -432,11 +645,9 @@ function TransformationPromise() {
 }
 export default function ServicesPage() {
   return (
-    <div className="w-full overflow-hidden bg-white">
+    <div className="w-full bg-white">
       <PremiumHero />
-      <ServicesIntro />
       <PremiumServicesShowcase />
-      <WhyOurProgramsAreDifferent />
       <TransformationPromise />
       <ConsultationCTASection />
     </div>

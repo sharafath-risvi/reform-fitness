@@ -54,7 +54,7 @@ export default function ConsultationCTASection() {
         ref={bgRef}
         className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-luminosity will-change-transform opacity-0"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop')`,
+          backgroundImage: `url('/Reform_images/DSC06277.JPG')`,
         }}
       />
       
@@ -62,10 +62,10 @@ export default function ConsultationCTASection() {
       <div className="absolute inset-0 bg-[#0a0a0a]/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/80" />
 
-      <div className="container-custom relative z-10 w-full flex flex-col items-center justify-center text-center py-24" ref={contentRef}>
+      <div className="container-custom relative z-10 w-full flex flex-col items-center justify-center text-center py-16 sm:py-20 lg:py-24" ref={contentRef}>
         
         <h2
-          className="font-serif text-5xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight tracking-tight opacity-0 font-bold"
+          className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6 leading-tight tracking-tight opacity-0 font-bold"
         >
           Ready to <em className="text-[#E8B884] italic">Transform?</em>
         </h2>

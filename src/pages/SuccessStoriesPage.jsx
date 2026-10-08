@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Star, Quote } from 'lucide-react'
@@ -123,26 +123,67 @@ function StatItem({ stat, index }) {
 }
 
 export default function SuccessStoriesPage() {
+  const { scrollYProgress } = useScroll()
+  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 150])
+  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 1.05])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+
   return (
     <>
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-6 lg:px-10 bg-[#F8F6F4]">
-        <div className="container-custom">
-          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-label text-[#2B6F6F] block mb-4">Success Stories</motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-headline text-[#231F20] mb-6"
-          >
-            Real people.
-            <br />
-            <em className="text-[#E8B884]">Real transformations.</em>
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="text-base text-[#231F20]/60 max-w-xl leading-relaxed">
-            These are not before-and-after photo contests. These are real stories of real people who chose to prioritize their health and were guided every step of the way.
-          </motion.p>
-        </div>
+      {/* SECTION 01: PREMIUM CINEMATIC HERO (FULL-WIDTH) */}
+      <section className="relative w-full h-[100svh] min-h-[700px] flex items-center bg-[#0a0a0a] overflow-hidden">
+        {/* Background Image & Parallax */}
+        <motion.div 
+          style={{ y: heroY, scale: heroScale }}
+          className="absolute inset-0 w-full h-[120%]"
+        >
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity"
+            style={{ backgroundImage: `url('/Reform_images/DSC06270.JPG')` }}
+          />
+          {/* Subtle dark overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#0a0a0a]/50 to-[#0a0a0a]/30" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-[#0a0a0a]/40" />
+        </motion.div>
+        
+        {/* Content Container */}
+        <motion.div 
+          style={{ opacity: heroOpacity }}
+          className="relative z-10 px-6 lg:px-24 w-full max-w-[1800px] mx-auto mt-20"
+        >
+          <div className="max-w-3xl flex flex-col items-start text-left">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center gap-4 mb-8"
+            >
+              <div className="w-10 h-[1px] bg-[#E8B884]" />
+              <span className="text-[0.65rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
+                Success Stories
+              </span>
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="font-serif text-[2rem] sm:text-[2.5rem] lg:text-7xl text-white mb-8 leading-[1.05] font-extrabold drop-shadow-2xl"
+            >
+              Real people.<br />
+              <em className="text-[#E8B884] italic font-extrabold">Real transformations.</em>
+            </motion.h1>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="text-base md:text-xl text-white/80 leading-relaxed font-light mb-10 max-w-xl tracking-wide drop-shadow-md"
+            >
+              These are not before-and-after photo contests. These are real stories of real people who chose to prioritize their health and were guided every step of the way.
+            </motion.p>
+          </div>
+        </motion.div>
       </section>
 
       {/* Stats */}

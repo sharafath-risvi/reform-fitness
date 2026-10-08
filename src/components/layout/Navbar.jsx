@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { X, Menu, ArrowUpRight } from 'lucide-react'
@@ -13,14 +13,36 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
+  const [hidden, setHidden] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
+  const hasScrolledInitial = useRef(false)
   const location = useLocation()
   
   const { scrollY } = useScroll()
 
+  useEffect(() => {
+    // Check initial scroll position on mount
+    const currentScrollY = window.scrollY
+    setScrolled(currentScrollY > 60)
+    
+    if (currentScrollY > 50) {
+      hasScrolledInitial.current = true
+      if (currentScrollY > 250) {
+        setHidden(true)
+      } else {
+        setHidden(false)
+      }
+    } else {
+      setHidden(true)
+    }
+  }, [])
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious()
+    
+    if (latest > 50) {
+      hasScrolledInitial.current = true
+    }
     
     // Determine if scrolled past threshold for styling
     setScrolled(prev => {
@@ -29,10 +51,20 @@ export default function Navbar() {
       return prev
     })
 
-    // Hide/Show logic based on scroll direction
+    // Visibility logic based on scroll direction and position
     setHidden(prev => {
-      const isHidden = latest > 150 && latest > previous
-      if (prev !== isHidden) return isHidden
+      // 1. Hide at the very top ON INITIAL LOAD ONLY
+      if (!hasScrolledInitial.current && latest <= 50) return true
+      
+      // 2. Show when scrolling up
+      if (latest < previous) return false
+      
+      // 3. When scrolling down, reveal initially, then hide after threshold
+      if (latest > previous) {
+        if (latest <= 250) return false
+        return true
+      }
+      
       return prev
     })
   })
@@ -50,18 +82,18 @@ export default function Navbar() {
     <>
       <motion.nav
         variants={{
-          visible: { y: 0 },
-          hidden: { y: '-250%' },
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: '-250%', opacity: 0 },
         }}
         animate={hidden ? 'hidden' : 'visible'}
         transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed top-4 lg:top-8 left-0 right-0 z-50 px-4 lg:px-12 pointer-events-none"
+        className="fixed top-3 sm:top-4 lg:top-8 left-0 right-0 z-50 px-3 sm:px-4 lg:px-12 pointer-events-none"
       >
         <div 
           className={`mx-auto w-full max-w-[1800px] rounded-[2.5rem] lg:rounded-full transition-all duration-500 ease-out pointer-events-auto border transform-gpu ${
             scrolled 
-              ? 'bg-[#0a0a0a]/80 backdrop-blur-lg border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.15)] py-4 px-6 lg:px-10' 
-              : 'bg-[#0a0a0a]/40 backdrop-blur-md border-white/[0.04] py-5 px-6 lg:px-10'
+              ? 'bg-[#0a0a0a]/80 backdrop-blur-lg border-white/[0.08] shadow-[0_30px_60px_rgba(0,0,0,0.15)] py-3 sm:py-4 px-4 sm:px-6 lg:px-10' 
+              : 'bg-[#0a0a0a]/40 backdrop-blur-md border-white/[0.04] py-4 sm:py-5 px-4 sm:px-6 lg:px-10'
           }`}
         >
           {/* Mobile Layout */}
@@ -70,7 +102,7 @@ export default function Navbar() {
               <img 
                 src="/logos/SECONDARY LOGO.png" 
                 alt="ReForm Fitness" 
-                className="h-[46px] w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500" 
+                className="h-[38px] sm:h-[46px] w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500" 
                 fetchpriority="high"
                 decoding="async"
               />

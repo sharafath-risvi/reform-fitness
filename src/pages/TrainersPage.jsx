@@ -16,7 +16,7 @@ const trainers = [
     certifications: ['NSCA-CPT', 'ACSM', 'Corrective Exercise Specialist', 'Sports Nutrition Level 1'],
     bio: 'Arjun is the driving force behind ReForm Fitness\'s rehabilitation division. With 8 years of experience working alongside orthopedic surgeons and physiotherapists, he has guided over 200 clients back to full health after surgeries, injuries, and chronic pain conditions.',
     philosophy: '"Science gives us the method, but compassion gives us the results."',
-    image: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop',
+    image: '/Reform_images/DSC06244.JPG',
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const trainers = [
     certifications: ['ACE-CPT', 'Pre/Postnatal Fitness Specialist', 'RYT-200 Yoga Alliance'],
     bio: 'Priya has dedicated her career to understanding and serving women\'s unique fitness needs. From young women managing PCOS to new mothers rebuilding their core, Priya brings warmth, expertise, and a deep understanding of female physiology to every session.',
     philosophy: '"Women\'s fitness is about becoming stronger, more capable, and fully alive."',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop',
+    image: '/Reform_images/DSC06234.JPG',
   },
   {
     id: 3,
@@ -38,90 +38,17 @@ const trainers = [
     certifications: ['NASM-CPT', 'Senior Fitness Specialist (ACE)', 'Functional Aging Specialist'],
     bio: 'Rahul found his calling working with senior citizens after seeing his own family struggle with mobility and independence challenges. His gentle approach has helped over 150 senior clients regain confidence, mobility, and vitality.',
     philosophy: '"Age is not a barrier. With patience and science, everyone can experience vitality."',
-    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069&auto=format&fit=crop',
-  },
-  {
-    id: 4,
-    name: 'Divya Krishnan',
-    title: 'Fat Loss & Nutrition Coach',
-    experience: '05+ Years',
-    specializations: ['Fat Loss', 'Body Transformation', 'Nutrition Coaching', 'Metabolic Training'],
-    certifications: ['ISSA-CPT', 'Precision Nutrition Level 1', 'Metabolic Testing Specialist'],
-    bio: 'Divya believes that sustainable fat loss comes from building habits, not breaking willpower. Her unique blend of scientific nutrition coaching and high-energy fitness training creates programs that clients actually enjoy and maintain long-term.',
-    philosophy: '"When fitness is enjoyable and nutrition sustainable, results become inevitable."',
-    image: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop',
-  },
-  {
-    id: 5,
-    name: 'Anil Kumar',
-    title: 'Strength & Performance Coach',
-    experience: '07+ Years',
-    specializations: ['Muscle Building', 'Athletic Performance', 'Powerlifting', 'Body Composition'],
-    certifications: ['NSCA-CSCS', 'USA Weightlifting Coach', 'Sports Performance Coach'],
-    bio: 'A competitive athlete himself, Anil brings performance-level coaching to everyday clients. His deep understanding of strength physics, periodization, and recovery science helps clients build functional strength that transforms appearance and performance.',
-    philosophy: '"Strength is the foundation of everything. Every rep is an investment."',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    id: 6,
-    name: 'Sneha Pillai',
-    title: 'Yoga & Mindfulness Instructor',
-    experience: '04+ Years',
-    specializations: ['Yoga', 'Mindfulness', 'Stress Management', 'Flexibility'],
-    certifications: ['RYT-500 Yoga Alliance', 'Mindfulness-Based Stress Reduction', 'Yin Yoga Certified'],
-    bio: 'Sneha brings a deeply spiritual yet practically grounded approach to yoga and mindfulness. Her sessions create profound shifts in how clients experience their body, mind, and daily stress — making her one of the most requested instructors at ReForm Fitness.',
-    philosophy: '"Yoga is not about how flexible you are. It\'s about how present you can be."',
-    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=2020&auto=format&fit=crop',
-  },
-  {
-    id: 7,
-    name: 'Coach Profile Pending',
-    title: 'Elite Trainer & Specialist',
-    experience: 'TBA',
-    specializations: ['Strength & Conditioning', 'Performance Optimization'],
-    certifications: ['Certified Personal Trainer', 'Specialist Certification Pending'],
-    bio: 'We are expanding our expert team. A new elite trainer will be joining ReForm Fitness soon to bring even more specialized expertise and guidance to your transformation journey. Stay tuned for their full profile and schedule.',
-    philosophy: '"Commitment to excellence and continuous improvement in every session."',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    id: 8,
-    name: 'Coach Profile Pending',
-    title: 'Performance Specialist',
-    experience: 'TBA',
-    specializations: ['Functional Training', 'Athletic Development'],
-    certifications: ['Certified Personal Trainer', 'Specialist Certification Pending'],
-    bio: 'Our coaching staff is growing to serve you better. We rigorously select trainers who align with our science-based, empathy-driven approach to fitness. This profile will be updated when our newest team member officially joins.',
-    philosophy: '"Empowering clients through education, proper mechanics, and dedication."',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    id: 9,
-    name: 'Coach Profile Pending',
-    title: 'Wellness & Movement Coach',
-    experience: 'TBA',
-    specializations: ['Movement Mechanics', 'Holistic Wellness'],
-    certifications: ['Certified Personal Trainer', 'Specialist Certification Pending'],
-    bio: 'ReForm Fitness is committed to providing a diverse range of coaching expertise. A new specialist in movement mechanics and holistic wellness is preparing to join our team to support your long-term fitness goals.',
-    philosophy: '"Movement is medicine, and proper guidance is the prescription."',
-    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop',
-  },
-  {
-    id: 10,
-    name: 'Coach Profile Pending',
-    title: 'Transformation Specialist',
-    experience: 'TBA',
-    specializations: ['Body Recomposition', 'Lifestyle Integration'],
-    certifications: ['Certified Personal Trainer', 'Specialist Certification Pending'],
-    bio: 'We are continuously seeking the best talent in the fitness industry. This upcoming addition to our team will bring fresh perspectives on body recomposition and sustainable lifestyle changes.',
-    philosophy: '"Transformation is an ongoing journey of mindful choices and consistent effort."',
-    image: 'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=2070&auto=format&fit=crop',
+    image: '/Reform_images/DSC06247.JPG',
   },
 ]
 
 function TrainerStory({ trainer, index }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 })
   const isEven = index % 2 === 0
+  
+  const imageInitialX = isEven ? -50 : 50;
+  const contentInitialX = isEven ? 50 : -50;
+
   const isDark = index % 2 !== 0 // Alternating Backgrounds: White (even) -> Black (odd)
   const bgColor = isDark ? 'bg-[#231F20]' : 'bg-white'
   const textColor = isDark ? 'text-white' : 'text-[#231F20]'
@@ -134,14 +61,14 @@ function TrainerStory({ trainer, index }) {
       <div className="w-full px-[5vw] lg:px-[8vw]">
         <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-20 items-center group`}>
           
-          {/* Image Side (~55%) */}
-          <div className="w-full lg:w-[55%] relative overflow-hidden group">
-            <div className="aspect-[4/3] lg:aspect-[3/2] overflow-hidden rounded-lg">
+          {/* Image Side */}
+          <div className="w-full lg:w-[50%] relative group">
+            <div className="aspect-[4/5] overflow-hidden rounded-2xl relative">
               <motion.div 
-                className="w-full h-full relative"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 1, ease: "easeOut" }}
+                className="w-full h-full absolute inset-0"
+                initial={{ opacity: 0, x: imageInitialX, y: 20 }}
+                animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               >
                 <img 
                   src={trainer.image} 
@@ -154,57 +81,57 @@ function TrainerStory({ trainer, index }) {
             </div>
           </div>
 
-          {/* Content Side (~45%) */}
-          <div className="w-full lg:w-[45%] py-4 lg:py-0">
+          {/* Content Side */}
+          <div className="w-full lg:w-[50%] py-4 lg:py-12 flex flex-col justify-center">
             <SectionTagline text={`Trainer ${(index + 1).toString().padStart(2, '0')}`} className="mb-4" />
 
             <motion.h2 
-               initial={{ opacity: 0, y: 20 }}
-               animate={inView ? { opacity: 1, y: 0 } : {}}
-               transition={{ duration: 0.8, delay: 0.2 }}
-               className={`font-serif text-4xl md:text-5xl lg:text-6xl font-light ${textColor} group-hover:translate-x-1 transition-transform duration-500 mb-3`}
+               initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+               animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+               transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+               className={`font-serif text-5xl md:text-6xl lg:text-7xl font-light ${textColor} group-hover:translate-x-1 transition-transform duration-500 mb-4`}
             >
                {trainer.name}
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className={`text-xs md:text-sm uppercase tracking-widest ${textMuted} mb-8`}
+              initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+              animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className={`text-sm md:text-base uppercase tracking-widest ${textMuted} mb-10`}
             >
               {trainer.title}
             </motion.p>
             
             <motion.div
-               initial={{ opacity: 0, y: 20 }}
-               animate={inView ? { opacity: 1, y: 0 } : {}}
-               transition={{ duration: 0.8, delay: 0.4 }}
+               initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+               animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
+               transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-               <p className={`text-sm md:text-base leading-relaxed ${textMuted} mb-8 max-w-2xl`}>
+               <p className={`text-base md:text-lg leading-relaxed ${textMuted} mb-10 max-w-2xl`}>
                  {trainer.bio}
                </p>
 
-               <div className={`h-[1px] w-full ${separatorColor} group-hover:bg-green-brand/40 transition-colors duration-700 mb-8`} />
+               <div className={`h-[1px] w-full ${separatorColor} group-hover:bg-green-brand/40 transition-colors duration-700 mb-10`} />
 
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
                   <div>
-                     <h4 className={`text-[0.65rem] tracking-widest uppercase mb-3 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Specializations</h4>
-                     <ul className="space-y-1.5">
+                     <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Specializations</h4>
+                     <ul className="space-y-2">
                        {trainer.specializations.map(spec => (
-                         <li key={spec} className={`text-sm ${textMuted}`}>{spec}</li>
+                         <li key={spec} className={`text-base ${textMuted}`}>{spec}</li>
                        ))}
                      </ul>
                   </div>
 
                   <div>
-                     <h4 className={`text-[0.65rem] tracking-widest uppercase mb-3 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Experience</h4>
-                     <p className={`text-sm ${textMuted} mb-6`}>{trainer.experience}</p>
+                     <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Experience</h4>
+                     <p className={`text-base ${textMuted} mb-8`}>{trainer.experience}</p>
                      
                      {trainer.philosophy && (
                        <div>
-                         <h4 className={`text-[0.65rem] tracking-widest uppercase mb-3 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Approach</h4>
-                         <p className={`text-sm italic ${textColor} leading-relaxed max-w-sm`} style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+                         <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Approach</h4>
+                         <p className={`text-lg md:text-xl italic ${textColor} leading-relaxed max-w-sm`} style={{ fontFamily: 'Cormorant Garamond, serif' }}>
                            {trainer.philosophy}
                          </p>
                        </div>
@@ -239,13 +166,13 @@ export default function TrainersPage() {
           className="absolute inset-0 w-full h-full"
         >
           <img 
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" 
+            src="/Reform_images/DSC06269.JPG" 
             alt="ReForm Fitness Trainers" 
-            className="w-full h-full object-cover object-top"
+            className="w-full h-full object-cover object-center"
           />
           {/* Dark Cinematic Overlay */}
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
         </motion.div>
 
         {/* Left-Aligned Hero Content */}
@@ -276,7 +203,7 @@ export default function TrainersPage() {
       </section>
 
       {/* SECTION 02 — TRAINER INTRODUCTION */}
-      <section className="py-24 lg:py-32 bg-white flex items-center justify-center">
+      <section className="pt-24 lg:pt-32 pb-0 lg:pb-0 bg-white flex items-center justify-center">
         <div className="container-custom max-w-4xl text-center flex flex-col items-center px-6">
           <SectionTagline text="THE PEOPLE BEHIND REFORM" className="mb-8" />
           
@@ -285,10 +212,10 @@ export default function TrainersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl mb-8 leading-tight font-serif drop-shadow-sm"
+            className="font-serif text-3xl sm:text-5xl lg:text-7xl mb-8 leading-[1.05] font-bold text-[#231F20]"
           >
-            <span className="text-[#231F20] block">Expertise</span>
-            <span className="text-[#E8B884] block italic font-light">With Purpose</span>
+            Expertise<br />
+            <em className="text-[#E8B884] italic">With Purpose</em>
           </motion.h2>
           
           <motion.p 
@@ -296,7 +223,7 @@ export default function TrainersPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg lg:text-2xl text-[#231F20]/70 leading-relaxed font-light max-w-3xl"
+            className="text-base lg:text-lg text-[#231F20]/70 leading-relaxed font-light max-w-2xl"
           >
             Every ReForm trainer brings professional expertise, personal attention, and a commitment to helping every client move better, feel stronger, and achieve lasting results.
           </motion.p>

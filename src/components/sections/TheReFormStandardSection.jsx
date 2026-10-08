@@ -63,13 +63,13 @@ export default function TheReFormStandardSection() {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative py-32 lg:py-48 overflow-hidden bg-[#111]">
+    <section ref={containerRef} className="relative py-16 sm:py-24 lg:py-48 overflow-hidden bg-[#111]">
       
       {/* Cinematic Background Image Layer */}
       <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
         <img
           ref={bgImageRef}
-          src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=2069&auto=format&fit=crop"
+          src="/Reform_images/DSC06286.JPG"
           alt="ReForm Fitness Values"
           className="w-full h-full object-cover will-change-transform transform-gpu"
           loading="lazy"

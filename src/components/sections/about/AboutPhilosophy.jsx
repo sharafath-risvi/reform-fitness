@@ -47,7 +47,7 @@ export default function AboutPhilosophy() {
       <div className="absolute inset-0 w-full h-[130%] -top-[15%] pointer-events-none">
         <img 
           ref={bgImageRef}
-          src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop" 
+          src="/Reform_images/DSC06270.JPG" 
           alt="Wellness Philosophy" 
           className="w-full h-full object-cover will-change-transform opacity-90"
         />

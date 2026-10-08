@@ -64,7 +64,7 @@ export default function AboutMission() {
       {/* Pinned Cinematic Background */}
       <div className="absolute inset-0 w-full h-screen pointer-events-none overflow-hidden" ref={bgImageRef}>
         <img 
-          src="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=1974&auto=format&fit=crop" 
+          src="/Reform_images/DSC06288.JPG" 
           alt="ReForm Fitness Vision" 
           className="mission-bg-img w-full h-full object-cover will-change-transform opacity-40 grayscale"
         />
@@ -88,12 +88,12 @@ export default function AboutMission() {
 
         {/* Vision Block */}
         <div className="min-h-screen flex items-center container-custom pb-32">
-          <div className="max-w-3xl ml-auto glass-dark p-8 md:p-12 lg:p-16 border border-white/5 rounded-sm text-right" ref={visionRef}>
-            <SectionTagline text="Our Vision" className="justify-end mb-6 opacity-0" />
+          <div className="max-w-3xl sm:ml-auto glass-dark p-8 md:p-12 lg:p-16 border border-white/5 rounded-sm sm:text-right" ref={visionRef}>
+            <SectionTagline text="Our Vision" className="sm:justify-end mb-6 opacity-0" />
             <h2 className="text-4xl lg:text-5xl xl:text-6xl text-white mb-8 leading-tight opacity-0 font-bold" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
               A world where every person lives with <em className="text-[#E8B884]">energy and strength</em> — without shortcuts.
             </h2>
-            <p className="text-base lg:text-lg text-white/80 leading-relaxed font-light opacity-0 ml-auto">
+            <p className="text-base lg:text-lg text-white/80 leading-relaxed font-light opacity-0 sm:ml-auto">
               We believe true health is not found in a 30-day crash diet, but through discipline, science, and genuine care. We envision a future where fitness is treated as a medical necessity.
             </p>
           </div>

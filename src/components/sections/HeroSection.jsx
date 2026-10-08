@@ -11,38 +11,38 @@ gsap.registerPlugin(ScrollTrigger)
 
 // Row 1 (Move Left) - Duplicated for infinite marquee (shift by -96vw)
 const row1Cards = [
-  { id: '1a', desktop: { x: '-36vw', y: '-38vh' }, mobile: { x: '-24vw', y: '-28vh' }, img: 'https://images.unsplash.com/photo-1576678927484-fa907321689d?q=80&w=2072' }, // Dumbbells
-  { id: '2a', desktop: { x: '-12vw', y: '-38vh' }, mobile: { x: '24vw', y: '-28vh' }, img: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070' }, // Bench
-  { id: '3a', desktop: { x: '12vw',  y: '-38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1596357395217-80de13130e92?q=80&w=2070' }, // Plates on Rack
-  { id: '4a', desktop: { x: '36vw',  y: '-38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070' }, // Dark Gym
+  { id: '1a', desktop: { x: '-36vw', y: '-38vh' }, mobile: { x: '-24vw', y: '-28vh' }, img: '/Reform_images/DSC06235.JPG' }, // Dumbbells
+  { id: '2a', desktop: { x: '-12vw', y: '-38vh' }, mobile: { x: '24vw', y: '-28vh' }, img: '/Reform_images/DSC06253.JPG' }, // Bench
+  { id: '3a', desktop: { x: '12vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.JPG' }, // Plates on Rack
+  { id: '4a', desktop: { x: '36vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.JPG' }, // Dark Gym
   
   // Duplicates for seamless loop
-  { id: '1b', desktop: { x: '60vw', y: '-38vh' }, mobile: { x: '72vw', y: '-28vh' }, img: 'https://images.unsplash.com/photo-1576678927484-fa907321689d?q=80&w=2072' },
-  { id: '2b', desktop: { x: '84vw', y: '-38vh' }, mobile: { x: '120vw', y: '-28vh' }, img: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=2070' },
-  { id: '3b', desktop: { x: '108vw',  y: '-38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1596357395217-80de13130e92?q=80&w=2070' },
-  { id: '4b', desktop: { x: '132vw',  y: '-38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070' },
+  { id: '1b', desktop: { x: '60vw', y: '-38vh' }, mobile: { x: '72vw', y: '-28vh' }, img: '/Reform_images/DSC06235.JPG' },
+  { id: '2b', desktop: { x: '84vw', y: '-38vh' }, mobile: { x: '120vw', y: '-28vh' }, img: '/Reform_images/DSC06253.JPG' },
+  { id: '3b', desktop: { x: '108vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06283.JPG' },
+  { id: '4b', desktop: { x: '132vw',  y: '-38vh' }, mobile: null, img: '/Reform_images/DSC06306.JPG' },
 ]
 
 // Row 2 (Stationary)
 const row2Cards = [
-  { id: '5a', desktop: { x: '-36vw', y: '0vh' },   mobile: null, img: 'https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=2071' }, // Ropes
+  { id: '5a', desktop: { x: '-36vw', y: '0vh' },   mobile: null, img: '/Reform_images/DSC06326.JPG' }, // Ropes
   // VIDEO MASK IS DYNAMICALLY ANIMATED TO: Desktop (-12vw, 0vh) | Mobile (-24vw, 0vh)
   { id: '6a', desktop: { x: '12vw',  y: '0vh' },   mobile: { x: '24vw', y: '0vh' }, video: '/videos/video2.mp4', isNextHero: true }, // Next Hero Video
-  { id: '7a', desktop: { x: '36vw',  y: '0vh' },   mobile: null, img: 'https://images.unsplash.com/photo-1558369178-6656ab9b980e?q=80&w=2070' }, // Erg / Rowing Machine
+  { id: '7a', desktop: { x: '36vw',  y: '0vh' },   mobile: null, img: '/Reform_images/DSC06331.JPG' }, // Erg / Rowing Machine
 ]
 
 // Row 3 (Move Right) - Duplicated for infinite marquee (shift by +96vw)
 const row3Cards = [
-  { id: '8a', desktop: { x: '-36vw', y: '38vh' },  mobile: { x: '-24vw', y: '28vh' }, img: 'https://images.unsplash.com/photo-1593079831268-3381b0c12363?q=80&w=2069' }, // Reception / Keep
-  { id: '9a', desktop: { x: '-12vw', y: '38vh' },  mobile: { x: '24vw', y: '28vh' }, img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070' }, // Treadmills
-  { id: '10a', desktop: { x: '12vw',  y: '38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070' }, // Gym floor
-  { id: '11a', desktop: { x: '36vw',  y: '38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070' }, // Luxury Gym
+  { id: '8a', desktop: { x: '-36vw', y: '38vh' },  mobile: { x: '-24vw', y: '28vh' }, img: '/Reform_images/DSC06221.JPG' }, // Reception / Keep
+  { id: '9a', desktop: { x: '-12vw', y: '38vh' },  mobile: { x: '24vw', y: '28vh' }, img: '/Reform_images/DSC06225.JPG' }, // Treadmills
+  { id: '10a', desktop: { x: '12vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.JPG' }, // Gym floor
+  { id: '11a', desktop: { x: '36vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.JPG' }, // Luxury Gym
 
   // Duplicates for seamless loop
-  { id: '8b', desktop: { x: '-132vw', y: '38vh' },  mobile: { x: '-120vw', y: '28vh' }, img: 'https://images.unsplash.com/photo-1593079831268-3381b0c12363?q=80&w=2069' },
-  { id: '9b', desktop: { x: '-108vw', y: '38vh' },  mobile: { x: '-72vw', y: '28vh' }, img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070' },
-  { id: '10b', desktop: { x: '-84vw',  y: '38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070' },
-  { id: '11b', desktop: { x: '-60vw',  y: '38vh' }, mobile: null, img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070' },
+  { id: '8b', desktop: { x: '-132vw', y: '38vh' },  mobile: { x: '-120vw', y: '28vh' }, img: '/Reform_images/DSC06221.JPG' },
+  { id: '9b', desktop: { x: '-108vw', y: '38vh' },  mobile: { x: '-72vw', y: '28vh' }, img: '/Reform_images/DSC06225.JPG' },
+  { id: '10b', desktop: { x: '-84vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06228.JPG' },
+  { id: '11b', desktop: { x: '-60vw',  y: '38vh' }, mobile: null, img: '/Reform_images/DSC06287.JPG' },
 ]
 
 const galleryCards = [...row1Cards, ...row2Cards, ...row3Cards]
@@ -56,9 +56,7 @@ export default function HeroSection() {
     let ctx = gsap.context(() => {
       
       // Initial States
-      gsap.set('.hero-content-1', { opacity: 0, y: 30, filter: 'blur(10px)' })
       gsap.set('.hero-content-2', { opacity: 0, y: 30, filter: 'blur(10px)' })
-      gsap.set(overlayRef.current, { opacity: 0 })
       
       galleryCards.forEach(card => {
         const x = window.innerWidth < 1024 ? (card.mobile ? card.mobile.x : 0) : card.desktop.x
@@ -75,39 +73,9 @@ export default function HeroSection() {
       // Master Cinematic Timeline
       const scrollTl = gsap.timeline()
 
-      // STAGE 01 & 02: Typography Splits & Video Appears
-      // Mobile: smaller split so logos appear connected (±48px vs desktop ±140px)
-      scrollTl.to('.split-left', { x: () => window.innerWidth < 1024 ? -48 : -140, ease: 'none', duration: 1 }, 0)
-      scrollTl.to('.split-right', { x: () => window.innerWidth < 1024 ? 48 : 140, ease: 'none', duration: 1 }, 0)
-      scrollTl.to('.video-mask', { width: () => window.innerWidth < 1024 ? '180px' : '260px', ease: 'none', duration: 0.5 }, 1)
-      scrollTl.to('.video-mask', {
-        width: '100vw',
-        height: '100vh',
-        borderRadius: '0px',
-        ease: 'power2.inOut',
-        duration: 2,
-      }, 1.5)
-      scrollTl.to('.intro-text', { opacity: 0, ease: 'none', duration: 0.5 }, 2)
-
-
-      // STAGE 03: Hero Content 01 Fades In
-      scrollTl.to('.hero-content-1', {
-        opacity: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        stagger: 0.2,
-        ease: 'power2.out',
-        duration: 1.5,
-      }, 3.5)
-      
-      scrollTl.to(overlayRef.current, { opacity: 0.6, ease: 'none', duration: 1.5 }, 3.5)
-      scrollTl.to('.gradient-overlay-1', { opacity: 0.8, ease: 'none', duration: 1.5 }, 3.5)
-
+      // STAGE 01-03: Video immediately active
       // Cinematic Zoom on Video 1 while active (Scale 1 to 1.05)
-      scrollTl.to(bgVideoRef.current, { scale: 1.05, ease: 'none', duration: 3.5 }, 3.5)
-
-      // PAUSE for reading Content 1
-      scrollTl.to('.hero-content-1', { y: 0, duration: 2 }, 5)
+      scrollTl.to(bgVideoRef.current, { scale: 1.05, ease: 'none', duration: 7 }, 0)
 
 
       // STAGE 04: Content Fades Out, Video Shrinks, Grid Appears
@@ -202,7 +170,7 @@ export default function HeroSection() {
         ScrollTrigger.create({
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=300%',
+          end: '+=200%',
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -215,7 +183,7 @@ export default function HeroSection() {
         ScrollTrigger.create({
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=160%',
+          end: '+=100%',
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -227,7 +195,7 @@ export default function HeroSection() {
 
       // Parallax on the final image after pin releases (desktop only)
       if (window.innerWidth >= 1024) {
-        const sectionHeight = window.innerHeight * 4.0 // 300% + 100vh
+        const sectionHeight = window.innerHeight * 3.0 // 200% + 100vh
         gsap.to('.next-hero-card video, .next-hero-card img', {
           scale: 1.15,
           ease: 'none',
@@ -279,15 +247,7 @@ export default function HeroSection() {
     >
 
 
-      {/* Intro Typography Layer - Replaced with official logo assets */}
-      <div className="intro-text absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-        <div className="split-left absolute right-1/2 flex items-center justify-end">
-          <img src="/logos/reform.png" alt="ReForm" className="-translate-x-1 md:translate-x-0 h-[9rem] md:h-[18rem] lg:h-[25rem] w-auto object-contain drop-shadow-2xl" />
-        </div>
-        <div className="split-right absolute left-1/2 flex items-center justify-start">
-          <img src="/logos/fitness.png" alt="Fitness" className="-translate-x-2 md:-translate-x-3 translate-y-[1px] md:translate-y-[3px] scale-[0.97] h-[9rem] md:h-[18rem] lg:h-[25rem] w-auto object-contain drop-shadow-2xl" />
-        </div>
-      </div>
+
 
       {/* Cinematic Background Grid Layers */}
       <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
@@ -308,7 +268,7 @@ export default function HeroSection() {
         </div>
 
         {/* The 1 Dynamic Video Mask (Moves to Grid R2, C2) */}
-        <div className="video-mask w-0 h-[3px] rounded-full overflow-hidden absolute shadow-2xl will-change-[width,height,border-radius,transform,opacity] z-20">
+        <div className="video-mask w-[100vw] h-[100vh] rounded-[0px] overflow-hidden absolute shadow-2xl will-change-[width,height,border-radius,transform,opacity] z-20">
           <video
             ref={bgVideoRef}
             src="/videos/video1.mp4"
@@ -321,29 +281,28 @@ export default function HeroSection() {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] object-cover max-w-none"
           />
           {/* Overlays for Hero Content 1 */}
-          <div ref={overlayRef} className="absolute inset-0 bg-[#0a0a0a]" />
-          <div className="gradient-overlay-1 absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-0" />
+          <div ref={overlayRef} className="absolute inset-0 bg-[#0a0a0a] opacity-60" />
+          <div className="gradient-overlay-1 absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80" />
         </div>
       </div>
 
-      {/* Hero Content 01 (Reveals at Stage 3) */}
+      {/* Hero Content 01 (Directly Visible) */}
       <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-6 lg:px-10 pt-20 pointer-events-none">
         <div className="max-w-4xl flex flex-col items-center pointer-events-auto">
           
-          <div className="hero-content-1 mb-8 flex flex-col items-center opacity-0 translate-y-8 blur-[10px]">
+          <div className="hero-content-1 mb-8 flex flex-col items-center">
             <span className="text-[0.65rem] text-[#E8B884] tracking-[0.4em] uppercase font-semibold mb-4 drop-shadow-md">ReForm Fitness</span>
-            <div className="w-px h-12 bg-gradient-to-b from-[#E8B884] to-transparent" />
           </div>
 
           <h1
-            className="font-serif hero-content-1 text-display text-white mb-8 leading-[1.1] opacity-0 translate-y-8 blur-[10px] drop-shadow-lg font-extrabold"
+            className="font-serif hero-content-1 text-display text-white mb-8 leading-[1.1] drop-shadow-lg font-extrabold"
           >
             The Art of
             <br />
             <em className="text-white/80 italic font-extrabold"><span className="text-[#E8B884] font-extrabold">Transformation</span>.</em>
           </h1>
 
-          <p className="hero-content-1 text-base lg:text-lg text-white leading-relaxed max-w-2xl mb-12 font-light opacity-0 translate-y-8 blur-[10px] drop-shadow-xl">
+          <p className="hero-content-1 text-base lg:text-lg text-white leading-relaxed max-w-2xl mb-12 font-light drop-shadow-xl">
             A premium personal training and wellness experience. We don't just change your body—we rebuild your entire foundation through science, rehabilitation, and lifestyle mastery.
           </p>
 
@@ -357,7 +316,6 @@ export default function HeroSection() {
           
           <div className="hero-content-2 mb-8 flex flex-col items-center opacity-0 translate-y-8 blur-[10px]">
             <span className="text-[0.65rem] text-[#E8B884] tracking-[0.4em] uppercase font-semibold mb-4 drop-shadow-md">The ReForm Standard</span>
-            <div className="w-px h-12 bg-gradient-to-b from-[#E8B884] to-transparent" />
           </div>
 
           <h2

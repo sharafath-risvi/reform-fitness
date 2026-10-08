@@ -9,35 +9,35 @@ const dummyReels = [
     id: 1, 
     title: 'Personal Training', 
     category: 'Coaching',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop', 
+    image: '/Reform_images/DSC06277.JPG', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 2, 
     title: 'Strength Training', 
     category: 'Form Check',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop', 
+    image: '/Reform_images/DSC06253.JPG', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 3, 
     title: 'Science-Based Training', 
     category: 'Education',
-    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop', 
+    image: '/Reform_images/DSC06256.JPG', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 4, 
     title: 'Transformation Journey', 
     category: 'Results',
-    image: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=800&auto=format&fit=crop', 
+    image: '/Reform_images/DSC06237.JPG', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
   { 
     id: 5, 
     title: 'Long-Term Results', 
     category: 'Mindset',
-    image: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800&auto=format&fit=crop', 
+    image: '/Reform_images/DSC06225.JPG', 
     url: 'https://www.instagram.com/reformfitness/' 
   },
 ]
@@ -95,17 +95,17 @@ export default function InstagramReelsSection() {
   }
 
   return (
-    <section ref={sectionRef} className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section ref={sectionRef} className="py-14 sm:py-20 lg:py-32 bg-white overflow-hidden">
       <div className="px-6 lg:px-24 w-full max-w-[1800px] mx-auto">
         
         {/* Header Area */}
-        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-10 mb-16 lg:mb-24">
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-6 mb-10 lg:mb-24">
           <div ref={headerRef} className="max-w-3xl">
             <div className="opacity-0 mb-6">
               <SectionTagline text="INSTAGRAM REELS" />
             </div>
             
-            <h2 className="text-4xl lg:text-6xl leading-[1.05] font-serif font-bold text-[#231F20] opacity-0">
+            <h2 className="text-3xl sm:text-4xl lg:text-6xl leading-[1.05] font-serif font-bold text-[#231F20] opacity-0">
               See The Work.<br />
               <em className="text-[#2B6F6F] italic">Feel The Difference.</em>
             </h2>

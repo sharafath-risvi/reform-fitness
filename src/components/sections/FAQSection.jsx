@@ -91,7 +91,7 @@ export default function FAQSection() {
   return (
     <section className="section-padding bg-white" ref={containerRef}>
       <div className="container-custom">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16">
           {/* Left: Header */}
           <div ref={headerRef}>
             <div className="flex items-center gap-4 mb-4 opacity-0">

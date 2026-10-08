@@ -68,7 +68,7 @@ export default function ContactPage() {
         >
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity"
-            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop')` }}
+            style={{ backgroundImage: `url('/images/contacthero.jpeg')` }}
           />
           {/* Subtle dark overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#0a0a0a]/50 to-[#0a0a0a]/30" />
@@ -97,7 +97,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif text-[2.5rem] lg:text-7xl text-white mb-10 leading-[1.05] font-extrabold drop-shadow-2xl"
+              className="font-serif text-[2rem] sm:text-[2.5rem] lg:text-7xl text-white mb-8 leading-[1.05] font-extrabold drop-shadow-2xl"
             >
               Let's Build Your<br />
               <em className="text-[#E8B884] italic font-extrabold">Transformation</em>
@@ -107,7 +107,7 @@ export default function ContactPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg md:text-xl text-white/80 leading-relaxed font-light mb-14 max-w-xl tracking-wide drop-shadow-md"
+              className="text-base md:text-xl text-white/80 leading-relaxed font-light mb-10 max-w-xl tracking-wide drop-shadow-md"
             >
               Whether you're ready to commit or just seeking clarity, we are here to provide expert guidance tailored to your goals.
             </motion.p>
@@ -127,12 +127,12 @@ export default function ContactPage() {
       </section>
 
       {/* SECTION 02: NEW INTRODUCTION SECTION (WHITE) */}
-      <section className="px-6 lg:px-24 py-32 max-w-full mx-auto w-full bg-[#FAFAF8] text-[#0a0a0a] relative z-20">
+      <section className="px-6 lg:px-24 py-16 lg:py-32 max-w-full mx-auto w-full bg-[#FAFAF8] text-[#0a0a0a] relative z-20">
         <div className="max-w-[1800px] mx-auto">
           <div className="flex flex-col items-center text-center">
             <SectionTagline text="Connect With ReForm" className="mb-8" />
             
-            <h2 className="font-serif text-5xl lg:text-7xl mb-8 leading-[1.05] font-bold">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-7xl mb-8 leading-[1.05] font-bold">
               Let's <span className="text-green-brand font-bold">Start</span><br />
               <em className="text-[#E8B884] italic">The Conversation</em>
             </h2>
@@ -145,7 +145,7 @@ export default function ContactPage() {
       </section>
 
       {/* SECTION 03: GET IN TOUCH (SPLIT LAYOUT - DARK) */}
-      <section id="contact-section" className="relative px-6 lg:px-24 py-32 w-full bg-[#0a0a0a] text-white">
+      <section id="contact-section" className="relative px-6 lg:px-24 py-16 lg:py-32 w-full bg-[#0a0a0a] text-white">
         <div className="max-w-[1800px] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
           {/* Left Side: Info Blocks (40%) */}
@@ -163,7 +163,7 @@ export default function ContactPage() {
               </span>
             </div>
             
-            <h2 className="font-serif text-5xl lg:text-7xl text-white mb-16 leading-[1.05] font-bold">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-7xl text-white mb-10 leading-[1.05] font-bold">
               <span className="text-green-brand font-bold">Reach</span> <em className="text-[#E8B884] italic">Out</em>
             </h2>
             
@@ -198,7 +198,7 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[60%] relative p-8 md:p-12 lg:p-16 rounded-[2.5rem] lg:rounded-[3.5rem] bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] shadow-[0_40px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl overflow-hidden group"
+            className="w-full lg:w-[60%] relative p-6 sm:p-8 md:p-12 lg:p-16 rounded-[2rem] lg:rounded-[3.5rem] bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] shadow-[0_40px_80px_rgba(0,0,0,0.5)] backdrop-blur-3xl overflow-hidden group"
           >
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#E8B884]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             
@@ -265,28 +265,46 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="relative pt-2">
                     <label className="block text-[0.65rem] uppercase tracking-widest font-semibold text-white/50 mb-2">Service Interested In</label>
-                    <select 
-                      {...register('service')} 
-                      className="w-full bg-transparent border-b border-white/20 px-0 py-3 outline-none focus:border-[green-brand] transition-colors font-light text-lg text-white appearance-none cursor-pointer"
-                    >
-                      <option value="" className="text-black">Select an option...</option>
-                      {checklist.map(item => (
-                        <option key={item} value={item} className="text-black">{item}</option>
-                      ))}
-                      <option value="General Inquiry" className="text-black">General Inquiry</option>
-                    </select>
+                    <div className="relative">
+                      <select 
+                        {...register('service')} 
+                        className="w-full bg-transparent border-b border-white/20 px-0 py-3 pr-8 outline-none focus:border-[green-brand] transition-colors font-light text-lg text-white appearance-none cursor-pointer"
+                      >
+                        <option value="" className="text-black">Select an option...</option>
+                        {checklist.map(item => (
+                          <option key={item} value={item} className="text-black">{item}</option>
+                        ))}
+                        <option value="General Inquiry" className="text-black">General Inquiry</option>
+                      </select>
+                      <svg
+                        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white/50"
+                        width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </div>
                   </div>
                   <div className="relative pt-2">
                     <label className="block text-[0.65rem] uppercase tracking-widest font-semibold text-white/50 mb-2">Preferred Time</label>
-                    <select 
-                      {...register('time')} 
-                      className="w-full bg-transparent border-b border-white/20 px-0 py-3 outline-none focus:border-[green-brand] transition-colors font-light text-lg text-white appearance-none cursor-pointer"
-                    >
-                      <option value="" className="text-black">Select a time...</option>
-                      <option value="Morning" className="text-black">Morning (6AM - 12PM)</option>
-                      <option value="Afternoon" className="text-black">Afternoon (12PM - 4PM)</option>
-                      <option value="Evening" className="text-black">Evening (4PM - 9PM)</option>
-                    </select>
+                    <div className="relative">
+                      <select 
+                        {...register('time')} 
+                        className="w-full bg-transparent border-b border-white/20 px-0 py-3 pr-8 outline-none focus:border-[green-brand] transition-colors font-light text-lg text-white appearance-none cursor-pointer"
+                      >
+                        <option value="" className="text-black">Select a time...</option>
+                        <option value="Morning" className="text-black">Morning (6AM - 12PM)</option>
+                        <option value="Afternoon" className="text-black">Afternoon (12PM - 4PM)</option>
+                        <option value="Evening" className="text-black">Evening (4PM - 9PM)</option>
+                      </select>
+                      <svg
+                        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none text-white/50"
+                        width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                      >
+                        <polyline points="6 9 12 15 18 9" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 
@@ -316,13 +334,13 @@ export default function ContactPage() {
       </section>
 
       {/* SECTION 04: MAP SECTION (WHITE) */}
-      <section id="location" className="px-6 lg:px-24 py-32 w-full bg-[#FAFAF8] text-[#0a0a0a] relative rounded-t-[3rem] lg:rounded-t-[4rem] -mt-10">
+      <section id="location" className="px-6 lg:px-24 py-16 lg:py-32 w-full bg-[#FAFAF8] text-[#0a0a0a] relative rounded-t-[3rem] lg:rounded-t-[4rem] -mt-10">
         <div className="max-w-[1800px] mx-auto">
           
           <div className="flex flex-col items-center text-center mb-16">
             <SectionTagline text="Location" className="mb-8" />
             
-            <h2 className="text-5xl lg:text-7xl leading-[1.05] font-serif mb-8 drop-shadow-xl font-bold">
+            <h2 className="text-3xl sm:text-5xl lg:text-7xl leading-[1.05] font-serif mb-8 drop-shadow-xl font-bold">
               Visit Our <em className="text-[#E8B884] italic">Studio</em>
             </h2>
             <p className="text-[#0a0a0a]/60 text-lg font-light max-w-2xl mx-auto">
@@ -335,7 +353,7 @@ export default function ContactPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full h-[600px] relative rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 group bg-[#FAFAF8]"
+            className="w-full h-[350px] sm:h-[450px] lg:h-[600px] relative rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.1)] border border-black/5 group bg-[#FAFAF8]"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent z-10 pointer-events-none" />
             <iframe 

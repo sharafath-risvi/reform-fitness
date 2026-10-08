@@ -57,7 +57,7 @@ export default function AboutHero() {
       <div className="absolute inset-0 will-change-transform pointer-events-none">
         <img
           ref={bgImageRef}
-          src="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=1974&auto=format&fit=crop"
+          src="/Reform_images/DSC06270.JPG"
           alt="About ReForm Fitness"
           className="w-full h-full object-cover origin-center will-change-transform opacity-60"
         />
@@ -65,7 +65,7 @@ export default function AboutHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-custom px-6 lg:px-12 flex flex-col justify-center h-full pt-32" ref={contentRef}>
+      <div className="relative z-10 container-custom px-6 lg:px-12 flex flex-col justify-center h-full pt-24 lg:pt-32" ref={contentRef}>
         <div className="max-w-4xl">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -80,7 +80,7 @@ export default function AboutHero() {
             initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-[2.5rem] lg:text-7xl text-white mb-8 leading-[1.1] font-extrabold"
+            className="font-serif text-[2rem] sm:text-[2.5rem] lg:text-7xl text-white mb-8 leading-[1.1] font-extrabold"
           >
             Not a gym.
             <br />

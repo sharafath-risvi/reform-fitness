@@ -61,8 +61,29 @@ function AnimatedRoutes() {
 // Register ScrollTrigger globally
 gsap.registerPlugin(ScrollTrigger)
 
+// Force redirect to Home on any page refresh
+if (typeof window !== 'undefined' && window.performance) {
+  const navEntries = window.performance.getEntriesByType('navigation')
+  const isReload = navEntries.length > 0 && navEntries[0].type === 'reload'
+  const isDeprecatedReload = window.performance.navigation && window.performance.navigation.type === 1
+  
+  if (isReload || isDeprecatedReload) {
+    if (window.location.pathname !== '/') {
+      window.location.replace('/')
+    }
+  }
+}
+
 export default function App() {
   useLayoutEffect(() => {
+    // Always start at the top on page load / refresh.
+    // 'manual' prevents the browser from restoring the previous scroll
+    // position, which would fight with GSAP's pinned sections.
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual'
+    }
+    window.scrollTo(0, 0)
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -76,6 +97,7 @@ export default function App() {
     })
 
     window.lenis = lenis
+    window.lenis.scrollTo(0, { immediate: true })
 
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)

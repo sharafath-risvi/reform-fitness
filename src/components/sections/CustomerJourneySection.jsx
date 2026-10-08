@@ -9,55 +9,55 @@ const journeySteps = [
     step: '01', 
     title: 'Lead Enquiry', 
     desc: 'Every transformation begins with one conversation. We discuss your goals and lay the foundation.',
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/leadenquiry.jpeg'
   },
   { 
     step: '02', 
     title: 'Fitness Assessment', 
     desc: 'We understand your body before we transform it. Precision metrics ensure safety.',
-    image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/fitnessassessment.jpeg'
   },
   { 
     step: '03', 
     title: 'Health Screening', 
     desc: 'Safety always comes before intensity. We evaluate mobility and potential limitations.',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/healthscreening.jpeg'
   },
   { 
     step: '04', 
     title: 'Goal Discussion', 
     desc: 'Clear, realistic milestones set the foundation for long-term success and motivation.',
-    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/goaldiscussion.jpeg'
   },
   { 
     step: '05', 
     title: 'Customized Program', 
     desc: 'A science-backed, bespoke plan designed exclusively for your unique body type.',
-    image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/customizedprograms.jpeg'
   },
   { 
     step: '06', 
     title: 'Training Begins', 
     desc: 'Precision execution at our luxury facility, guided every step of the way.',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop'
+    image: '/Reform_images/DSC06277.JPG'
   },
   { 
     step: '07', 
     title: 'Weekly Follow-up', 
     desc: 'Continuous tracking and micro-adjustments to ensure you are always progressing.',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=2070&auto=format&fit=crop'
+    image: '/Reform_images/DSC06292.JPG'
   },
   { 
     step: '08', 
     title: 'Monthly Review', 
     desc: 'Comprehensive evaluations to measure real physical change and strength gains.',
-    image: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/monthlyreview.jpeg'
   },
   { 
     step: '09', 
     title: 'Transformation', 
     desc: 'Sustainable habits formed for a lifelong impact. Welcome to the new you.',
-    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop'
+    image: '/images/transformation.jpeg'
   }
 ]
 
@@ -224,14 +224,14 @@ export default function CustomerJourneySection() {
       <div className="lg:hidden w-full">
         
         {/* Header */}
-        <div className="px-6 pt-20 pb-10">
+        <div className="px-4 sm:px-6 pt-16 sm:pt-20 pb-10">
           <div className="inline-flex items-center gap-3 mb-6 w-fit">
             <div className="w-5 h-[1px] bg-[#E8B884]" />
             <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
               PATH TO TRANSFORMATION
             </span>
           </div>
-          <h2 className="text-5xl leading-[1.05] font-serif font-bold">
+          <h2 className="text-4xl sm:text-5xl leading-[1.05] font-serif font-bold">
             <span className="text-white block">Your</span>
             <span className="text-[#E8B884] block italic">Journey</span>
           </h2>
@@ -240,7 +240,7 @@ export default function CustomerJourneySection() {
         {/* Stages — vertical document flow, all 9 visible */}
         <div className="flex flex-col">
           {journeySteps.map((step, i) => (
-            <div key={i} className="mobile-stage-card px-6 pb-14">
+            <div key={i} className="mobile-stage-card px-4 sm:px-6 pb-10 sm:pb-14">
               
               {/* Connector between stages */}
               {i > 0 && (
@@ -258,7 +258,7 @@ export default function CustomerJourneySection() {
               </div>
 
               {/* Title */}
-              <h3 className="text-[1.75rem] text-white mb-3 leading-[1.15] font-serif font-bold">
+              <h3 className="text-[1.5rem] sm:text-[1.75rem] text-white mb-3 leading-[1.15] font-serif font-bold">
                 {step.title.split(' ').map((word, idx, arr) => (
                   <span key={idx} className={idx === arr.length - 1 ? 'italic text-[#E8B884]/90' : ''}>
                     {word}{idx < arr.length - 1 ? ' ' : ''}

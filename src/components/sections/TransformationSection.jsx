@@ -138,7 +138,7 @@ export default function TransformationSection() {
       <div className="absolute inset-0 w-full h-[120%] -top-[10%] pointer-events-none">
         <img 
           ref={bgImageRef}
-          src="https://images.unsplash.com/photo-1549476464-37392f717541?q=80&w=1974&auto=format&fit=crop" 
+          src="/Reform_images/DSC06273.JPG" 
           alt="Transformation background" 
           className="w-full h-full object-cover opacity-30 grayscale will-change-transform transform-gpu"
           loading="lazy"

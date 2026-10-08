@@ -8,20 +8,24 @@ const founders = [
   {
     name: "Arjun Menon",
     role: "Co-Founder & Head of Rehabilitation",
-    intro: "Driven by a passion for movement biomechanics and injury recovery.",
-    vision: "To create a facility where medical precision meets elite performance training.",
-    experience: "12+ Years",
-    specialization: "Clinical Rehabilitation, Post-Surgery Recovery",
-    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1974&auto=format&fit=crop"
+    image: "/Reform_images/DSC06294.JPG",
+    quote: "Fitness shouldn't break you down. It should build you up to handle life's actual demands.",
+    details: "With over 8 years specializing in sports injury recovery and functional mechanics, Arjun designed ReForm to bridge the gap between clinical rehabilitation and high-performance training.",
+    vision: "Fitness shouldn't break you down. It should build you up to handle life's actual demands.",
+    intro: "With over 8 years specializing in sports injury recovery and functional mechanics, Arjun designed ReForm to bridge the gap between clinical rehabilitation and high-performance training.",
+    experience: "8+ Years",
+    specialization: "Clinical Rehabilitation, Sports Injury Recovery"
   },
   {
-    name: "Dr. Priya Sharma",
-    role: "Co-Founder & Director of Wellness",
-    intro: "A former clinical nutritionist turned holistic wellness advocate.",
-    vision: "To shift the fitness industry's focus from aesthetics to genuine, lifelong health.",
-    experience: "10+ Years",
-    specialization: "Hormonal Health, Sports Nutrition, Women's Fitness",
-    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop"
+    name: "Priya Sharma",
+    role: "Co-Founder & Head of Women's Wellness",
+    image: "/Reform_images/DSC06296.JPG",
+    quote: "True transformation starts when you stop punishing your body and start nourishing it.",
+    details: "Priya brings 6 years of expertise in holistic women's health, focusing on hormonal balance, pre/postnatal fitness, and creating sustainable lifestyle changes rather than quick fixes.",
+    vision: "True transformation starts when you stop punishing your body and start nourishing it.",
+    intro: "Priya brings 6 years of expertise in holistic women's health, focusing on hormonal balance, pre/postnatal fitness, and creating sustainable lifestyle changes rather than quick fixes.",
+    experience: "6+ Years",
+    specialization: "Hormonal Balance, Pre/Postnatal Fitness"
   }
 ]
 
@@ -118,7 +122,7 @@ export default function AboutFounders() {
               </div>
 
               {/* Founder Info */}
-              <div className="pr-8">
+              <div className="pr-0 sm:pr-8">
                 <div className="flex items-center gap-3 mb-3">
                   <Award size={14} className="text-[#E8B884]" />
                   <span className="text-[0.6rem] tracking-widest uppercase font-semibold text-[#2B6F6F]">
