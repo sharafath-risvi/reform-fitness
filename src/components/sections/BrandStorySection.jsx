@@ -9,7 +9,7 @@ const bgImages = [
 ]
 
 const coreValueImages = [
-  "/images/safetyfirst.jpeg",
+  "/images/safetyfirst.png",
   "/images/clientcentered.jpeg",
   "/images/professionalism.jpeg",
   "/Reform_images/DSC06234.webp",

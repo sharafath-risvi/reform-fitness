@@ -73,12 +73,7 @@ export default function HeroSection() {
       // Master Cinematic Timeline
       const scrollTl = gsap.timeline()
 
-      // STAGE 01-03: Video immediately active
-      // Cinematic Zoom on Video 1 while active (Scale 1 to 1.05)
-      scrollTl.to(bgVideoRef.current, { scale: 1.05, ease: 'none', duration: 7 }, 0)
-
-
-      // STAGE 04: Content Fades Out, Video Shrinks, Grid Appears
+      // Content Fades Out, Video Shrinks, Grid Appears IMMEDIATELY
       scrollTl.to('.hero-content-1', {
         opacity: 0,
         y: -30,
@@ -86,10 +81,10 @@ export default function HeroSection() {
         ease: 'power2.inOut',
         duration: 1,
         stagger: 0.1,
-      }, 7)
+      }, 0)
       
-      scrollTl.to(overlayRef.current, { opacity: 0, duration: 1 }, 7)
-      scrollTl.to('.gradient-overlay-1', { opacity: 0, duration: 1 }, 7)
+      scrollTl.to(overlayRef.current, { opacity: 0, duration: 1 }, 0)
+      scrollTl.to('.gradient-overlay-1', { opacity: 0, duration: 1 }, 0)
 
       scrollTl.to('.video-mask', {
         width: () => window.innerWidth < 1024 ? '44vw' : '22vw',
@@ -99,10 +94,7 @@ export default function HeroSection() {
         y: '0vh', // Grid R2, C2
         ease: 'power3.inOut',
         duration: 2.5,
-      }, 7)
-
-      // Reset cinematic zoom so it fits the card naturally
-      scrollTl.to(bgVideoRef.current, { scale: 1, ease: 'power3.inOut', duration: 2.5 }, 7)
+      }, 0)
 
       // Grid Cards animate in (staggered slightly randomly for editorial feel)
       galleryCards.forEach((card, index) => {
@@ -117,22 +109,22 @@ export default function HeroSection() {
           filter: 'blur(0px)',
           ease: 'power3.out',
           duration: 2,
-        }, 7 + (index * 0.05)) // Luxurious staggered delay
+        }, 0 + (index * 0.05)) // Luxurious staggered delay
       })
 
       // STAGE 05: Pause to admire the gallery
-      scrollTl.to('.video-mask', { y: '0vh', duration: 1.5 }, 9.5)
+      scrollTl.to('.video-mask', { y: '0vh', duration: 1.5 }, 2.5)
 
 
       // STAGE 06: Next Image Expands, Others Fade
-      scrollTl.to('.row-1-marquee', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 11)
-      scrollTl.to('.row-3-marquee', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 11)
+      scrollTl.to('.row-1-marquee', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 4)
+      scrollTl.to('.row-3-marquee', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 4)
       row2Cards.forEach(card => {
         if (!card.isNextHero) {
-          scrollTl.to(`.gallery-card-${card.id}`, { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 11)
+          scrollTl.to(`.gallery-card-${card.id}`, { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 4)
         }
       })
-      scrollTl.to('.video-mask', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 11)
+      scrollTl.to('.video-mask', { opacity: 0.15, filter: 'blur(5px)', duration: 1.5 }, 4)
 
       scrollTl.to('.next-hero-card', {
         width: '100vw',
@@ -143,12 +135,12 @@ export default function HeroSection() {
         zIndex: 40,
         ease: 'power3.inOut',
         duration: 2.5,
-      }, 11)
+      }, 4)
 
 
       // STAGE 07: Hero Content 02 Fades In
-      scrollTl.to('.next-hero-overlay', { opacity: 0.5, ease: 'none', duration: 1.5 }, 13.5)
-      scrollTl.to('.next-hero-gradient', { opacity: 0.8, ease: 'none', duration: 1.5 }, 13.5)
+      scrollTl.to('.next-hero-overlay', { opacity: 0.5, ease: 'none', duration: 1.5 }, 6.5)
+      scrollTl.to('.next-hero-gradient', { opacity: 0.8, ease: 'none', duration: 1.5 }, 6.5)
 
       scrollTl.to('.hero-content-2', {
         opacity: 1,
@@ -157,20 +149,20 @@ export default function HeroSection() {
         stagger: 0.2,
         ease: 'power2.out',
         duration: 1.5,
-      }, 13.5)
+      }, 6.5)
 
       // STAGE 08: Final hold before pin releases
       scrollTl.to('.hero-content-2', {
         y: 0,
-        duration: 2.5,
-      }, 15)
+        duration: 0.5,
+      }, 8)
 
       const mmHero = gsap.matchMedia()
       mmHero.add("(min-width: 1024px)", () => {
         ScrollTrigger.create({
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=200%',
+          end: '+=120%',
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -183,7 +175,7 @@ export default function HeroSection() {
         ScrollTrigger.create({
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=100%',
+          end: '+=80%',
           pin: true,
           scrub: 1,
           anticipatePin: 1,

@@ -9,7 +9,7 @@ const journeySteps = [
     step: '01', 
     title: 'Lead Enquiry', 
     desc: 'Every transformation begins with one conversation. We discuss your goals and lay the foundation.',
-    image: '/images/leadenquiry.jpeg'
+    image: '/images/leadenquiry.png'
   },
   { 
     step: '02', 
