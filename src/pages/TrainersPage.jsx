@@ -1,142 +1,168 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Link } from 'react-router-dom'
-import { ArrowUpRight, Play, Star, Award, Shield } from 'lucide-react'
+import { useRef } from 'react'
 import SectionTagline from '../components/ui/SectionTagline'
 import ConsultationCTASection from '../components/sections/ConsultationCTASection'
-import { useRef } from 'react'
 
 const trainers = [
   {
     id: 1,
-    name: 'Arjun Menon',
-    title: 'Head Trainer & Rehabilitation Specialist',
-    experience: '08+ Years',
-    specializations: ['Rehabilitation', 'Strength Training', 'Sports Injury Recovery', 'Corrective Exercise'],
-    certifications: ['NSCA-CPT', 'ACSM', 'Corrective Exercise Specialist', 'Sports Nutrition Level 1'],
-    bio: 'Arjun is the driving force behind ReForm Fitness\'s rehabilitation division. With 8 years of experience working alongside orthopedic surgeons and physiotherapists, he has guided over 200 clients back to full health after surgeries, injuries, and chronic pain conditions.',
-    philosophy: '"Science gives us the method, but compassion gives us the results."',
-    image: '/Reform_images/DSC06244.webp',
+    name: 'Akash Radhakrishnan',
+    title: 'Certified Personal Trainer | Strength Coach | Athlete',
+    experience: '3+ Years in the UAE',
+    achievement: 'Mahatma Gandhi University Weightlifting Gold Medalist',
+    specializations: ['Strength Training', 'Muscle Building', 'Fat Loss', 'Athletic Performance', 'Functional Fitness', 'Body Transformations'],
+    bio: [
+      "Akash is a competitive athlete and strength coach with 3+ years of experience in the UAE. His sporting background spans Weightlifting, Powerlifting, Wrestling, Bodybuilding, Baseball, Softball, and CrossFit.",
+      "A Mahatma Gandhi University Weightlifting Gold Medalist, he specializes in strength training, muscle building, fat loss, and athletic performance—helping clients build confidence and a sustainable lifestyle."
+    ],
+    image: '/trainers/akash.webp',
   },
   {
     id: 2,
-    name: 'Priya Sharma',
-    title: "Women's Fitness & Yoga Expert",
-    experience: '06+ Years',
-    specializations: ["Women's Health", 'Pre/Postnatal Fitness', 'Yoga', 'PCOS Management'],
-    certifications: ['ACE-CPT', 'Pre/Postnatal Fitness Specialist', 'RYT-200 Yoga Alliance'],
-    bio: 'Priya has dedicated her career to understanding and serving women\'s unique fitness needs. From young women managing PCOS to new mothers rebuilding their core, Priya brings warmth, expertise, and a deep understanding of female physiology to every session.',
-    philosophy: '"Women\'s fitness is about becoming stronger, more capable, and fully alive."',
-    image: '/Reform_images/DSC06234.webp',
+    name: 'Nishin Prakash',
+    title: 'Fitness Coach',
+    experience: '4+ Years',
+    specializations: ['Strength & Conditioning', 'Body Recomposition', 'Fat Loss', 'Mobility & Stretching', 'Functional Training', '1:1 Personal Coaching'],
+    location: 'Dubai, UAE',
+    languages: 'English, Hindi, Malayalam & Tamil',
+    bio: [
+      "With 4 years of experience in fitness training, Nishin Prakash is a Dubai-based Fitness Coach specializing in Strength & Conditioning, Body Recomposition, Fat Loss, Mobility, and Stretching.",
+      "Every training program is designed around the client’s goals, fitness level, lifestyle, and individual needs, ensuring that training is both effective and sustainable."
+    ],
+    image: '/trainers/nishin.webp',
   },
   {
     id: 3,
-    name: 'Rahul Nair',
-    title: 'Senior Fitness & Mobility Coach',
-    experience: '05+ Years',
-    specializations: ['Senior Fitness', 'Mobility Training', 'Fall Prevention', 'Functional Training'],
-    certifications: ['NASM-CPT', 'Senior Fitness Specialist (ACE)', 'Functional Aging Specialist'],
-    bio: 'Rahul found his calling working with senior citizens after seeing his own family struggle with mobility and independence challenges. His gentle approach has helped over 150 senior clients regain confidence, mobility, and vitality.',
-    philosophy: '"Age is not a barrier. With patience and science, everyone can experience vitality."',
-    image: '/Reform_images/DSC06247.webp',
+    name: 'Nisha Nangla',
+    title: 'Certified Yoga Trainer & Zumba Instructor',
+    experience: 'Yoga (4 Years) | Zumba (5 Years)',
+    specializations: ['Yoga', 'Zumba', 'Strength Training', 'Flexibility & Stamina'],
+    bio: [
+      "Originally from Punjab, India, Nisha Nangla is a passionate fitness professional with 4 years of experience in Yoga and 5 years of experience in Zumba. She also specializes in strength training, helping clients build strength, flexibility, stamina, and confidence through enjoyable and personalized workouts."
+    ],
+    image: '/trainers/nisha.webp',
   },
 ]
 
 function TrainerStory({ trainer, index }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 })
-  const isEven = index % 2 === 0
   
-  const imageInitialX = isEven ? -50 : 50;
-  const contentInitialX = isEven ? 50 : -50;
-
-  const isDark = index % 2 !== 0 // Alternating Backgrounds: White (even) -> Black (odd)
+  // Use alternating backgrounds
+  const isDark = index % 2 !== 0 
   const bgColor = isDark ? 'bg-[#231F20]' : 'bg-white'
-  const textColor = isDark ? 'text-white' : 'text-[#231F20]'
-  const textMuted = isDark ? 'text-white/60' : 'text-[#231F20]/60'
-  const textLabel = isDark ? 'text-[#E8B884]' : 'text-[#2B6F6F]' 
-  const separatorColor = isDark ? 'bg-white/10' : 'bg-black/10'
+  
+  // Alternate Image/Content placement based on index.
+  // Trainer 1 (index 0): Image Right, Content Left.
+  // Trainer 2 (index 1): Image Left, Content Right.
+  // Trainer 3 (index 2): Image Right, Content Left.
+  const isImageRight = index % 2 === 0
+  
+  // Text styling variables
+  const nameColor = isDark ? 'text-white' : 'text-[#231F20]'
+  const titleColor = isDark ? 'text-[#E8B884]' : 'text-[#2B6F6F]'
+  const bioColor = isDark ? 'text-white/80' : 'text-[#231F20]/80'
+  const labelColor = isDark ? 'text-[#E8B884]' : 'text-[#2B6F6F]'
+  const dividerColor = isDark ? 'bg-white/10' : 'bg-black/10'
 
   return (
     <section ref={ref} className={`py-16 lg:py-24 w-full flex items-center ${bgColor} overflow-hidden transition-colors duration-700`}>
       <div className="w-full px-[5vw] lg:px-[8vw]">
-        <div className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 lg:gap-20 items-center group`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start group">
           
-          {/* Image Side */}
-          <div className="w-full lg:w-[50%] relative group">
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl relative">
+          {/* Image Side - Ordered dynamically on large screens. Always on top on mobile. */}
+          <div className={`w-full relative ${isImageRight ? 'lg:order-2' : 'lg:order-1'} ${index === 0 ? 'lg:mt-2 xl:mt-4' : ''}`}>
+            <div className={`${index === 0 ? 'aspect-[3/4] lg:aspect-[2/3]' : 'aspect-[4/5]'} overflow-hidden rounded-2xl relative shadow-2xl w-full max-w-lg mx-auto lg:max-w-none`}>
               <motion.div 
                 className="w-full h-full absolute inset-0"
-                initial={{ opacity: 0, x: imageInitialX, y: 20 }}
+                initial={{ opacity: 0, x: isImageRight ? 50 : -50, y: 20 }}
                 animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               >
                 <img 
                   src={trainer.image} 
                   alt={trainer.name} 
-                  className="w-full h-full object-cover grayscale-[20%] transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0" 
+                  className="w-full h-full object-cover grayscale-[10%] transition-transform duration-700 group-hover:scale-105 group-hover:grayscale-0" 
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </motion.div>
             </div>
           </div>
 
           {/* Content Side */}
-          <div className="w-full lg:w-[50%] py-4 lg:py-12 flex flex-col justify-center">
+          <div className={`w-full py-4 lg:py-6 flex flex-col justify-center ${isImageRight ? 'lg:order-1' : 'lg:order-2'}`}>
             <SectionTagline text={`Trainer ${(index + 1).toString().padStart(2, '0')}`} className="mb-4" />
 
             <motion.h2 
-               initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+               initial={{ opacity: 0, x: isImageRight ? -50 : 50, y: 20 }}
                animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
                transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-               className={`font-serif text-5xl md:text-6xl lg:text-7xl font-light ${textColor} group-hover:translate-x-1 transition-transform duration-500 mb-4`}
+               className={`font-serif text-4xl md:text-5xl lg:text-6xl font-bold ${nameColor} mb-3`}
             >
                {trainer.name}
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+              initial={{ opacity: 0, x: isImageRight ? -50 : 50, y: 20 }}
               animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
               transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className={`text-sm md:text-base uppercase tracking-widest ${textMuted} mb-10`}
+              className={`text-sm md:text-base uppercase tracking-[0.2em] ${titleColor} mb-8 font-semibold`}
             >
               {trainer.title}
             </motion.p>
             
             <motion.div
-               initial={{ opacity: 0, x: contentInitialX, y: 20 }}
+               initial={{ opacity: 0, x: isImageRight ? -50 : 50, y: 20 }}
                animate={inView ? { opacity: 1, x: 0, y: 0 } : {}}
                transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
-               <p className={`text-base md:text-lg leading-relaxed ${textMuted} mb-10 max-w-2xl`}>
-                 {trainer.bio}
-               </p>
+               <div className={`space-y-4 text-base md:text-lg leading-relaxed ${bioColor} mb-10 font-light`}>
+                 {trainer.bio.map((paragraph, i) => (
+                   <p key={i}>{paragraph}</p>
+                 ))}
+               </div>
 
-               <div className={`h-[1px] w-full ${separatorColor} group-hover:bg-green-brand/40 transition-colors duration-700 mb-10`} />
+               <div className={`h-[1px] w-full ${dividerColor} mb-10`} />
 
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12">
-                  <div>
-                     <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Specializations</h4>
-                     <ul className="space-y-2">
-                       {trainer.specializations.map(spec => (
-                         <li key={spec} className={`text-base ${textMuted}`}>{spec}</li>
-                       ))}
-                     </ul>
-                  </div>
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                 <div>
+                    <h4 className={`text-xs tracking-widest uppercase mb-3 ${labelColor} font-bold`}>Areas of Expertise</h4>
+                    <ul className="space-y-2">
+                      {trainer.specializations.map(spec => (
+                        <li key={spec} className={`text-sm md:text-base ${bioColor}`}>{spec}</li>
+                      ))}
+                    </ul>
+                 </div>
 
-                  <div>
-                     <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Experience</h4>
-                     <p className={`text-base ${textMuted} mb-8`}>{trainer.experience}</p>
-                     
-                     {trainer.philosophy && (
-                       <div>
-                         <h4 className={`text-xs tracking-widest uppercase mb-4 ${textLabel} group-hover:text-green-brand transition-colors duration-500 font-bold`}>Approach</h4>
-                         <p className={`text-lg md:text-xl italic ${textColor} leading-relaxed max-w-sm`} style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                           {trainer.philosophy}
-                         </p>
-                       </div>
-                     )}
-                  </div>
+                 <div>
+                    {trainer.experience && (
+                      <div className="mb-5">
+                        <h4 className={`text-xs tracking-widest uppercase mb-1 ${labelColor} font-bold`}>Experience</h4>
+                        <p className={`text-sm md:text-base ${bioColor}`}>{trainer.experience}</p>
+                      </div>
+                    )}
+
+                    {trainer.achievement && (
+                      <div className="mb-5">
+                        <h4 className={`text-xs tracking-widest uppercase mb-1 ${labelColor} font-bold`}>Achievement</h4>
+                        <p className={`text-sm md:text-base ${bioColor}`}>{trainer.achievement}</p>
+                      </div>
+                    )}
+
+                    {trainer.location && (
+                      <div className="mb-5">
+                        <h4 className={`text-xs tracking-widest uppercase mb-1 ${labelColor} font-bold`}>Location</h4>
+                        <p className={`text-sm md:text-base ${bioColor}`}>{trainer.location}</p>
+                      </div>
+                    )}
+
+                    {trainer.languages && (
+                      <div className="mb-5">
+                        <h4 className={`text-xs tracking-widest uppercase mb-1 ${labelColor} font-bold`}>Languages</h4>
+                        <p className={`text-sm md:text-base ${bioColor}`}>{trainer.languages}</p>
+                      </div>
+                    )}
+                 </div>
                </div>
             </motion.div>
           </div>
@@ -154,7 +180,6 @@ export default function TrainersPage() {
   })
   
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
 
   return (
     <>
@@ -233,7 +258,11 @@ export default function TrainersPage() {
       {/* SECTION 03 — TRAINER SHOWCASE */}
       <div className="w-full bg-[#231F20]">
         {trainers.map((trainer, index) => (
-          <TrainerStory key={trainer.id} trainer={trainer} index={index} />
+          <TrainerStory 
+            key={trainer.id} 
+            trainer={trainer} 
+            index={index} 
+          />
         ))}
       </div>
 
@@ -241,4 +270,3 @@ export default function TrainersPage() {
     </>
   )
 }
-

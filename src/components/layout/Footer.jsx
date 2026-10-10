@@ -45,9 +45,9 @@ const YoutubeIcon = (props) => (
 )
 
 const socialLinks = [
-  { label: 'Instagram', href: '#', icon: InstagramIcon },
-  { label: 'Facebook', href: '#', icon: FacebookIcon },
-  { label: 'YouTube', href: '#', icon: YoutubeIcon },
+  { label: 'Instagram', href: 'https://www.instagram.com/reformfitness.dxb?srtk=MjkzcTJxbmxyc3Z1', icon: InstagramIcon },
+  // { label: 'Facebook', href: '#', icon: FacebookIcon },
+  // { label: 'YouTube', href: '#', icon: YoutubeIcon },
 ]
 
 export default function Footer() {
@@ -212,6 +212,8 @@ export default function Footer() {
                 <li key={label}>
                   <a
                     href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     aria-label={label}
                     className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 group w-fit"
                   >

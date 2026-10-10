@@ -75,7 +75,7 @@ const allServices = [
     includes: ['Medical history review', 'Doctor coordination', 'Progressive recovery protocol', 'Pain point assessment', 'Return-to-function milestones', 'Long-term injury prevention'],
     color: '#E8B884',
     ideal: 'Post-surgery, chronic pain, and sports injury recovery',
-    img: '/Reform_images/DSC06282.webp'
+    img: '/services_images/injuryrehabilation.jpeg'
   },
   {
     icon: Flower2,
@@ -582,7 +582,7 @@ function ServiceBlock({ service, index }) {
 function PremiumServicesShowcase() {
   return (
     <section className="py-24 lg:py-32 bg-white">
-      <div className="max-w-[1400px] mx-auto px-6 mb-20 md:mb-32 text-center flex flex-col items-center">
+      <div className="max-w-[1400px] mx-auto px-6 mb-6 lg:mb-8 text-center flex flex-col items-center">
         <SectionTagline text="OUR SERVICES" className="justify-center mb-6" />
         
         <motion.h2 
@@ -592,7 +592,7 @@ function PremiumServicesShowcase() {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="text-4xl md:text-5xl lg:text-6xl text-[#231F20] font-serif leading-tight font-bold mb-8"
         >
-          Training <em className="text-[#E8B884] italic font-light">Designed Around You</em>
+          Training <em className="text-[#E8B884] italic">Designed Around You</em>
         </motion.h2>
 
         <motion.p 
@@ -602,7 +602,7 @@ function PremiumServicesShowcase() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-lg md:text-xl text-[#231F20]/70 font-light leading-relaxed max-w-3xl"
         >
-          Every program at ReForm Fitness is <span className="text-green-brand font-medium">meticulously crafted</span> based on your unique biomechanics, goals, and lifestyle. We don't believe in templates. We combine science with personalization to deliver results that last a lifetime.
+          Personalized training built around your body, goals, and lifestyle—for results that last.
         </motion.p>
       </div>
 

@@ -7,7 +7,6 @@ const navLinks = [
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Trainers', href: '/trainers' },
-  { label: 'Success Stories', href: '/success-stories' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -120,11 +119,11 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center justify-between w-full relative min-h-[50px]">
             
             {/* Left Links */}
-            <div className="flex-1 flex items-center justify-start gap-10 xl:gap-14 pl-2 lg:pl-6">
-              {navLinks.slice(0, 3).map((link) => (
+            <div className="flex-1 flex items-center justify-start gap-10 xl:gap-16 pl-12 lg:pl-20 xl:pl-32">
+              {navLinks.slice(0, 2).map((link) => (
                 <NavLink key={link.href} to={link.href}>
                   {({ isActive }) => (
-                    <div className={`text-[0.7rem] xl:text-[0.75rem] tracking-[0.25em] uppercase font-medium transition-colors duration-500 relative py-2 group cursor-pointer ${isActive ? 'text-white' : 'text-white/60 hover:text-white'}`}>
+                    <div className={`text-[0.8rem] xl:text-[0.85rem] tracking-[0.25em] uppercase font-semibold transition-colors duration-500 relative py-2 group cursor-pointer ${isActive ? 'text-white' : 'text-white/60 hover:text-white'}`}>
                       {link.label}
                       <span className={`absolute bottom-0 left-0 h-[1px] bg-green-brand transition-all duration-500 ease-out transform-gpu ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
                     </div>
@@ -134,11 +133,11 @@ export default function Navbar() {
             </div>
 
             {/* Right Links */}
-            <div className="flex-1 flex items-center justify-end gap-10 xl:gap-14 pr-2 lg:pr-6">
-              {navLinks.slice(3).map((link) => (
+            <div className="flex-1 flex items-center justify-end gap-10 xl:gap-16 pr-12 lg:pr-20 xl:pr-32">
+              {navLinks.slice(2).map((link) => (
                 <NavLink key={link.href} to={link.href}>
                   {({ isActive }) => (
-                    <div className={`text-[0.7rem] xl:text-[0.75rem] tracking-[0.25em] uppercase font-medium transition-colors duration-500 relative py-2 group cursor-pointer ${isActive ? 'text-white' : 'text-white/60 hover:text-white'}`}>
+                    <div className={`text-[0.8rem] xl:text-[0.85rem] tracking-[0.25em] uppercase font-semibold transition-colors duration-500 relative py-2 group cursor-pointer ${isActive ? 'text-white' : 'text-white/60 hover:text-white'}`}>
                       {link.label}
                       <span className={`absolute bottom-0 left-0 h-[1px] bg-green-brand transition-all duration-500 ease-out transform-gpu ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
                     </div>

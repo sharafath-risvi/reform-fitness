@@ -5,7 +5,6 @@ import WhyChooseUsSection from '../components/sections/WhyChooseUsSection'
 import ServicesSection from '../components/sections/ServicesSection'
 import InstagramReelsSection from '../components/sections/InstagramReelsSection'
 import TheReFormStandardSection from '../components/sections/TheReFormStandardSection'
-import TestimonialsSection from '../components/sections/TestimonialsSection'
 import FAQSection from '../components/sections/FAQSection'
 import ConsultationCTASection from '../components/sections/ConsultationCTASection'
 
@@ -19,7 +18,6 @@ export default function HomePage() {
       <ServicesSection />
       <InstagramReelsSection />
       <TheReFormStandardSection />
-      <TestimonialsSection />
       <FAQSection />
       <ConsultationCTASection />
     </>

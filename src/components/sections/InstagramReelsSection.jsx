@@ -4,42 +4,21 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionTagline from '../ui/SectionTagline'
 
-const dummyReels = [
+const realReels = [
   { 
     id: 1, 
-    title: 'Personal Training', 
-    category: 'Coaching',
-    image: '/Reform_images/DSC06277.webp', 
-    url: 'https://www.instagram.com/reformfitness/' 
+    title: 'Discipline Today, Stronger Tomorrow', 
+    category: 'Motivation',
+    image: '/Reform_images/real_reel_1.jpg', 
+    url: 'https://www.instagram.com/reformfitness.dxb?srtk=MjkzcTJxbmxyc3Z1' 
   },
   { 
     id: 2, 
-    title: 'Strength Training', 
-    category: 'Form Check',
-    image: '/Reform_images/DSC06253.webp', 
-    url: 'https://www.instagram.com/reformfitness/' 
-  },
-  { 
-    id: 3, 
-    title: 'Science-Based Training', 
-    category: 'Education',
-    image: '/Reform_images/DSC06256.webp', 
-    url: 'https://www.instagram.com/reformfitness/' 
-  },
-  { 
-    id: 4, 
-    title: 'Transformation Journey', 
-    category: 'Results',
-    image: '/Reform_images/DSC06237.webp', 
-    url: 'https://www.instagram.com/reformfitness/' 
-  },
-  { 
-    id: 5, 
-    title: 'Long-Term Results', 
-    category: 'Mindset',
-    image: '/Reform_images/DSC06225.webp', 
-    url: 'https://www.instagram.com/reformfitness/' 
-  },
+    title: 'Protein = Strength', 
+    category: 'Nutrition',
+    image: '/Reform_images/real_reel_2.jpg', 
+    url: 'https://www.instagram.com/reformfitness.dxb?srtk=MjkzcTJxbmxyc3Z1' 
+  }
 ]
 
 // Stagger array for editorial layout look
@@ -114,7 +93,7 @@ export default function InstagramReelsSection() {
           <div className="flex flex-col sm:flex-row items-center gap-6 xl:pb-2">
             {/* CTA Button */}
             <a 
-              href="https://www.instagram.com/reformfitness/"
+              href="https://www.instagram.com/reformfitness.dxb?srtk=MjkzcTJxbmxyc3Z1"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#2B6F6F] text-white rounded-full text-sm tracking-wider uppercase font-semibold hover:bg-[#E8B884] hover:text-[#231F20] transition-colors duration-300 group shadow-md hover:shadow-lg"
@@ -157,7 +136,7 @@ export default function InstagramReelsSection() {
           className="flex overflow-x-auto snap-x snap-mandatory gap-5 lg:gap-8 px-6 lg:px-24 pb-12 lg:pb-32 w-full max-w-[1800px] mx-auto hide-scrollbar"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {dummyReels.map((reel, i) => (
+          {realReels.map((reel, i) => (
             <a 
               key={reel.id}
               href={reel.url}

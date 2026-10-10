@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
 import TrainersPage from './pages/TrainersPage'
-import SuccessStoriesPage from './pages/SuccessStoriesPage'
 import ConsultationPage from './pages/ConsultationPage'
 import ContactPage from './pages/ContactPage'
 import WhatsAppFloat from './components/ui/WhatsAppFloat'
@@ -49,7 +48,6 @@ function AnimatedRoutes() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
           <Route path="/trainers" element={<TrainersPage />} />
-          <Route path="/success-stories" element={<SuccessStoriesPage />} />
           <Route path="/consultation" element={<ConsultationPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
