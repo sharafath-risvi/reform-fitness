@@ -61,12 +61,12 @@ export default function AboutHero() {
           alt="About ReForm Fitness"
           className="w-full h-full object-cover origin-center will-change-transform opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#111]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-[#111]" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container-custom px-6 lg:px-12 flex flex-col justify-center h-full pt-24 lg:pt-32" ref={contentRef}>
-        <div className="max-w-4xl">
+      <div className="relative z-10 w-full max-w-[1850px] mx-auto px-6 lg:px-12 flex flex-col justify-center items-center text-center h-full pt-24 lg:pt-32" ref={contentRef}>
+        <div className="w-full flex flex-col items-center text-center">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -82,8 +82,7 @@ export default function AboutHero() {
             transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-serif text-[2rem] sm:text-[2.5rem] lg:text-7xl text-white mb-8 leading-[1.1] font-extrabold"
           >
-            Not a gym.
-            <br />
+            Not a gym.{' '}
             <em className="text-[#E8B884] font-extrabold">A Health <span className="text-green-brand font-extrabold">Transformation</span> Company.</em>
           </motion.h1>
 
@@ -91,7 +90,7 @@ export default function AboutHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 1 }}
-            className="text-base lg:text-lg text-white/90 leading-relaxed max-w-2xl font-light"
+            className="text-base lg:text-lg text-white/90 leading-relaxed font-light"
           >
             ReForm Fitness was built on the belief that everyone — regardless of age, fitness level, or medical history — deserves personalized, science-based coaching that transforms not just their body, but their entire life.
           </motion.p>

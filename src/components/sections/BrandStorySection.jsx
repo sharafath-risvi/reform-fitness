@@ -109,32 +109,32 @@ export default function BrandStorySection() {
       // SECTION 2: CORE VALUES ENTRANCE & ANIMATION
       // ==========================================
       
-      // Part A: Cinematic text entrance (unpinned scroll-in)
-      gsap.fromTo('.cv-intro-container',
-        { y: 150, opacity: 0, scale: 0.95, filter: 'blur(12px)' },
-        {
-          y: 0, opacity: 1, scale: 1, filter: 'blur(0px)',
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: cvRef.current,
-            start: 'top 85%',
-            end: 'top 30%', 
-            scrub: 1,
-          }
+      // Part A: Synchronized Core Values image + text entrance (unpinned scroll-in)
+      const entranceTL = gsap.timeline({
+        scrollTrigger: {
+          trigger: cvRef.current,
+          start: 'top bottom',
+          end: 'top 15%',
+          scrub: 1,
         }
+      })
+      entranceTL.fromTo('.cv-bg-layer',
+        { opacity: 0.35, scale: 1.04 },
+        { opacity: 1, scale: 1, ease: 'power2.out' },
+        0
+      )
+      entranceTL.fromTo('.cv-intro-container',
+        { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
+        { opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out' },
+        0
       )
 
       // Helper: builds the Core Values pinned timeline
       const buildCoreValuesTimeline = (tlCV, isMobile) => {
-        // Reveal the dark premium background image behind the text
-        tlCV.to('.cv-bg-layer', { opacity: 1, scale: 1, duration: 2, ease: 'power2.inOut' })
-        tlCV.to('.built-on-text', { color: '#FFFFFF', duration: 1.5 }, "<0.5")
-        tlCV.to('.cv-desc', { color: 'rgba(255,255,255,0.8)', duration: 1.5 }, "<")
-        tlCV.to('.cv-tagline-text', { color: '#FFFFFF', duration: 1.5 }, "<")
-        tlCV.to('.cv-tagline-line', { backgroundColor: '#FFFFFF', opacity: 0.4, duration: 1.5 }, "<")
-        tlCV.to({}, { duration: isMobile ? 0.5 : 1 })
-        tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.5 })
-        tlCV.to({}, { duration: 0.5 })
+        // Hold the fully entered scene with image and text before transitioning
+        tlCV.to({}, { duration: isMobile ? 0.8 : 1.2 })
+        tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.2, ease: 'power2.inOut' })
+        tlCV.to({}, { duration: 0.4 })
 
         // SCENE 05: Stack Cards
         tlCV.to('.cv-bg-layer', {
@@ -191,6 +191,7 @@ export default function BrandStorySection() {
             { x: '-20vw', y: '140vh', w: '30vw', h: '42vh' },
             { x: '25vw', y: '170vh', w: '32vw', h: '48vh' },
           ]
+          tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "gallery")
           galleryPositions.forEach((pos, i) => {
             if (i === 0) {
               tlCV.to(`.cv-bg-layer`, { xPercent: -50, yPercent: -50, x: pos.x, y: pos.y, width: pos.w, height: pos.h, rotation: 0, duration: 2, ease: 'power3.inOut' }, "gallery")
@@ -216,6 +217,7 @@ export default function BrandStorySection() {
             { target: '.card-7',       x: '-23vw', y:  '51vh', w: '42vw', h: '28vh' },
             { target: '.card-8',       x:  '23vw', y:  '51vh', w: '42vw', h: '28vh' },
           ]
+          tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "mobile-gallery")
           mobileGalleryPositions.forEach((pos) => {
             tlCV.to(pos.target, {
               xPercent: -50, yPercent: -50,
@@ -326,17 +328,14 @@ export default function BrandStorySection() {
         </div>
       </section>
 
-      {/* Breathing space between chapters and core values */}
-      <div className="h-[5vh] lg:h-[10vh] w-full bg-white" />
-
       {/* ========================================== */}
       {/* CORE VALUES SECTION                        */}
       {/* ========================================== */}
-      <section ref={cvRef} className="relative bg-white h-screen overflow-hidden">
+      <section ref={cvRef} className="relative bg-[#111] h-screen overflow-hidden">
         
         {/* Core Values Intro Text */}
         <div className="cv-intro-wrapper absolute inset-0 flex items-center justify-center z-20 pointer-events-none px-6">
-           <div className="cv-intro-container flex flex-col items-center text-center max-w-4xl opacity-0">
+           <div className="cv-intro-container flex flex-col items-center text-center max-w-4xl">
               <div className="inline-flex items-center gap-4 mb-6 lg:mb-8">
                 <div className="cv-tagline-line w-8 h-[1px] bg-[#E8B884]"></div>
                 <span className="cv-tagline-text text-xs tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
@@ -344,11 +343,11 @@ export default function BrandStorySection() {
                 </span>
                 {/* Intentionally NO horizontal line on the right side */}
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl mb-6 lg:mb-8 leading-tight font-serif drop-shadow-sm font-bold">
-                <span className="built-on-text text-[#231F20] block"><span className="text-green-brand font-bold">Built</span> on</span>
+              <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl mb-6 lg:mb-8 leading-tight font-serif drop-shadow-md font-bold">
+                <span className="built-on-text text-white block"><span className="text-green-brand font-bold">Built</span> on</span>
                 <span className="text-[#E8B884] block italic">Excellence</span>
               </h2>
-              <p className="cv-desc text-base md:text-xl lg:text-2xl text-[#231F20]/70 leading-relaxed font-light">
+              <p className="cv-desc text-base md:text-xl lg:text-2xl text-white/80 leading-relaxed font-light">
                 The principles that shape every transformation.
               </p>
            </div>
@@ -358,7 +357,7 @@ export default function BrandStorySection() {
         <div className="gallery-wrapper absolute inset-0 z-10 pointer-events-none">
           
           {/* Main Background Reveal Layer */}
-          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] opacity-0 overflow-hidden bg-black scale-95">
+          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] overflow-hidden bg-black">
             <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/50 transition-colors bg-overlay" />
             <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none px-6 text-center">
