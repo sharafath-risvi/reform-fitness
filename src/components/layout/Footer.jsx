@@ -53,6 +53,16 @@ const socialLinks = [
 export default function Footer() {
   const { ref: footerRef, inView } = useInView({ triggerOnce: true, threshold: 0.1 })
 
+  const handleNavClick = (href) => {
+    if (href && href.includes('#')) return
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true })
+    }
+  }
+
   return (
     <footer ref={footerRef} className="bg-[#0a0a0a] text-white pt-16 lg:pt-32 pb-8 border-t border-white/5 relative overflow-hidden flex flex-col">
       
@@ -73,7 +83,7 @@ export default function Footer() {
             transition={{ duration: 0.8 }}
             className="flex flex-col items-start max-w-md"
           >
-            <Link to="/" className="inline-block mb-8 group">
+            <Link to="/" onClick={() => handleNavClick('/')} className="inline-block mb-8 group">
               <img 
                 src="/logos/primary-logo.png" 
                 alt="ReForm Fitness" 
@@ -119,6 +129,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     to={link.href}
+                    onClick={() => handleNavClick(link.href)}
                     className="text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-3 group w-fit"
                   >
                     <span className="w-0 h-[1px] bg-green-brand group-hover:w-4 transition-all duration-300" />
@@ -143,6 +154,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     to={link.href}
+                    onClick={() => handleNavClick(link.href)}
                     className="text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-3 group w-fit"
                   >
                     <span className="w-0 h-[1px] bg-green-brand group-hover:w-4 transition-all duration-300" />

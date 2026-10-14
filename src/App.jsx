@@ -71,17 +71,43 @@ ScrollTrigger.config({
   autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load,resize',
 })
 
-// Force redirect to Home on any page refresh
-if (typeof window !== 'undefined' && window.performance) {
-  const navEntries = window.performance.getEntriesByType('navigation')
-  const isReload = navEntries.length > 0 && navEntries[0].type === 'reload'
-  const isDeprecatedReload = window.performance.navigation && window.performance.navigation.type === 1
-  
-  if (isReload || isDeprecatedReload) {
-    if (window.location.pathname !== '/') {
-      window.location.replace('/')
+// Helper component to ensure navigation to different internal routes resets scroll to top Hero section
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+
+  useLayoutEffect(() => {
+    // Preserve intentional in-page anchor navigation (e.g. /contact#location)
+    if (hash) {
+      const element = document.querySelector(hash)
+      if (element) {
+        if (window.lenis) {
+          window.lenis.scrollTo(element, { offset: -80 })
+        } else {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }
+      return
     }
-  }
+
+    // Immediately reset scroll position to the top
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true })
+    }
+
+    // Refresh ScrollTrigger cleanly
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.clearScrollMemory?.()
+      if (window.scrollY === 0) {
+        ScrollTrigger.refresh()
+      }
+    }
+  }, [pathname, hash])
+
+  return null
 }
 
 export default function App() {
@@ -152,6 +178,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ScrollProgress />
       <Navbar />
       <main>

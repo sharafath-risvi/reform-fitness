@@ -300,49 +300,54 @@ function CinematicServiceTexts({ scrollYProgress, isMobile }) {
   const textClass = "absolute font-sans font-light tracking-[0.25em] uppercase text-3xl md:text-4xl lg:text-5xl text-white drop-shadow-2xl pointer-events-none whitespace-nowrap"
   
   if (isMobile) {
-    // 100% pure flexbox centering. ZERO absolute transform logic.
-    const wrapper = "absolute inset-0 flex items-center justify-center pointer-events-none"
-    const mobileText = "font-sans font-light tracking-[0.25em] uppercase text-3xl md:text-4xl lg:text-5xl text-white drop-shadow-2xl pointer-events-none whitespace-nowrap text-center"
+    // Flexbox centering with responsive typography tailored so no service name is cropped on mobile
+    const wrapper = "absolute inset-0 flex items-center justify-center pointer-events-none px-4 sm:px-6"
+    const baseText = "font-sans font-light uppercase text-white drop-shadow-2xl pointer-events-none select-none text-center whitespace-nowrap leading-tight"
+    
+    // Tailored font size and tracking per character length to keep every title fully inside the video area
+    const longText = `${baseText} text-sm min-[360px]:text-base min-[400px]:text-lg sm:text-2xl tracking-[0.10em] min-[360px]:tracking-[0.13em]`
+    const midText = `${baseText} text-base min-[360px]:text-lg min-[400px]:text-xl sm:text-3xl tracking-[0.14em] min-[360px]:tracking-[0.16em]`
+    const shortText = `${baseText} text-xl min-[360px]:text-2xl min-[400px]:text-3xl sm:text-4xl tracking-[0.18em] min-[360px]:tracking-[0.22em]`
     
     return (
       <div key="mobile" className="absolute inset-0 pointer-events-none z-40 overflow-hidden">
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text1Opacity }}>
+          <motion.div className={longText} style={{ opacity: text1Opacity }}>
             Body Transformation
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text2Opacity }}>
+          <motion.div className={longText} style={{ opacity: text2Opacity }}>
             Injury Rehabilitation
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text3Opacity }}>
+          <motion.div className={midText} style={{ opacity: text3Opacity }}>
             Muscle Building
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text4Opacity }}>
+          <motion.div className={longText} style={{ opacity: text4Opacity }}>
             Home Personal Training
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text5Opacity }}>
+          <motion.div className={midText} style={{ opacity: text5Opacity }}>
             Senior Fitness
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text6Opacity }}>
+          <motion.div className={shortText} style={{ opacity: text6Opacity }}>
             Yoga
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text7Opacity }}>
+          <motion.div className={midText} style={{ opacity: text7Opacity }}>
             Women's Fitness
           </motion.div>
         </div>
         <div className={wrapper}>
-          <motion.div className={mobileText} style={{ opacity: text8Opacity }}>
+          <motion.div className={shortText} style={{ opacity: text8Opacity }}>
             Zumba
           </motion.div>
         </div>
