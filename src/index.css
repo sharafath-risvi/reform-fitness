@@ -596,9 +596,9 @@ html.lenis {
    (lg:, xl:, 2xl: classes) are untouched.
 ───────────────────────────────────────── */
 @media (max-width: 640px) {
-  /* Prevent all horizontal overflow globally */
+  /* Prevent all horizontal overflow globally without breaking position: sticky */
   body, #root {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
   }
 

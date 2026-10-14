@@ -125,54 +125,24 @@ export default function BrandStorySection() {
       // Set initial centering and GPU compositing flags on all card layers
       gsap.set('.card-layer', { xPercent: -50, yPercent: -50, force3D: true, transformOrigin: '50% 50%' })
       
-      // Part A: Synchronized Core Values image + text entrance (unpinned scroll-in)
-      const entranceTL = gsap.timeline({
-        scrollTrigger: {
-          trigger: cvRef.current,
-          start: 'top bottom',
-          end: 'top 15%',
-          scrub: 0.6,
-          invalidateOnRefresh: true,
-        }
-      })
-      entranceTL.fromTo('.cv-bg-layer',
-        { opacity: 0.35, scale: 1.04 },
-        { opacity: 1, scale: 1, ease: 'power2.out' },
-        0
-      )
-      entranceTL.fromTo('.cv-intro-container',
-        { opacity: 0, scale: 0.95, filter: 'blur(10px)' },
-        { opacity: 1, scale: 1, filter: 'blur(0px)', ease: 'power2.out' },
-        0
-      )
-
       // Helper: builds the Core Values pinned timeline
       const buildCoreValuesTimeline = (tlCV, isMobile) => {
-        // Calculate target dimensions matching CSS vw/vh units to prevent clamp string interpolation breakdown
-        const targetW_vw = isMobile
-          ? ((Math.min(Math.max(window.innerWidth * 0.38, 140), 210) / window.innerWidth) * 100).toFixed(2) + 'vw'
-          : ((Math.min(Math.max(window.innerWidth * 0.30, 280), 450) / window.innerWidth) * 100).toFixed(2) + 'vw'
-        const targetH_vh = isMobile
-          ? ((Math.min(Math.max(window.innerHeight * 0.45, 190), 280) / window.innerHeight) * 100).toFixed(2) + 'vh'
-          : ((Math.min(Math.max(window.innerHeight * 0.40, 350), 600) / window.innerHeight) * 100).toFixed(2) + 'vh'
-
         // Hold the fully entered scene with image and text before transitioning
         tlCV.to({}, { duration: isMobile ? 0.8 : 1.2 })
         tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.2, ease: 'power2.inOut' })
         tlCV.to({}, { duration: 0.4 })
 
-        // SCENE 05: Stack Cards
-        // Smoothly and monotonically shrink the full-viewport image layer into its card dimensions
+        // TRANSITION A: Smoothly shrink the full-viewport image layer into its card dimensions using pure GPU scale
         tlCV.to('.cv-bg-layer', {
-          width: targetW_vw,
-          height: targetH_vh,
-          borderRadius: '24px',
+          scale: 1,
+          borderRadius: isMobile ? '16px' : '24px',
           duration: 2,
           ease: 'power3.inOut'
         }, "stack")
         tlCV.to('.cv-bg-layer .bg-overlay', { backgroundColor: 'rgba(35,31,32,0.75)', duration: 1.5 }, "stack")
         tlCV.to('.cv-text-1', { opacity: 1, duration: 0.8 }, "stack+=0.5")
 
+        // TRANSITION B: Cards appear and move into their intended grouped arrangement
         const cardConfigDesktop = [
           { x: -70, y: -20, rotation: -6 },
           { x: 80, y: 25, rotation: 8 },
@@ -195,63 +165,63 @@ export default function BrandStorySection() {
 
         cardConfig.forEach((cfg, i) => {
           tlCV.fromTo(`.card-${i+2}`, 
-            { opacity: 0, y: 150, x: cfg.x * 2, rotation: cfg.rotation * 2, scale: 0.8, xPercent: -50, yPercent: -50 },
-            { opacity: 1, y: cfg.y, x: cfg.x, rotation: cfg.rotation, scale: 1, xPercent: -50, yPercent: -50, duration: 1, ease: 'power3.out' },
-            "stack+=0.4"
+            { opacity: 0, y: 130, x: cfg.x * 1.8, rotation: cfg.rotation * 1.5, scale: 0.85, xPercent: -50, yPercent: -50 },
+            { opacity: 1, y: cfg.y, x: cfg.x, rotation: cfg.rotation, scale: 1, xPercent: -50, yPercent: -50, duration: 1.2, ease: 'power3.out' },
+            `stack+=${0.3 + i * 0.06}`
           )
-          tlCV.to(`.card-${i+2} .cv-text`, { opacity: 1, duration: 0.4 }, "-=0.3")
+          tlCV.to(`.card-${i+2} .cv-text`, { opacity: 1, duration: 0.4 }, `stack+=${0.55 + i * 0.06}`)
         })
 
         tlCV.to({}, { duration: isMobile ? 0.5 : 1 })
 
-        // SCENE 06: Gallery arrangement — each platform gets a mobile or desktop version
+        // TRANSITION C: Grouped images to final vertical arrangement using GPU transforms and scale
         if (!isMobile) {
-          // Desktop: full vw/vh spread + vertical scroll up
+          // Desktop: full spread + vertical scroll up
           const galleryPositions = [
-            { x: '-25vw', y: '-40vh', w: '35vw', h: '45vh' },
-            { x: '25vw', y: '-15vh', w: '25vw', h: '35vh' },
-            { x: '-15vw', y: '25vh', w: '28vw', h: '40vh' },
-            { x: '20vw', y: '45vh', w: '30vw', h: '45vh' },
-            { x: '-25vw', y: '75vh', w: '35vw', h: '50vh' },
-            { x: '15vw', y: '105vh', w: '28vw', h: '38vh' },
-            { x: '-20vw', y: '140vh', w: '30vw', h: '42vh' },
-            { x: '25vw', y: '170vh', w: '32vw', h: '48vh' },
+            { x: '-25vw', y: '-40vh', scale: 1.35 },
+            { x: '25vw', y: '-15vh', scale: 1.0 },
+            { x: '-15vw', y: '25vh', scale: 1.13 },
+            { x: '20vw', y: '45vh', scale: 1.25 },
+            { x: '-25vw', y: '75vh', scale: 1.4 },
+            { x: '15vw', y: '105vh', scale: 1.1 },
+            { x: '-20vw', y: '140vh', scale: 1.2 },
+            { x: '25vw', y: '170vh', scale: 1.32 },
           ]
           tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "gallery")
           galleryPositions.forEach((pos, i) => {
-            if (i === 0) {
-              tlCV.to(`.cv-bg-layer`, { xPercent: -50, yPercent: -50, x: pos.x, y: pos.y, width: pos.w, height: pos.h, rotation: 0, duration: 2, ease: 'power3.inOut' }, "gallery")
-            } else {
-              tlCV.to(`.card-${i+1}`, { xPercent: -50, yPercent: -50, x: pos.x, y: pos.y, width: pos.w, height: pos.h, rotation: 0, duration: 2, ease: 'power3.inOut' }, "gallery")
-            }
+            const target = i === 0 ? '.cv-bg-layer' : `.card-${i+1}`
+            tlCV.to(target, { 
+              xPercent: -50, yPercent: -50, 
+              x: pos.x, y: pos.y, 
+              scale: pos.scale, 
+              rotation: 0, 
+              duration: 2, 
+              ease: 'power3.inOut' 
+            }, "gallery")
           })
           tlCV.to('.gallery-wrapper', { y: '-180vh', duration: 8, ease: 'power1.inOut' }, "gallery+=1.5")
         } else {
-          // Mobile: 2-column vertical arrangement within viewport, then scroll up
-          // Cards settle into a tight 2-col grid: 4 rows × 2 cols (8 cards total)
-          // Card width ~42vw, height ~28vh, gaps ~3vw / 3vh
-          // Col centres: left=-23vw, right=+23vw relative to viewport centre
-          // Row centres start at y=-42vh and step down 31vh each
+          // Mobile: 2-column vertical grid within viewport using scale: 0.7 (42vw/60vw = 0.7, 28vh/40vh = 0.7)
           const mobileGalleryPositions = [
-            // cv-bg-layer goes top-left
-            { target: '.cv-bg-layer',  x: '-23vw', y: '-42vh', w: '42vw', h: '28vh' },
-            { target: '.card-2',       x:  '23vw', y: '-42vh', w: '42vw', h: '28vh' },
-            { target: '.card-3',       x: '-23vw', y: '-11vh', w: '42vw', h: '28vh' },
-            { target: '.card-4',       x:  '23vw', y: '-11vh', w: '42vw', h: '28vh' },
-            { target: '.card-5',       x: '-23vw', y:  '20vh', w: '42vw', h: '28vh' },
-            { target: '.card-6',       x:  '23vw', y:  '20vh', w: '42vw', h: '28vh' },
-            { target: '.card-7',       x: '-23vw', y:  '51vh', w: '42vw', h: '28vh' },
-            { target: '.card-8',       x:  '23vw', y:  '51vh', w: '42vw', h: '28vh' },
+            { target: '.cv-bg-layer',  x: '-23vw', y: '-42vh' },
+            { target: '.card-2',       x:  '23vw', y: '-42vh' },
+            { target: '.card-3',       x: '-23vw', y: '-11vh' },
+            { target: '.card-4',       x:  '23vw', y: '-11vh' },
+            { target: '.card-5',       x: '-23vw', y:  '20vh' },
+            { target: '.card-6',       x:  '23vw', y:  '20vh' },
+            { target: '.card-7',       x: '-23vw', y:  '51vh' },
+            { target: '.card-8',       x:  '23vw', y:  '51vh' },
           ]
           tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "mobile-gallery")
           mobileGalleryPositions.forEach((pos) => {
             tlCV.to(pos.target, {
               xPercent: -50, yPercent: -50,
               x: pos.x, y: pos.y,
-              width: pos.w, height: pos.h,
+              scale: 0.7,
               rotation: 0,
               borderRadius: '16px',
-              duration: 2, ease: 'power3.inOut'
+              duration: 2, 
+              ease: 'power3.inOut'
             }, "mobile-gallery")
           })
           // After settling into grid, scroll the whole wrapper up to reveal bottom rows
@@ -261,8 +231,29 @@ export default function BrandStorySection() {
         }
       }
 
-      // Part B: Pinned animation
+      // Desktop Timeline & Entrance
       mm.add("(min-width: 1024px)", () => {
+        gsap.set('.cv-bg-layer', { borderRadius: '0px' })
+        const entranceTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: cvRef.current,
+            start: 'top bottom',
+            end: 'top top',
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+          }
+        })
+        entranceTL.fromTo('.cv-bg-layer',
+          { opacity: 0.35, scale: 4.2 },
+          { opacity: 1, scale: 4.0, ease: 'power2.out' },
+          0
+        )
+        entranceTL.fromTo('.cv-intro-container',
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, ease: 'power2.out' },
+          0
+        )
+
         const tlCV = gsap.timeline({
           scrollTrigger: {
             trigger: cvRef.current,
@@ -282,6 +273,7 @@ export default function BrandStorySection() {
           if (rafId) return
           rafId = requestAnimationFrame(() => {
             rafId = null
+            if (!tlCV.scrollTrigger || !tlCV.scrollTrigger.isActive) return
             const x = (e.clientX / window.innerWidth - 0.5) * 15
             const y = (e.clientY / window.innerHeight - 0.5) * 15
             gsap.to(moveImgs, { x, y, duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
@@ -294,7 +286,29 @@ export default function BrandStorySection() {
         }
       })
 
+      // Mobile Timeline & Entrance
       mm.add("(max-width: 1023px)", () => {
+        gsap.set('.cv-bg-layer', { borderRadius: '0px' })
+        const entranceTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: cvRef.current,
+            start: 'top bottom',
+            end: 'top top',
+            scrub: 0.4,
+            invalidateOnRefresh: true,
+          }
+        })
+        entranceTL.fromTo('.cv-bg-layer',
+          { opacity: 0.35, scale: 2.6 },
+          { opacity: 1, scale: 2.5, ease: 'power2.out' },
+          0
+        )
+        entranceTL.fromTo('.cv-intro-container',
+          { opacity: 0, scale: 0.95 },
+          { opacity: 1, scale: 1, ease: 'power2.out' },
+          0
+        )
+
         const tlCV = gsap.timeline({
           scrollTrigger: {
             trigger: cvRef.current,
@@ -395,7 +409,7 @@ export default function BrandStorySection() {
         <div className="gallery-wrapper absolute inset-0 z-10 pointer-events-none transform-gpu [backface-visibility:hidden]">
           
           {/* Main Background Reveal Layer */}
-          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 w-[100vw] h-[100vh] overflow-hidden bg-black [backface-visibility:hidden] transform-gpu will-change-[width,height,transform]">
+          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 w-[60vw] h-[40vh] md:w-[25vw] md:h-[35vh] overflow-hidden bg-black [backface-visibility:hidden] transform-gpu will-change-[transform,opacity] rounded-2xl">
             <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="eager" decoding="async" />
             <div className="absolute inset-0 bg-black/50 bg-overlay pointer-events-none" />
             <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none px-6 text-center">

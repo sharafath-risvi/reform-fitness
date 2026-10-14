@@ -385,17 +385,12 @@ function PremiumHero() {
   const containerRef = useRef(null)
   
   const [isMobile, setIsMobile] = useState(false)
-  const [scrollRange, setScrollRange] = useState(0)
   
   useEffect(() => {
     const updateLayout = () => {
       setIsMobile(window.innerWidth < 1024)
-      if (containerRef.current) {
-        setScrollRange(containerRef.current.offsetHeight - window.innerHeight)
-      }
     }
     updateLayout()
-    setTimeout(updateLayout, 150)
     window.addEventListener('resize', updateLayout)
     return () => window.removeEventListener('resize', updateLayout)
   }, [])
@@ -404,8 +399,6 @@ function PremiumHero() {
     target: containerRef,
     offset: ["start start", "end end"]
   })
-
-  const mobileY = useTransform(scrollYProgress, (v) => v * scrollRange)
 
   // TIMELINE PHASES (ONE CONTINUOUS SCROLL PROGRESS):
   // PHASE 1a (0.0 - 0.08): Text splits and flies outward.
@@ -434,8 +427,7 @@ function PremiumHero() {
   return (
     <section ref={containerRef} className="relative w-full h-[700vh] bg-black">
       <motion.div 
-        className={`${isMobile ? 'absolute top-0 left-0' : 'sticky top-0'} w-full h-[100svh] lg:h-screen overflow-hidden`}
-        style={isMobile ? { y: mobileY } : {}}
+        className="sticky top-0 left-0 w-full h-[100dvh] lg:h-screen overflow-hidden"
       >
         
         {/* EXACT SAME Element handles video AND blur. Never unmounts. */}

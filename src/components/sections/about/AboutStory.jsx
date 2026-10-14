@@ -88,9 +88,9 @@ export default function AboutStory() {
               We knew there had to be a better way—a scientific, empathetic, and truly personalized approach to human health.
             </p>
             {/* Mobile Image (Inline) */}
-            <div className="block lg:hidden w-full h-[45vh] sm:h-[55vh] mt-10 rounded-xl overflow-hidden relative shadow-2xl bg-[#111]">
-              <img src={images[0]} alt="Our Story" className="w-full h-full object-cover object-top grayscale opacity-80" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-transparent to-[#111]/20 opacity-80 pointer-events-none" />
+            <div className="block lg:hidden w-full aspect-[3/4] max-h-[550px] mt-10 rounded-xl overflow-hidden relative shadow-2xl bg-[#111]">
+              <img src={images[0]} alt="Our Story" className="w-full h-full object-cover object-[center_42%] grayscale opacity-85" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111]/50 via-transparent to-[#111]/10 opacity-70 pointer-events-none" />
             </div>
           </div>
 
