@@ -63,11 +63,11 @@ export default function ConsultationPage() {
             </motion.p>
             {/* Contact options */}
             <div className="space-y-3">
-              <a href="tel:+91XXXXXXXXXX" className="flex items-center gap-3 text-white/70 hover:text-[#E8B884] transition-colors text-sm">
+              <a href="tel:+971501534461" className="flex items-center gap-3 text-white/70 hover:text-[#E8B884] transition-colors text-sm">
                 <Phone size={14} className="text-[#E8B884]" />
-                <span>+91 XXX XXX XXXX (Call directly)</span>
+                <span>+971 50 153 4461 (Call directly)</span>
               </a>
-              <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-[#E8B884] transition-colors text-sm">
+              <a href="https://wa.me/971501534461" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-[#E8B884] transition-colors text-sm">
                 <MessageCircle size={14} className="text-[#25D366]" />
                 <span>WhatsApp us anytime</span>
               </a>

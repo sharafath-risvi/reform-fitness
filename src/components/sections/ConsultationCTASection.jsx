@@ -23,6 +23,7 @@ export default function ConsultationCTASection() {
             start: 'top bottom',
             end: 'bottom top',
             scrub: 1,
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -35,6 +36,7 @@ export default function ConsultationCTASection() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top 75%',
+            invalidateOnRefresh: true,
           }
         }
       )

@@ -45,7 +45,7 @@ const journeySteps = [
     step: '07', 
     title: 'Weekly Follow-up', 
     desc: 'Continuous tracking and micro-adjustments to ensure you are always progressing.',
-    image: '/Reform_images/DSC06292.webp'
+    image: '/images/weeklyfollowup.jpeg'
   },
   { 
     step: '08', 
@@ -115,10 +115,11 @@ export default function CustomerJourneySection() {
             end: 'bottom 45%',
             onEnter: () => updateStage(i),
             onEnterBack: () => updateStage(i),
+            invalidateOnRefresh: true,
           })
           gsap.fromTo(`.film-img-${i}`,
             { yPercent: -5, scale: 1 },
-            { yPercent: 5, scale: 1.05, ease: 'none', scrollTrigger: { trigger: `.film-frame-${i}`, start: 'top bottom', end: 'bottom top', scrub: true } }
+            { yPercent: 5, scale: 1.05, ease: 'none', scrollTrigger: { trigger: `.film-frame-${i}`, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } }
           )
         })
       })
@@ -130,7 +131,7 @@ export default function CustomerJourneySection() {
             { opacity: 0, y: 30 },
             {
               opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
-              scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' }
+              scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none', invalidateOnRefresh: true }
             }
           )
         })

@@ -63,6 +63,22 @@ export default function HeroSection() {
       }
     })
 
+    // Recalibrate ScrollTrigger once primary hero video data is ready,
+    // but only if the user hasn't scrolled yet — refresh() temporarily
+    // resets scroll to 0 to recalculate pin spacers, causing a jump mid-scroll.
+    const safeRefresh = () => {
+      if (window.scrollY === 0) {
+        ScrollTrigger.refresh()
+      }
+    }
+    if (centerVid1Ref.current) {
+      if (centerVid1Ref.current.readyState >= 2) {
+        safeRefresh()
+      } else {
+        centerVid1Ref.current.addEventListener('loadeddata', safeRefresh, { once: true })
+      }
+    }
+
     // Keep blurred backgrounds synchronized with their corresponding foreground videos
     const syncInterval = setInterval(() => {
       if (centerVid1Ref.current && bgVid1Ref.current) {

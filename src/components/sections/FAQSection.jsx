@@ -67,6 +67,7 @@ export default function FAQSection() {
           scrollTrigger: {
             trigger: headerRef.current,
             start: 'top 85%',
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -80,6 +81,7 @@ export default function FAQSection() {
           scrollTrigger: {
             trigger: accordionRef.current,
             start: 'top 85%',
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -113,7 +115,7 @@ export default function FAQSection() {
               <p className="text-sm font-semibold text-[#231F20] mb-1">Still have questions?</p>
               <p className="text-xs text-[#231F20]/50 mb-4">Message us on WhatsApp — we typically reply within 1 hour.</p>
               <a
-                href="https://wa.me/91XXXXXXXXXX"
+                href="https://wa.me/971501534461"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-[#2B6F6F] hover:text-[#E8B884] transition-colors"

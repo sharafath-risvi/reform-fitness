@@ -15,11 +15,11 @@ import ContactPage from './pages/ContactPage'
 import WhatsAppFloat from './components/ui/WhatsAppFloat'
 import ScrollProgress from './components/ui/ScrollProgress'
 
-// Page transition variants
+// Page transition variants - clean opacity fade without translateY to avoid breaking GSAP pin positioning / containing block
 const pageVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 }
 
 function AnimatedRoutes() {
@@ -42,6 +42,14 @@ function AnimatedRoutes() {
         initial="initial"
         animate="animate"
         exit="exit"
+        onAnimationComplete={() => {
+          // Only refresh if the user hasn't started scrolling yet.
+          // ScrollTrigger.refresh() recalculates pin spacers by temporarily
+          // resetting scroll to 0, which causes a visible jump mid-scroll.
+          if (window.scrollY === 0) {
+            ScrollTrigger.refresh()
+          }
+        }}
       >
         <Routes location={location}>
           <Route path="/" element={<HomePage />} />
@@ -56,8 +64,12 @@ function AnimatedRoutes() {
   )
 }
 
-// Register ScrollTrigger globally
+// Register ScrollTrigger globally with mobile-optimized settings
 gsap.registerPlugin(ScrollTrigger)
+ScrollTrigger.config({
+  ignoreMobileResize: true,
+  autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load,resize',
+})
 
 // Force redirect to Home on any page refresh
 if (typeof window !== 'undefined' && window.performance) {
@@ -100,16 +112,41 @@ export default function App() {
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
 
-    gsap.ticker.add((time) => {
+    const tickerCallback = (time) => {
       lenis.raf(time * 1000)
-    })
+    }
+    gsap.ticker.add(tickerCallback)
     
     gsap.ticker.lagSmoothing(0)
 
+    // Helper: only refresh ScrollTrigger when the user hasn't scrolled yet.
+    // ScrollTrigger.refresh() recalculates pin spacers by temporarily resetting
+    // scroll to 0, which causes a visible page jump if called mid-scroll.
+    const safeRefresh = () => {
+      if (window.scrollY === 0) {
+        ScrollTrigger.refresh()
+      }
+    }
+
+    // Recalibrate ScrollTrigger when custom web fonts finish loading (prevents typography layout shifts)
+    if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(safeRefresh)
+    }
+
+    // Recalibrate ScrollTrigger when all window resources (images, styles) have fully loaded
+    const handleLoad = () => safeRefresh()
+    window.addEventListener('load', handleLoad)
+
+    // Ensure initial layout settles across paint cycles
+    requestAnimationFrame(() => {
+      requestAnimationFrame(safeRefresh)
+    })
+
     return () => {
+      window.removeEventListener('load', handleLoad)
       lenis.destroy()
       window.lenis = null
-      gsap.ticker.remove(lenis.raf)
+      gsap.ticker.remove(tickerCallback)
     }
   }, [])
 

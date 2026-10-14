@@ -4,8 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import SectionTagline from '../../ui/SectionTagline'
 
 const images = [
-  "/Reform_images/ourstory.webp", // Origin/Focus
-  "/Reform_images/DSC06300.webp", // Progression
+  "/aboutpage/ourstory.jpeg", // Origin/Focus
+  "/aboutpage/evolution.jpeg", // Progression
   "/Reform_images/DSC06281.webp"  // Future/Community
 ]
 
@@ -89,7 +89,7 @@ export default function AboutStory() {
             </p>
             {/* Mobile Image (Inline) */}
             <div className="block lg:hidden w-full h-[45vh] sm:h-[55vh] mt-10 rounded-xl overflow-hidden relative shadow-2xl bg-[#111]">
-              <img src={images[0]} alt="Our Story" className="w-full h-full object-contain grayscale opacity-80" />
+              <img src={images[0]} alt="Our Story" className="w-full h-full object-cover object-top grayscale opacity-80" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#111]/80 via-transparent to-[#111]/20 opacity-80 pointer-events-none" />
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function AboutStory() {
               <img 
                 src={src} 
                 alt={`About Story ${i + 1}`} 
-                className={`w-full h-full grayscale opacity-80 ${i === 0 ? 'object-contain bg-[#111]' : 'object-cover'}`}
+                className="w-full h-full grayscale opacity-80 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#111] via-transparent to-transparent opacity-80 pointer-events-none" />
             </div>

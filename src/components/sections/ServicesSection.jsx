@@ -38,77 +38,100 @@ export default function ServicesSection() {
   useEffect(() => {
     let ctx = gsap.context(() => {
       const panels = gsap.utils.toArray('.service-panel')
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: () => `+=${window.innerWidth * panels.length}`,
-          pin: true,
-          scrub: 1,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        }
-      })
+      const mm = gsap.matchMedia()
 
-      // Horizontal Storytelling Scroll
-      const trackTween = tl.to(trackRef.current, {
-        xPercent: -100 * ((panels.length - 1) / panels.length),
-        ease: 'none',
-      })
+      const buildTimeline = (anticipate) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: 'top top',
+            end: () => `+=${window.innerWidth * panels.length}`,
+            pin: true,
+            scrub: 1,
+            // anticipatePin causes GSAP to start pinning N seconds before the trigger
+            // reaches the viewport top. On mobile, high-velocity touch swipes make 1s
+            // of anticipation cover hundreds of px, causing this section to appear
+            // over CustomerJourneySection prematurely. Use 0 on mobile.
+            anticipatePin: anticipate,
+            invalidateOnRefresh: true,
+          }
+        })
 
-      // Micro-Interactions
-      panels.forEach((panel, i) => {
-        // Image Parallax (Only applies to service cards)
-        const img = panel.querySelector('.service-img')
-        if (img) {
-          gsap.fromTo(img, 
-            { xPercent: -10 },
-            {
-              xPercent: 10,
-              ease: 'none',
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: trackTween,
-                start: 'left right',
-                end: 'right left',
-                scrub: true,
-              }
-            }
-          )
-        }
+        // Horizontal Storytelling Scroll
+        const trackTween = tl.to(trackRef.current, {
+          xPercent: -100 * ((panels.length - 1) / panels.length),
+          ease: 'none',
+        })
 
-        // Text Content Reveal
-        const textContent = panel.querySelector('.content-reveal')
-        if (textContent) {
-          if (i === 0) {
-            // Intro Panel reveals as the section scrolls into view vertically
-            gsap.fromTo(textContent.children,
-              { opacity: 0, y: 30 },
+        // Micro-Interactions
+        panels.forEach((panel, i) => {
+          // Image Parallax (Only applies to service cards)
+          const img = panel.querySelector('.service-img')
+          if (img) {
+            gsap.fromTo(img, 
+              { xPercent: -10 },
               {
-                opacity: 1, y: 0, stagger: 0.2, duration: 1, ease: 'power2.out',
-                scrollTrigger: {
-                  trigger: containerRef.current,
-                  start: 'top 60%',
-                }
-              }
-            )
-          } else {
-            // Service Panels reveal as they horizontally enter the viewport
-            gsap.fromTo(textContent.children,
-              { opacity: 0, y: 30 },
-              {
-                opacity: 1, y: 0, stagger: 0.2, duration: 1, ease: 'power2.out',
+                xPercent: 10,
+                ease: 'none',
                 scrollTrigger: {
                   trigger: panel,
                   containerAnimation: trackTween,
-                  start: 'left 75%',
-                  toggleActions: 'play none none reverse'
+                  start: 'left right',
+                  end: 'right left',
+                  scrub: true,
                 }
               }
             )
           }
-        }
+
+          // Text Content Reveal
+          const textContent = panel.querySelector('.content-reveal')
+          if (textContent) {
+            if (i === 0) {
+              // Intro Panel reveals as the section scrolls into view vertically
+              gsap.fromTo(textContent.children,
+                { opacity: 0, y: 30 },
+                {
+                  opacity: 1, y: 0, stagger: 0.2, duration: 1, ease: 'power2.out',
+                  scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 60%',
+                  }
+                }
+              )
+            } else {
+              // Service Panels reveal as they horizontally enter the viewport
+              gsap.fromTo(textContent.children,
+                { opacity: 0, y: 30 },
+                {
+                  opacity: 1, y: 0, stagger: 0.2, duration: 1, ease: 'power2.out',
+                  scrollTrigger: {
+                    trigger: panel,
+                    containerAnimation: trackTween,
+                    start: 'left 75%',
+                    toggleActions: 'play none none reverse'
+                  }
+                }
+              )
+            }
+          }
+        })
+
+        return tl
+      }
+
+      // Desktop: keep anticipatePin: 1 for smooth mouse-scroll experience
+      mm.add('(min-width: 768px)', () => {
+        buildTimeline(1)
+        return () => {}
+      })
+
+      // Mobile: set anticipatePin: 0 to prevent premature pinning during
+      // fast touch swipes, which causes this section to flicker over the
+      // preceding CustomerJourneySection (Path to Transformation).
+      mm.add('(max-width: 767px)', () => {
+        buildTimeline(0)
+        return () => {}
       })
 
     }, containerRef)

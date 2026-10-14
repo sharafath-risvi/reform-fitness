@@ -40,6 +40,7 @@ export default function InstagramReelsSection() {
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 80%',
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -52,6 +53,7 @@ export default function InstagramReelsSection() {
           scrollTrigger: {
             trigger: carouselRef.current,
             start: 'top 80%',
+            invalidateOnRefresh: true,
           }
         }
       )

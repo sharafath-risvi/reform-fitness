@@ -9,7 +9,7 @@ const bgImages = [
 ]
 
 const coreValueImages = [
-  "/images/safetyfirst.png",
+  "/images/safetyfirst.webp",
   "/images/clientcentered.jpeg",
   "/images/professionalism.jpeg",
   "/Reform_images/DSC06234.webp",
@@ -48,6 +48,15 @@ export default function BrandStorySection() {
   const cvRef = useRef(null)
   
   useEffect(() => {
+    // Eagerly pre-load & decode all Core Values images off the main thread to eliminate on-scroll decoding pauses
+    coreValueImages.forEach((src) => {
+      const img = new Image()
+      img.src = src
+      if (img.decode) {
+        img.decode().catch(() => {})
+      }
+    })
+
     let ctx = gsap.context(() => {
       
       const mm = gsap.matchMedia()
@@ -65,6 +74,8 @@ export default function BrandStorySection() {
             end: '+=200%', 
             pin: true,
             scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           }
         })
         tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 })
@@ -90,6 +101,8 @@ export default function BrandStorySection() {
             end: '+=100%',
             pin: true,
             scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           }
         })
         tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 })
@@ -108,6 +121,9 @@ export default function BrandStorySection() {
       // ==========================================
       // SECTION 2: CORE VALUES ENTRANCE & ANIMATION
       // ==========================================
+
+      // Set initial centering and GPU compositing flags on all card layers
+      gsap.set('.card-layer', { xPercent: -50, yPercent: -50, force3D: true, transformOrigin: '50% 50%' })
       
       // Part A: Synchronized Core Values image + text entrance (unpinned scroll-in)
       const entranceTL = gsap.timeline({
@@ -115,7 +131,8 @@ export default function BrandStorySection() {
           trigger: cvRef.current,
           start: 'top bottom',
           end: 'top 15%',
-          scrub: 1,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
         }
       })
       entranceTL.fromTo('.cv-bg-layer',
@@ -131,15 +148,24 @@ export default function BrandStorySection() {
 
       // Helper: builds the Core Values pinned timeline
       const buildCoreValuesTimeline = (tlCV, isMobile) => {
+        // Calculate target dimensions matching CSS vw/vh units to prevent clamp string interpolation breakdown
+        const targetW_vw = isMobile
+          ? ((Math.min(Math.max(window.innerWidth * 0.38, 140), 210) / window.innerWidth) * 100).toFixed(2) + 'vw'
+          : ((Math.min(Math.max(window.innerWidth * 0.30, 280), 450) / window.innerWidth) * 100).toFixed(2) + 'vw'
+        const targetH_vh = isMobile
+          ? ((Math.min(Math.max(window.innerHeight * 0.45, 190), 280) / window.innerHeight) * 100).toFixed(2) + 'vh'
+          : ((Math.min(Math.max(window.innerHeight * 0.40, 350), 600) / window.innerHeight) * 100).toFixed(2) + 'vh'
+
         // Hold the fully entered scene with image and text before transitioning
         tlCV.to({}, { duration: isMobile ? 0.8 : 1.2 })
         tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.2, ease: 'power2.inOut' })
         tlCV.to({}, { duration: 0.4 })
 
         // SCENE 05: Stack Cards
+        // Smoothly and monotonically shrink the full-viewport image layer into its card dimensions
         tlCV.to('.cv-bg-layer', {
-          width: isMobile ? 'clamp(140px, 38vw, 210px)' : 'clamp(280px, 30vw, 450px)',
-          height: isMobile ? 'clamp(190px, 45vh, 280px)' : 'clamp(350px, 40vh, 600px)',
+          width: targetW_vw,
+          height: targetH_vh,
           borderRadius: '24px',
           duration: 2,
           ease: 'power3.inOut'
@@ -169,8 +195,8 @@ export default function BrandStorySection() {
 
         cardConfig.forEach((cfg, i) => {
           tlCV.fromTo(`.card-${i+2}`, 
-            { opacity: 0, y: 150, x: cfg.x * 2, rotation: cfg.rotation * 2, scale: 0.8 },
-            { opacity: 1, y: cfg.y, x: cfg.x, rotation: cfg.rotation, scale: 1, duration: 1, ease: 'power3.out' },
+            { opacity: 0, y: 150, x: cfg.x * 2, rotation: cfg.rotation * 2, scale: 0.8, xPercent: -50, yPercent: -50 },
+            { opacity: 1, y: cfg.y, x: cfg.x, rotation: cfg.rotation, scale: 1, xPercent: -50, yPercent: -50, duration: 1, ease: 'power3.out' },
             "stack+=0.4"
           )
           tlCV.to(`.card-${i+2} .cv-text`, { opacity: 1, duration: 0.4 }, "-=0.3")
@@ -243,19 +269,29 @@ export default function BrandStorySection() {
             start: 'top top',
             end: '+=250%',
             pin: true,
-            scrub: 1,
+            scrub: 0.6,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           }
         })
         buildCoreValuesTimeline(tlCV, false)
 
         const moveImgs = gsap.utils.toArray('.card-layer img')
+        let rafId = null
         const handleMouseMove = (e) => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 20
-          const y = (e.clientY / window.innerHeight - 0.5) * 20
-          gsap.to(moveImgs, { x, y, duration: 1, ease: 'power2.out' })
+          if (rafId) return
+          rafId = requestAnimationFrame(() => {
+            rafId = null
+            const x = (e.clientX / window.innerWidth - 0.5) * 15
+            const y = (e.clientY / window.innerHeight - 0.5) * 15
+            gsap.to(moveImgs, { x, y, duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
+          })
         }
-        window.addEventListener('mousemove', handleMouseMove)
-        return () => window.removeEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mousemove', handleMouseMove, { passive: true })
+        return () => {
+          window.removeEventListener('mousemove', handleMouseMove)
+          if (rafId) cancelAnimationFrame(rafId)
+        }
       })
 
       mm.add("(max-width: 1023px)", () => {
@@ -265,7 +301,9 @@ export default function BrandStorySection() {
             start: 'top top',
             end: '+=150%',
             pin: true,
-            scrub: 1,
+            scrub: 0.4,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
           }
         })
         buildCoreValuesTimeline(tlCV, true)
@@ -354,12 +392,12 @@ export default function BrandStorySection() {
         </div>
 
         {/* Core Values Gallery (Background Image + Expanding Cards) */}
-        <div className="gallery-wrapper absolute inset-0 z-10 pointer-events-none">
+        <div className="gallery-wrapper absolute inset-0 z-10 pointer-events-none transform-gpu [backface-visibility:hidden]">
           
           {/* Main Background Reveal Layer */}
-          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vh] overflow-hidden bg-black">
-            <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="lazy" decoding="async" />
-            <div className="absolute inset-0 bg-black/50 transition-colors bg-overlay" />
+          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 w-[100vw] h-[100vh] overflow-hidden bg-black [backface-visibility:hidden] transform-gpu will-change-[width,height,transform]">
+            <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="eager" decoding="async" />
+            <div className="absolute inset-0 bg-black/50 bg-overlay pointer-events-none" />
             <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none px-6 text-center">
                <h3 className="text-white text-[13px] min-[375px]:text-[15px] md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold">{coreValues[0]}</h3>
             </div>
@@ -367,10 +405,10 @@ export default function BrandStorySection() {
 
           {/* The other 7 Core Value Cards */}
           {coreValueImages.slice(1).map((src, i) => (
-            <div key={i} className={`card-layer card-${i+2} absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] md:w-[25vw] md:h-[35vh] opacity-0 overflow-hidden rounded-2xl shadow-2xl bg-[#231F20]`}>
-              <img src={src} className="w-full h-full object-cover opacity-95 scale-105 transform-gpu" loading="lazy" decoding="async" />
-              <div className="absolute inset-0 bg-[#231F20]/75" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 cv-text px-6 text-center">
+            <div key={i} className={`card-layer card-${i+2} absolute top-1/2 left-1/2 w-[60vw] h-[40vh] md:w-[25vw] md:h-[35vh] opacity-0 overflow-hidden rounded-2xl shadow-xl bg-[#231F20] [backface-visibility:hidden] transform-gpu will-change-[transform,opacity]`}>
+              <img src={src} className="w-full h-full object-cover opacity-95 scale-105 transform-gpu" loading="eager" decoding="async" />
+              <div className="absolute inset-0 bg-[#231F20]/75 pointer-events-none" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 cv-text px-6 text-center pointer-events-none">
                  <h3 className={`text-white ${["Professionalism", "Confidentiality"].includes(coreValues[i+1]) ? "text-[11px] min-[375px]:text-[13px]" : "text-[13px] min-[375px]:text-[15px]"} md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold`}>{coreValues[i+1]}</h3>
               </div>
             </div>

@@ -102,7 +102,7 @@ export default function Navbar() {
                 src="/logos/SECONDARY LOGO.png" 
                 alt="ReForm Fitness" 
                 className="h-[38px] sm:h-[46px] w-auto opacity-90 group-hover:opacity-100 transition-opacity duration-500" 
-                fetchpriority="high"
+                fetchPriority="high"
                 decoding="async"
               />
             </Link>
@@ -133,7 +133,7 @@ export default function Navbar() {
             </div>
 
             {/* Right Links */}
-            <div className="flex-1 flex items-center justify-end gap-10 xl:gap-16 pr-12 lg:pr-20 xl:pr-32">
+            <div className="flex-1 flex items-center justify-end gap-10 xl:gap-16 pr-12 lg:pr-20 xl:pl-32">
               {navLinks.slice(2).map((link) => (
                 <NavLink key={link.href} to={link.href}>
                   {({ isActive }) => (
@@ -152,7 +152,7 @@ export default function Navbar() {
                 src="/logos/primary-logo.png" 
                 alt="ReForm Fitness" 
                 className="h-[4.5rem] xl:h-[5.5rem] w-auto opacity-95 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105 transform-gpu" 
-                fetchpriority="high"
+                fetchPriority="high"
                 decoding="async"
               />
             </Link>

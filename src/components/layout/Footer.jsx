@@ -164,23 +164,23 @@ export default function Footer() {
             </h4>
             <ul className="space-y-6">
               <li>
-                <a href="tel:+91XXXXXXXXXX" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 group w-fit">
+                <a href="tel:+971501534461" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 group w-fit">
                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-green-brand/30 group-hover:text-green-brand transition-colors">
                     <Phone size={14} />
                   </div>
-                  <span>+91 XXX XXX XXXX</span>
+                  <span>+971 50 153 4461</span>
                 </a>
               </li>
               <li>
-                <a href="mailto:hello@reformfitness.com" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 group w-fit">
+                <a href="mailto:reformfitness2026@gmail.com" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-white transition-colors duration-300 group w-fit">
                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-green-brand/30 group-hover:text-green-brand transition-colors">
                     <Mail size={14} />
                   </div>
-                  <span className="break-all">hello@reformfitness.com</span>
+                  <span className="break-all">reformfitness2026@gmail.com</span>
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/91XXXXXXXXXX" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-[#25D366] transition-colors duration-300 group w-fit">
+                <a href="https://wa.me/971501534461" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-[0.95rem] text-white/60 hover:text-[#25D366] transition-colors duration-300 group w-fit">
                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-[#25D366]/30 group-hover:text-[#25D366] transition-colors">
                     <MessageCircle size={14} />
                   </div>
@@ -192,7 +192,7 @@ export default function Footer() {
                   <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:border-green-brand/30 group-hover:text-green-brand transition-colors">
                     <MapPin size={14} />
                   </div>
-                  <span>Level 4, Luxury Avenue<br/>City Center, 560001</span>
+                  <span>Dubai, UAE</span>
                 </Link>
               </li>
             </ul>

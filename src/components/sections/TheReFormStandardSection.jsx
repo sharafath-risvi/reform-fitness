@@ -30,6 +30,7 @@ export default function TheReFormStandardSection() {
             start: 'top bottom',
             end: 'bottom top',
             scrub: true,
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -42,6 +43,7 @@ export default function TheReFormStandardSection() {
           scrollTrigger: {
             trigger: headerRef.current,
             start: 'top 80%',
+            invalidateOnRefresh: true,
           }
         }
       )
@@ -54,6 +56,7 @@ export default function TheReFormStandardSection() {
           scrollTrigger: {
             trigger: gridRef.current,
             start: 'top 75%',
+            invalidateOnRefresh: true,
           }
         }
       )

@@ -7,10 +7,10 @@ import SectionTagline from '../components/ui/SectionTagline'
 import ConsultationCTASection from '../components/sections/ConsultationCTASection'
 
 const contactDetails = [
-  { icon: Phone, label: 'Phone', value: '+91 XXX XXX XXXX', desc: 'Available Mon–Sat, 6AM–9PM', href: 'tel:+91XXXXXXXXXX' },
-  { icon: MessageCircle, label: 'WhatsApp', value: 'Chat with an Expert', desc: 'Fastest response time', href: 'https://wa.me/91XXXXXXXXXX' },
-  { icon: Mail, label: 'Email', value: 'hello@reformfitness.com', desc: 'Detailed inquiries & partnerships', href: 'mailto:hello@reformfitness.com' },
-  { icon: MapPin, label: 'Studio Address', value: 'Level 4, Luxury Avenue', desc: 'City Center, 560001', href: '#location' },
+  { icon: Phone, label: 'Phone', value: '+971 50 153 4461', desc: 'Available Mon–Sat, 6AM–9PM', href: 'tel:+971501534461' },
+  { icon: MessageCircle, label: 'WhatsApp', value: 'Chat with an Expert', desc: 'Fastest response time', href: 'https://wa.me/971501534461' },
+  { icon: Mail, label: 'Email', value: 'reformfitness2026@gmail.com', desc: 'Detailed inquiries & partnerships', href: 'mailto:reformfitness2026@gmail.com' },
+  { icon: MapPin, label: 'Studio Address', value: 'Dubai, UAE', desc: 'Private luxury training studio', href: '#location' },
 ]
 
 const checklist = [
@@ -357,15 +357,26 @@ export default function ContactPage() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent z-10 pointer-events-none" />
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.9937499984947!2d77.5945627!3d12.9715987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU4JzE3LjgiTiA3N8KwMzUnNDAuNCJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
-              className="w-full h-full grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 border-0 pointer-events-none"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d462560.6828926985!2d54.947451703536514!3d25.076280984991652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43496ad9c645%3A0xbde66e5084295162!2sDubai%20-%20United%20Arab%20Emirates!5e0!3m2!1sen!2sae!4v1728900000000!5m2!1sen!2sae" 
+              className="w-full h-full grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 border-0"
               allowFullScreen=""
               loading="lazy"
-              title="ReForm Fitness Map Location"
+              title="ReForm Fitness — Dubai, UAE"
             />
-            <div className="absolute bottom-12 left-12 z-20 pointer-events-none">
-              <p className="text-3xl text-white font-serif font-medium mb-2 drop-shadow-md">ReForm Private Studio</p>
-              <p className="text-[#E8B884] font-semibold uppercase tracking-[0.2em] text-xs drop-shadow-md">Central Boulevard, 560001</p>
+            <div className="absolute bottom-8 sm:bottom-12 left-6 sm:left-12 right-6 sm:right-12 z-20 flex flex-col sm:flex-row sm:items-end justify-between gap-4 pointer-events-none">
+              <div>
+                <p className="text-2xl sm:text-3xl text-white font-serif font-medium mb-2 drop-shadow-md">ReForm Private Studio</p>
+                <p className="text-[#E8B884] font-semibold uppercase tracking-[0.2em] text-xs drop-shadow-md">Dubai, United Arab Emirates</p>
+              </div>
+              <a
+                href="https://maps.google.com/?q=Dubai,+United+Arab+Emirates"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pointer-events-auto inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-[#E8B884] text-white hover:text-[#0a0a0a] backdrop-blur-md border border-white/20 transition-all duration-300 text-xs uppercase tracking-widest font-semibold w-fit shadow-lg group/btn"
+              >
+                <span>Open Map</span>
+                <ArrowUpRight size={14} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
           </motion.div>
           
