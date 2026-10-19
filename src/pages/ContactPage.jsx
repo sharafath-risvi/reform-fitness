@@ -10,7 +10,7 @@ const contactDetails = [
   { icon: Phone, label: 'Phone', value: '+971 50 153 4461', desc: 'Available Mon–Sat, 6AM–9PM', href: 'tel:+971501534461' },
   { icon: MessageCircle, label: 'WhatsApp', value: 'Chat with an Expert', desc: 'Fastest response time', href: 'https://wa.me/971501534461' },
   { icon: Mail, label: 'Email', value: 'reformfitness2026@gmail.com', desc: 'Detailed inquiries & partnerships', href: 'mailto:reformfitness2026@gmail.com' },
-  { icon: MapPin, label: 'Studio Address', value: 'Dubai, UAE', desc: 'Private luxury training studio', href: '#location' },
+  { icon: MapPin, label: 'Studio Address', value: 'Dubai, UAE', desc: 'Home Training', href: '#location' },
 ]
 
 const checklist = [

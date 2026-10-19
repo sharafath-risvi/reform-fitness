@@ -529,7 +529,7 @@ function StaticServicesHero() {
         className="absolute inset-0 w-full h-full pointer-events-none"
       >
         <img 
-          src="/Reform_images/DSC06294.webp" 
+          src="/service_hero/922bc06a-27a7-438d-ac0d-f28231f75b12.png" 
           alt="ReForm Fitness Services" 
           className="w-full h-full object-cover object-center opacity-60"
         />
@@ -538,7 +538,7 @@ function StaticServicesHero() {
       </motion.div>
 
       {/* Hero Content */}
-      <div className="relative z-10 w-full max-w-[1850px] mx-auto px-6 lg:px-12 flex flex-col justify-center items-center text-center h-full pt-24 lg:pt-32">
+      <div className="relative z-10 w-full max-w-[1850px] mx-auto px-6 lg:px-12 flex flex-col justify-center items-center text-center h-full pt-28 lg:pt-40 pb-20 lg:pb-32">
         <div className="w-full flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
