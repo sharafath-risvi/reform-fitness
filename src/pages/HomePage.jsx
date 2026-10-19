@@ -1,5 +1,6 @@
 import HeroSection from '../components/sections/HeroSection'
 import BrandStorySection from '../components/sections/BrandStorySection'
+import HomeServicesSection from '../components/sections/HomeServicesSection'
 import CustomerJourneySection from '../components/sections/CustomerJourneySection'
 import WhyChooseUsSection from '../components/sections/WhyChooseUsSection'
 import ServicesSection from '../components/sections/ServicesSection'
@@ -13,9 +14,10 @@ export default function HomePage() {
     <>
       <HeroSection />
       <BrandStorySection />
+      <HomeServicesSection />
       <CustomerJourneySection />
       <WhyChooseUsSection />
-      <ServicesSection />
+      {/* <ServicesSection /> */}
       <InstagramReelsSection />
       <TheReFormStandardSection />
       <FAQSection />

@@ -146,6 +146,9 @@ const differentiators = [
   }
 ];
 
+
+/* === PRESERVED VIDEO HERO COMPONENTS START === */
+/*
 function FrameSequence({ containerRef, blurValue }) {
   const canvasRef = useRef(null)
   const imagesRef = useRef([])
@@ -427,7 +430,7 @@ function PremiumHero() {
   const contentOpacity = useTransform(scrollYProgress, [0.8, 0.9], [0, 1])
   const contentY = useTransform(scrollYProgress, [0.8, 0.9], [40, 0])
   const contentScale = useTransform(scrollYProgress, [0.8, 0.9], [0.95, 1])
-  */
+  *\/
 
   return (
     <section ref={containerRef} className="relative w-full h-[700vh] bg-black">
@@ -435,19 +438,19 @@ function PremiumHero() {
         className="sticky top-0 left-0 w-full h-[100dvh] lg:h-screen overflow-hidden"
       >
         
-        {/* EXACT SAME Element handles video AND blur. Never unmounts. */}
+        {/* EXACT SAME Element handles video AND blur. Never unmounts. *\/}
         <FrameSequence containerRef={containerRef} blurValue={blurValue} />
         
-        {/* Darken Overlay */}
+        {/* Darken Overlay *\/}
         <motion.div 
           className="absolute inset-0 bg-black pointer-events-none"
           style={{ opacity: overlayBgOpacity }}
         />
 
-        {/* Video 1 Cinematic Texts */}
+        {/* Video 1 Cinematic Texts *\/}
         <CinematicServiceTexts scrollYProgress={scrollYProgress} isMobile={isMobile} />
 
-        {/* INITIAL Cinematic Content Overlay */}
+        {/* INITIAL Cinematic Content Overlay *\/}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 overflow-hidden">
           <div className="text-center px-6 w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
             <motion.h1 
@@ -465,7 +468,7 @@ function PremiumHero() {
           </div>
         </div>
 
-        {/* FINAL Cinematic Content Overlay (CURRENTLY DISABLED) */}
+        {/* FINAL Cinematic Content Overlay (CURRENTLY DISABLED) *\/}
         {/*
         <motion.div 
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
@@ -496,7 +499,7 @@ function PremiumHero() {
             </div>
           </motion.div>
         </motion.div>
-        */}
+        *\/}
 
       </motion.div>
     </section>
@@ -504,6 +507,71 @@ function PremiumHero() {
 }
 
 
+
+
+*/
+/* === PRESERVED VIDEO HERO COMPONENTS END === */
+
+function StaticServicesHero() {
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  })
+  
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+
+  return (
+    <section ref={heroRef} className="relative h-screen w-full flex flex-col justify-center overflow-hidden bg-[#111]">
+      {/* Parallax Background */}
+      <motion.div 
+        style={{ y, scale: 1.05 }} 
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      >
+        <img 
+          src="/Reform_images/DSC06294.webp" 
+          alt="ReForm Fitness Services" 
+          className="w-full h-full object-cover object-center opacity-60"
+        />
+        {/* Dark Cinematic Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-[#111]" />
+      </motion.div>
+
+      {/* Hero Content */}
+      <div className="relative z-10 w-full max-w-[1850px] mx-auto px-6 lg:px-12 flex flex-col justify-center items-center text-center h-full pt-24 lg:pt-32">
+        <div className="w-full flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="mb-6"
+          >
+            <SectionTagline text="OUR SERVICES" className="justify-center" />
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ delay: 0.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="font-serif text-[2.25rem] sm:text-[2.75rem] lg:text-6xl xl:text-7xl text-white mb-8 leading-[1.1] font-extrabold drop-shadow-2xl"
+          >
+            Training <span className="text-green-brand font-extrabold">Designed</span> <br className="hidden sm:block" />
+            <em className="text-[#E8B884] italic font-extrabold">Around You</em>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 1 }}
+            className="text-base lg:text-xl text-white/90 leading-relaxed font-light max-w-3xl drop-shadow-lg"
+          >
+            Experience the pinnacle of personal training. Tailored strategies, elite coaching, and a premium environment dedicated to your success.
+          </motion.p>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 function ServiceBlock({ service, index }) {
   const isEven = index % 2 !== 0
@@ -643,7 +711,7 @@ function TransformationPromise() {
 export default function ServicesPage() {
   return (
     <div className="w-full bg-white">
-      <PremiumHero />
+      <StaticServicesHero />
       <PremiumServicesShowcase />
       <TransformationPromise />
       <ConsultationCTASection />

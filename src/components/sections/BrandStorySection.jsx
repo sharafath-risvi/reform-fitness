@@ -8,28 +8,6 @@ const bgImages = [
   "/Reform_images/DSC06269.webp", 
 ]
 
-const coreValueImages = [
-  "/images/safetyfirst.webp",
-  "/images/clientcentered.jpeg",
-  "/images/professionalism.jpeg",
-  "/Reform_images/DSC06234.webp",
-  "/Reform_images/DSC06253.webp",
-  "/images/sciencebased.jpeg",
-  "/Reform_images/DSC06292.webp",
-  "/images/longterm.jpeg",
-]
-
-const coreValues = [
-  "Safety First",
-  "Client-Centered",
-  "Professionalism",
-  "Integrity",
-  "Confidentiality",
-  "Science-Based",
-  "Continuous Improvement",
-  "Long-Term Results"
-]
-
 const SplitText = ({ text }) => {
   return (
     <>
@@ -45,27 +23,16 @@ const SplitText = ({ text }) => {
 export default function BrandStorySection() {
   const containerRef = useRef(null)
   const storyRef = useRef(null)
-  const cvRef = useRef(null)
   
   useEffect(() => {
-    // Eagerly pre-load & decode all Core Values images off the main thread to eliminate on-scroll decoding pauses
-    coreValueImages.forEach((src) => {
-      const img = new Image()
-      img.src = src
-      if (img.decode) {
-        img.decode().catch(() => {})
-      }
-    })
-
     let ctx = gsap.context(() => {
-      
       const mm = gsap.matchMedia()
 
       // ==========================================
       // SECTION 1: STORY (Chapter 01 & 02)
       // ==========================================
 
-      // Desktop: full 400% scroll distance
+      // Desktop: full scroll distance
       mm.add("(min-width: 1024px)", () => {
         const tlStory = gsap.timeline({
           scrollTrigger: {
@@ -82,7 +49,8 @@ export default function BrandStorySection() {
         tlStory.to('.block-1 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.5, ease: 'power3.out' }, "<")
         tlStory.to({}, { duration: 1 }) 
         tlStory.to('.block-1', { opacity: 0, y: -40, duration: 1 })
-        tlStory.to('.bg-img-1', { opacity: 1, duration: 1.5 })
+        tlStory.to('.bg-white-layer', { opacity: 0, duration: 1.5 }, "<")
+        tlStory.to('.bg-img-1', { opacity: 1, duration: 1.5 }, "<")
         tlStory.to('.bg-img-1 img', { scale: 1, duration: 5, ease: 'none' }, "<")
         tlStory.to('.block-2', { opacity: 1, y: 0, duration: 1 }, "-=4")
         tlStory.to('.block-2 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.5, ease: 'power3.out' }, "<")
@@ -92,7 +60,7 @@ export default function BrandStorySection() {
         return () => {}
       })
 
-      // Mobile: compressed 200% scroll distance
+      // Mobile: compressed scroll distance
       mm.add("(max-width: 1023px)", () => {
         const tlStory = gsap.timeline({
           scrollTrigger: {
@@ -109,7 +77,8 @@ export default function BrandStorySection() {
         tlStory.to('.block-1 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.2, ease: 'power3.out' }, "<")
         tlStory.to({}, { duration: 0.5 })
         tlStory.to('.block-1', { opacity: 0, y: -40, duration: 0.8 })
-        tlStory.to('.bg-img-1', { opacity: 1, duration: 1 })
+        tlStory.to('.bg-white-layer', { opacity: 0, duration: 1 }, "<")
+        tlStory.to('.bg-img-1', { opacity: 1, duration: 1 }, "<")
         tlStory.to('.block-2', { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
         tlStory.to('.block-2 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.03, duration: 1, ease: 'power3.out' }, "<")
         tlStory.to({}, { duration: 0.5 })
@@ -118,224 +87,24 @@ export default function BrandStorySection() {
         return () => {}
       })
 
-      // ==========================================
-      // SECTION 2: CORE VALUES ENTRANCE & ANIMATION
-      // ==========================================
-
-      // Set initial centering and GPU compositing flags on all card layers
-      gsap.set('.card-layer', { xPercent: -50, yPercent: -50, force3D: true, transformOrigin: '50% 50%' })
-      
-      // Helper: builds the Core Values pinned timeline
-      const buildCoreValuesTimeline = (tlCV, isMobile) => {
-        // Hold the fully entered scene with image and text before transitioning
-        tlCV.to({}, { duration: isMobile ? 0.8 : 1.2 })
-        tlCV.to('.cv-intro-wrapper', { opacity: 0, y: -40, duration: isMobile ? 1 : 1.2, ease: 'power2.inOut' })
-        tlCV.to({}, { duration: 0.4 })
-
-        // TRANSITION A: Smoothly shrink the full-viewport image layer into its card dimensions using pure GPU scale
-        tlCV.to('.cv-bg-layer', {
-          scale: 1,
-          borderRadius: isMobile ? '16px' : '24px',
-          duration: 2,
-          ease: 'power3.inOut'
-        }, "stack")
-        tlCV.to('.cv-bg-layer .bg-overlay', { backgroundColor: 'rgba(35,31,32,0.75)', duration: 1.5 }, "stack")
-        tlCV.to('.cv-text-1', { opacity: 1, duration: 0.8 }, "stack+=0.5")
-
-        // TRANSITION B: Cards appear and move into their intended grouped arrangement
-        const cardConfigDesktop = [
-          { x: -70, y: -20, rotation: -6 },
-          { x: 80, y: 25, rotation: 8 },
-          { x: 120, y: -30, rotation: 14 },
-          { x: -140, y: 35, rotation: -12 },
-          { x: 180, y: 15, rotation: -2 },
-          { x: -200, y: -25, rotation: -16 },
-          { x: 220, y: -10, rotation: 18 }
-        ]
-        const cardConfigMobile = [
-          { x: -36, y: -12, rotation: -5 },
-          { x: 40, y: 14, rotation: 6 },
-          { x: 60, y: -16, rotation: 10 },
-          { x: -72, y: 18, rotation: -9 },
-          { x: 90, y: 8, rotation: -2 },
-          { x: -100, y: -14, rotation: -12 },
-          { x: 110, y: -6, rotation: 14 }
-        ]
-        const cardConfig = isMobile ? cardConfigMobile : cardConfigDesktop
-
-        cardConfig.forEach((cfg, i) => {
-          tlCV.fromTo(`.card-${i+2}`, 
-            { opacity: 0, y: 130, x: cfg.x * 1.8, rotation: cfg.rotation * 1.5, scale: 0.85, xPercent: -50, yPercent: -50 },
-            { opacity: 1, y: cfg.y, x: cfg.x, rotation: cfg.rotation, scale: 1, xPercent: -50, yPercent: -50, duration: 1.2, ease: 'power3.out' },
-            `stack+=${0.3 + i * 0.06}`
-          )
-          tlCV.to(`.card-${i+2} .cv-text`, { opacity: 1, duration: 0.4 }, `stack+=${0.55 + i * 0.06}`)
-        })
-
-        tlCV.to({}, { duration: isMobile ? 0.5 : 1 })
-
-        // TRANSITION C: Grouped images to final vertical arrangement using GPU transforms and scale
-        if (!isMobile) {
-          // Desktop: full spread + vertical scroll up
-          const galleryPositions = [
-            { x: '-25vw', y: '-40vh', scale: 1.35 },
-            { x: '25vw', y: '-15vh', scale: 1.0 },
-            { x: '-15vw', y: '25vh', scale: 1.13 },
-            { x: '20vw', y: '45vh', scale: 1.25 },
-            { x: '-25vw', y: '75vh', scale: 1.4 },
-            { x: '15vw', y: '105vh', scale: 1.1 },
-            { x: '-20vw', y: '140vh', scale: 1.2 },
-            { x: '25vw', y: '170vh', scale: 1.32 },
-          ]
-          tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "gallery")
-          galleryPositions.forEach((pos, i) => {
-            const target = i === 0 ? '.cv-bg-layer' : `.card-${i+1}`
-            tlCV.to(target, { 
-              xPercent: -50, yPercent: -50, 
-              x: pos.x, y: pos.y, 
-              scale: pos.scale, 
-              rotation: 0, 
-              duration: 2, 
-              ease: 'power3.inOut' 
-            }, "gallery")
-          })
-          tlCV.to('.gallery-wrapper', { y: '-180vh', duration: 8, ease: 'power1.inOut' }, "gallery+=1.5")
-        } else {
-          // Mobile: 2-column vertical grid within viewport using scale: 0.7 (42vw/60vw = 0.7, 28vh/40vh = 0.7)
-          const mobileGalleryPositions = [
-            { target: '.cv-bg-layer',  x: '-23vw', y: '-42vh' },
-            { target: '.card-2',       x:  '23vw', y: '-42vh' },
-            { target: '.card-3',       x: '-23vw', y: '-11vh' },
-            { target: '.card-4',       x:  '23vw', y: '-11vh' },
-            { target: '.card-5',       x: '-23vw', y:  '20vh' },
-            { target: '.card-6',       x:  '23vw', y:  '20vh' },
-            { target: '.card-7',       x: '-23vw', y:  '51vh' },
-            { target: '.card-8',       x:  '23vw', y:  '51vh' },
-          ]
-          tlCV.to(cvRef.current, { backgroundColor: '#FFFFFF', duration: 2, ease: 'power2.inOut' }, "mobile-gallery")
-          mobileGalleryPositions.forEach((pos) => {
-            tlCV.to(pos.target, {
-              xPercent: -50, yPercent: -50,
-              x: pos.x, y: pos.y,
-              scale: 0.7,
-              rotation: 0,
-              borderRadius: '16px',
-              duration: 2, 
-              ease: 'power3.inOut'
-            }, "mobile-gallery")
-          })
-          // After settling into grid, scroll the whole wrapper up to reveal bottom rows
-          tlCV.to('.gallery-wrapper', { y: '-55vh', duration: 5, ease: 'power1.inOut' }, "mobile-gallery+=1.5")
-          // Then fade out gently before pin releases
-          tlCV.to('.gallery-wrapper', { opacity: 0, duration: 1.5, ease: 'power2.inOut' }, "mobile-gallery+=7")
-        }
-      }
-
-      // Desktop Timeline & Entrance
-      mm.add("(min-width: 1024px)", () => {
-        gsap.set('.cv-bg-layer', { borderRadius: '0px' })
-        const entranceTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: cvRef.current,
-            start: 'top bottom',
-            end: 'top top',
-            scrub: 0.6,
-            invalidateOnRefresh: true,
-          }
-        })
-        entranceTL.fromTo('.cv-bg-layer',
-          { opacity: 0.35, scale: 4.2 },
-          { opacity: 1, scale: 4.0, ease: 'power2.out' },
-          0
-        )
-        entranceTL.fromTo('.cv-intro-container',
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, ease: 'power2.out' },
-          0
-        )
-
-        const tlCV = gsap.timeline({
-          scrollTrigger: {
-            trigger: cvRef.current,
-            start: 'top top',
-            end: '+=250%',
-            pin: true,
-            scrub: 0.6,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          }
-        })
-        buildCoreValuesTimeline(tlCV, false)
-
-        const moveImgs = gsap.utils.toArray('.card-layer img')
-        let rafId = null
-        const handleMouseMove = (e) => {
-          if (rafId) return
-          rafId = requestAnimationFrame(() => {
-            rafId = null
-            if (!tlCV.scrollTrigger || !tlCV.scrollTrigger.isActive) return
-            const x = (e.clientX / window.innerWidth - 0.5) * 15
-            const y = (e.clientY / window.innerHeight - 0.5) * 15
-            gsap.to(moveImgs, { x, y, duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-          })
-        }
-        window.addEventListener('mousemove', handleMouseMove, { passive: true })
-        return () => {
-          window.removeEventListener('mousemove', handleMouseMove)
-          if (rafId) cancelAnimationFrame(rafId)
-        }
-      })
-
-      // Mobile Timeline & Entrance
-      mm.add("(max-width: 1023px)", () => {
-        gsap.set('.cv-bg-layer', { borderRadius: '0px' })
-        const entranceTL = gsap.timeline({
-          scrollTrigger: {
-            trigger: cvRef.current,
-            start: 'top bottom',
-            end: 'top top',
-            scrub: 0.4,
-            invalidateOnRefresh: true,
-          }
-        })
-        entranceTL.fromTo('.cv-bg-layer',
-          { opacity: 0.35, scale: 2.6 },
-          { opacity: 1, scale: 2.5, ease: 'power2.out' },
-          0
-        )
-        entranceTL.fromTo('.cv-intro-container',
-          { opacity: 0, scale: 0.95 },
-          { opacity: 1, scale: 1, ease: 'power2.out' },
-          0
-        )
-
-        const tlCV = gsap.timeline({
-          scrollTrigger: {
-            trigger: cvRef.current,
-            start: 'top top',
-            end: '+=150%',
-            pin: true,
-            scrub: 0.4,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          }
-        })
-        buildCoreValuesTimeline(tlCV, true)
-        return () => {}
-      })
-
     }, containerRef)
     
+    // Recalculate scroll positions for dependent downstream sections
+    ScrollTrigger.refresh()
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <div ref={containerRef} className="brand-story-wrapper bg-white">
-      
+    <div ref={containerRef} className="brand-story-wrapper bg-[#0D0D0D]">
       {/* ========================================== */}
       {/* CHAPTERS SECTION                           */}
       {/* ========================================== */}
-      <section ref={storyRef} className="relative bg-white h-screen overflow-hidden">
+      <section ref={storyRef} className="relative bg-[#0D0D0D] h-screen overflow-hidden">
+        {/* White background layer for Chapter 01 */}
+        <div className="bg-white-layer absolute inset-0 bg-white z-0 pointer-events-none" />
+
+        {/* Chapter 02 background image with dark overlay */}
         <div className="bg-layer bg-img-1 absolute inset-0 z-0 opacity-0 overflow-hidden">
            <img src={bgImages[0]} className="w-full h-full object-cover scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
            <div className="absolute inset-0 bg-black/60" />
@@ -379,58 +148,6 @@ export default function BrandStorySection() {
           </div>
         </div>
       </section>
-
-      {/* ========================================== */}
-      {/* CORE VALUES SECTION                        */}
-      {/* ========================================== */}
-      <section ref={cvRef} className="relative bg-[#111] h-screen overflow-hidden">
-        
-        {/* Core Values Intro Text */}
-        <div className="cv-intro-wrapper absolute inset-0 flex items-center justify-center z-20 pointer-events-none px-6">
-           <div className="cv-intro-container flex flex-col items-center text-center max-w-4xl">
-              <div className="inline-flex items-center gap-4 mb-6 lg:mb-8">
-                <div className="cv-tagline-line w-8 h-[1px] bg-[#E8B884]"></div>
-                <span className="cv-tagline-text text-xs tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
-                  OUR CORE VALUES
-                </span>
-                {/* Intentionally NO horizontal line on the right side */}
-              </div>
-              <h2 className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl mb-6 lg:mb-8 leading-tight font-serif drop-shadow-md font-bold">
-                <span className="built-on-text text-white block"><span className="text-green-brand font-bold">Built</span> on</span>
-                <span className="text-[#E8B884] block italic">Excellence</span>
-              </h2>
-              <p className="cv-desc text-base md:text-xl lg:text-2xl text-white/80 leading-relaxed font-light">
-                The principles that shape every transformation.
-              </p>
-           </div>
-        </div>
-
-        {/* Core Values Gallery (Background Image + Expanding Cards) */}
-        <div className="gallery-wrapper absolute inset-0 z-10 pointer-events-none transform-gpu [backface-visibility:hidden]">
-          
-          {/* Main Background Reveal Layer */}
-          <div className="cv-bg-layer card-layer absolute top-1/2 left-1/2 w-[60vw] h-[40vh] md:w-[25vw] md:h-[35vh] overflow-hidden bg-black [backface-visibility:hidden] transform-gpu will-change-[transform,opacity] rounded-2xl">
-            <img src={coreValueImages[0]} className="w-full h-full object-cover opacity-100 transform-gpu" loading="eager" decoding="async" />
-            <div className="absolute inset-0 bg-black/50 bg-overlay pointer-events-none" />
-            <div className="absolute inset-0 flex items-center justify-center cv-text-1 opacity-0 z-30 pointer-events-none px-6 text-center">
-               <h3 className="text-white text-[13px] min-[375px]:text-[15px] md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold">{coreValues[0]}</h3>
-            </div>
-          </div>
-
-          {/* The other 7 Core Value Cards */}
-          {coreValueImages.slice(1).map((src, i) => (
-            <div key={i} className={`card-layer card-${i+2} absolute top-1/2 left-1/2 w-[60vw] h-[40vh] md:w-[25vw] md:h-[35vh] opacity-0 overflow-hidden rounded-2xl shadow-xl bg-[#231F20] [backface-visibility:hidden] transform-gpu will-change-[transform,opacity]`}>
-              <img src={src} className="w-full h-full object-cover opacity-95 scale-105 transform-gpu" loading="eager" decoding="async" />
-              <div className="absolute inset-0 bg-[#231F20]/75 pointer-events-none" />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 cv-text px-6 text-center pointer-events-none">
-                 <h3 className={`text-white ${["Professionalism", "Confidentiality"].includes(coreValues[i+1]) ? "text-[11px] min-[375px]:text-[13px]" : "text-[13px] min-[375px]:text-[15px]"} md:text-2xl font-serif tracking-widest uppercase drop-shadow-xl font-bold`}>{coreValues[i+1]}</h3>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-      </section>
-
     </div>
   )
 }
