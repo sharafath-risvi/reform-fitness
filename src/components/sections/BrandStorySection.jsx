@@ -66,7 +66,7 @@ export default function BrandStorySection() {
           scrollTrigger: {
             trigger: storyRef.current,
             start: 'top top',
-            end: '+=100%',
+            end: '+=150%',
             pin: true,
             scrub: 1,
             anticipatePin: 1,
@@ -75,13 +75,13 @@ export default function BrandStorySection() {
         })
         tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 })
         tlStory.to('.block-1 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.2, ease: 'power3.out' }, "<")
-        tlStory.to({}, { duration: 0.5 })
+        tlStory.to({}, { duration: 0.8 })
         tlStory.to('.block-1', { opacity: 0, y: -40, duration: 0.8 })
         tlStory.to('.bg-white-layer', { opacity: 0, duration: 1 }, "<")
         tlStory.to('.bg-img-1', { opacity: 1, duration: 1 }, "<")
-        tlStory.to('.block-2', { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
+        tlStory.to('.block-2', { opacity: 1, y: 0, duration: 0.8 }, "-=0.2")
         tlStory.to('.block-2 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.03, duration: 1, ease: 'power3.out' }, "<")
-        tlStory.to({}, { duration: 0.5 })
+        tlStory.to({}, { duration: 0.8 })
         tlStory.to('.block-2', { opacity: 0, y: -40, duration: 0.8 })
         tlStory.to('.bg-img-1', { opacity: 0, duration: 1 }, "<")
         return () => {}
