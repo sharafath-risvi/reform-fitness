@@ -16,7 +16,7 @@ const trainers = [
       "Akash is a competitive athlete and strength coach with 3+ years of experience in the UAE. His sporting background spans Weightlifting, Powerlifting, Wrestling, Bodybuilding, Baseball, Softball, and CrossFit.",
       "A Mahatma Gandhi University Weightlifting Gold Medalist, he specializes in strength training, muscle building, fat loss, and athletic performance—helping clients build confidence and a sustainable lifestyle."
     ],
-    image: '/trainers/akash.webp',
+    image: '/trainers/akash.png',
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const trainers = [
       "With 4 years of experience in fitness training, Nishin Prakash is a Dubai-based Fitness Coach specializing in Strength & Conditioning, Body Recomposition, Fat Loss, Mobility, and Stretching.",
       "Every training program is designed around the client’s goals, fitness level, lifestyle, and individual needs, ensuring that training is both effective and sustainable."
     ],
-    image: '/trainers/nishin.webp',
+    image: '/trainers/nishin.png',
   },
   {
     id: 3,

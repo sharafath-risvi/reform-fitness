@@ -68,7 +68,7 @@ export default function AboutFounders() {
           {/* Image - LEFT SIDE (Slightly lowered and slightly taller) */}
           <div className="w-full flex flex-col lg:col-span-5 xl:col-span-5 mt-0 lg:mt-2">
             <div className="relative group w-full mb-8 lg:mb-0 max-w-md mx-auto lg:max-w-none">
-              <div className="founder-image relative overflow-hidden aspect-[2/3] rounded-2xl w-full shadow-2xl">
+              <div className="founder-image relative overflow-hidden aspect-[2/3.05] rounded-2xl w-full shadow-2xl">
                 <img 
                   src="/founder/founder.jpeg" 
                   alt="Founder of Reform Fitness" 
@@ -80,6 +80,13 @@ export default function AboutFounders() {
 
           {/* Founder Info - RIGHT SIDE */}
           <div className="founder-text flex flex-col justify-start lg:col-span-7 xl:col-span-7 lg:pt-4">
+            <p className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#231F20] mb-2">
+              Jahir Hussain
+            </p>
+            <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-[#2B6F6F] font-semibold mb-8">
+              Founder
+            </p>
+            
             <p className="text-base md:text-lg text-[#231F20]/90 leading-relaxed font-light mb-6">
               Reform Fitness was born from a personal experience that <span className="text-[#2B6F6F] font-medium">changed the way I understood fitness.</span>
             </p>

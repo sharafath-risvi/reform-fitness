@@ -75,7 +75,7 @@ const allServices = [
     includes: ['Medical history review', 'Doctor coordination', 'Progressive recovery protocol', 'Pain point assessment', 'Return-to-function milestones', 'Long-term injury prevention'],
     color: '#E8B884',
     ideal: 'Post-surgery, chronic pain, and sports injury recovery',
-    img: '/services_images/injuryrehabilation.jpeg'
+    img: '/services_images/injuryrehabilation.png'
   },
   {
     icon: Flower2,

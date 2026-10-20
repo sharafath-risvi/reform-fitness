@@ -41,7 +41,7 @@ const serviceGroups = [
       num: '05',
       title: 'Rehabilitation (Post Injury)',
       subtitle: 'From Recovery to Full Functional Strength',
-      img: '/services_images/injuryrehabilation.jpeg',
+      img: '/services_images/injuryrehabilation.png',
     },
     {
       num: '06',
