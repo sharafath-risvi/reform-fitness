@@ -68,7 +68,7 @@ export default function ContactPage() {
         >
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60 mix-blend-luminosity"
-            style={{ backgroundImage: `url('/images/contacthero.jpeg')` }}
+            style={{ backgroundImage: `url('/images/contacthero.png')` }}
           />
           {/* Subtle dark overlay for readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/90 via-[#0a0a0a]/50 to-[#0a0a0a]/30" />
