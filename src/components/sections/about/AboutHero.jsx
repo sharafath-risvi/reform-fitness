@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -8,12 +8,7 @@ export default function AboutHero() {
   const bgImageRef = useRef(null)
   const contentRef = useRef(null)
 
-  useLayoutEffect(() => {
-    // Explicitly guarantee initial visible state so content is never stuck at opacity 0
-    if (contentRef.current) {
-      gsap.set(contentRef.current, { y: 0, opacity: 1, filter: 'blur(0px)' })
-    }
-
+  useEffect(() => {
     let ctx = gsap.context(() => {
       // Pin and zoom
       gsap.to(containerRef.current, {
@@ -24,7 +19,6 @@ export default function AboutHero() {
           pin: true,
           pinSpacing: false,
           scrub: 1,
-          invalidateOnRefresh: true,
         }
       })
 
@@ -33,44 +27,28 @@ export default function AboutHero() {
         {
           scale: 1.15,
           ease: 'none',
-          immediateRender: false,
           scrollTrigger: {
             trigger: containerRef.current,
             start: 'top top',
             end: 'bottom top',
             scrub: 1,
-            invalidateOnRefresh: true,
           }
         }
       )
 
-      gsap.fromTo(contentRef.current,
-        { y: 0, opacity: 1, filter: 'blur(0px)' },
-        {
-          y: -150,
-          opacity: 0,
-          filter: 'blur(10px)',
-          ease: 'none',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1,
-            invalidateOnRefresh: true,
-          }
+      gsap.to(contentRef.current, {
+        y: -150,
+        opacity: 0,
+        filter: 'blur(10px)',
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
         }
-      )
+      })
     }, containerRef)
-
-    const rafId = requestAnimationFrame(() => {
-      ScrollTrigger.refresh()
-    })
-
-    return () => {
-      cancelAnimationFrame(rafId)
-      ctx.revert()
-    }
+    return () => ctx.revert()
   }, [])
 
   return (
