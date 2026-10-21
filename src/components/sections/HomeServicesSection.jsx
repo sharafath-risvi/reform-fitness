@@ -47,7 +47,7 @@ const serviceGroups = [
       num: '06',
       title: 'Senior Fitness',
       subtitle: 'Age Gracefully, Balance & Independence',
-      img: '/services_images/seniorfitness.jpeg',
+      img: '/services_images/seniorfitness.png',
     },
     {
       num: '07',

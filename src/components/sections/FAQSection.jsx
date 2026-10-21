@@ -12,7 +12,7 @@ const faqs = [
   { q: 'What is included in the health screening?', a: 'Our health screening covers medical history, current medications, past injuries or surgeries, lifestyle habits, sleep quality, nutrition patterns, and mental wellness. This comprehensive view helps us design a truly safe and effective program.' },
   { q: 'Do you offer nutrition plans?', a: 'We offer lifestyle nutrition coaching rather than strict medical diet plans. We help you build sustainable eating habits, understand macronutrients, and make smarter food choices that support your goals — without crash diets or deprivation.' },
   { q: 'How quickly will I see results?', a: 'Most clients notice improvements in energy, sleep, and mood within the first 2–3 weeks. Visible physical changes typically begin in 4–6 weeks depending on your goals, consistency, and lifestyle factors. We prioritize long-term sustainable results over quick fixes.' },
-  { q: 'Are your trainers certified?', a: 'Yes. All ReForm Fitness trainers hold internationally recognized certifications from organizations such as NSCA, NASM, ACE, ACSM, and ISSA. Many also hold specialized certifications in rehabilitation, women\'s health, and senior fitness.' },
+  { q: 'Are your trainers certified?', a: 'Trainers are certified by level 3 certification and register in reps some of trainer certified in yoga and specialise in pre-post natal.' },
 ]
 
 function FAQItem({ faq }) {

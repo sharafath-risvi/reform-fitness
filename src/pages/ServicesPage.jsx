@@ -65,7 +65,7 @@ const allServices = [
     includes: ['Balance and coordination training', 'Joint strengthening exercises', 'Fall prevention techniques', 'Mobility and flexibility work', 'Low-impact cardio sessions', 'Functional daily movement training'],
     color: '#2B6F6F',
     ideal: 'Adults aged 55 and above',
-    img: '/services_images/seniorfitness.jpeg'
+    img: '/services_images/seniorfitness.png'
   },
   {
     icon: Activity,

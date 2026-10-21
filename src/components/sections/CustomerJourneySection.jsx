@@ -39,13 +39,13 @@ const journeySteps = [
     step: '06', 
     title: 'Training Begins', 
     desc: 'Precision execution at our luxury facility, guided every step of the way.',
-    image: '/Reform_images/DSC06277.webp'
+    image: '/Reform_images/stage6.png'
   },
   { 
     step: '07', 
     title: 'Weekly Follow-up', 
     desc: 'Continuous tracking and micro-adjustments to ensure you are always progressing.',
-    image: '/images/weeklyfollowup.jpeg'
+    image: '/images/weeklyfollowup.png'
   },
   { 
     step: '08', 

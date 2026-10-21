@@ -191,9 +191,9 @@ export default function TrainersPage() {
           className="absolute inset-0 w-full h-full"
         >
           <img 
-            src="/Reform_images/DSC06269.webp" 
+            src="/Reform_images/trainers.png" 
             alt="ReForm Fitness Trainers" 
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-[center_48%] lg:object-[center_58%]"
           />
           {/* Dark Cinematic Overlay */}
           <div className="absolute inset-0 bg-black/30" />

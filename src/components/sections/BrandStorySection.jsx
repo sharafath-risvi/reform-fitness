@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const bgImages = [
-  "/Reform_images/DSC06269.webp", 
+  "/Reform_images/trainers.png", 
 ]
 
 const SplitText = ({ text }) => {
@@ -106,7 +106,7 @@ export default function BrandStorySection() {
 
         {/* Chapter 02 background image with dark overlay */}
         <div className="bg-layer bg-img-1 absolute inset-0 z-0 opacity-0 overflow-hidden">
-           <img src={bgImages[0]} className="w-full h-full object-cover scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
+           <img src={bgImages[0]} className="w-full h-full object-cover object-[center_48%] lg:object-[center_58%] scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
            <div className="absolute inset-0 bg-black/60" />
         </div>
 
