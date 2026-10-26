@@ -28,9 +28,14 @@ const introCards = [
   { icon: Dumbbell, title: 'Tailored Fitness Journey', desc: 'No cookie-cutter routines. Receive a roadmap designed exclusively for your body.' }
 ]
 
+const WEB3FORMS_ACCESS_KEY = '690c61be-9bd8-40b5-a983-8c7b04f0555f'
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit'
+
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
-  const { register, handleSubmit } = useForm()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const { register, handleSubmit, reset } = useForm()
   const location = useLocation()
 
   useEffect(() => {
@@ -46,9 +51,38 @@ export default function ContactPage() {
     }
   }, [location]);
 
-  const onSubmit = (data) => {
-    console.log(data)
-    setSent(true)
+  const onSubmit = async (_data, event) => {
+    if (isSubmitting) return
+
+    setIsSubmitting(true)
+    setSubmitError('')
+
+    try {
+      const formData = new FormData(event.target)
+      formData.append('access_key', WEB3FORMS_ACCESS_KEY)
+      formData.append('subject', 'New Contact Form Submission — ReForm Fitness')
+
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: formData,
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        reset()
+        setSent(true)
+      } else {
+        setSubmitError(result.message || 'Something went wrong. Please try again, or email us directly.')
+      }
+    } catch {
+      setSubmitError('Unable to send your message. Please check your connection and try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const { scrollYProgress } = useScroll()
@@ -214,6 +248,7 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-10 relative z-10">
+                <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
                 
                 {/* Form Header */}
                 <div className="flex flex-col items-start">
@@ -320,12 +355,22 @@ export default function ContactPage() {
                   </label>
                 </div>
 
+                {submitError && (
+                  <p className="text-red-400 text-sm font-light text-center" role="alert">
+                    {submitError}
+                  </p>
+                )}
+
                 <button 
                   type="submit" 
-                  className="w-full py-5 rounded-full bg-[#E8B884] text-[#0a0a0a] hover:text-white font-semibold tracking-[0.2em] uppercase text-[0.8rem] hover:bg-[#2B6F6F] transition-colors duration-500 mt-6 flex items-center justify-center gap-4 group shadow-[0_10px_30px_rgba(232,184,132,0.15)] hover:shadow-[0_20px_40px_rgba(43,111,111,0.15)]"
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
+                  className="w-full py-5 rounded-full bg-[#E8B884] text-[#0a0a0a] hover:text-white font-semibold tracking-[0.2em] uppercase text-[0.8rem] hover:bg-[#2B6F6F] transition-colors duration-500 mt-6 flex items-center justify-center gap-4 group shadow-[0_10px_30px_rgba(232,184,132,0.15)] hover:shadow-[0_20px_40px_rgba(43,111,111,0.15)] disabled:opacity-70 disabled:pointer-events-none disabled:hover:bg-[#E8B884] disabled:hover:text-[#0a0a0a]"
                 >
-                  <span>Submit Application</span>
-                  <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  <span>{isSubmitting ? 'Sending...' : 'Submit Application'}</span>
+                  {!isSubmitting && (
+                    <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  )}
                 </button>
               </form>
             )}
