@@ -1,5 +1,6 @@
 import HeroSection from '../components/sections/HeroSection'
 import BrandStorySection from '../components/sections/BrandStorySection'
+import AboutFounders from '../components/sections/about/AboutFounders'
 import HomeServicesSection from '../components/sections/HomeServicesSection'
 import CustomerJourneySection from '../components/sections/CustomerJourneySection'
 import WhyChooseUsSection from '../components/sections/WhyChooseUsSection'
@@ -8,18 +9,23 @@ import InstagramReelsSection from '../components/sections/InstagramReelsSection'
 import TheReFormStandardSection from '../components/sections/TheReFormStandardSection'
 import FAQSection from '../components/sections/FAQSection'
 import ConsultationCTASection from '../components/sections/ConsultationCTASection'
+import ScrollIndicator from '../components/ui/ScrollIndicator'
 
 export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <div className="relative bg-white">
+        <AboutFounders />
+        <ScrollIndicator variant="light" className="pb-12 -mt-6" />
+      </div>
       <BrandStorySection />
       <HomeServicesSection />
       <CustomerJourneySection />
       <WhyChooseUsSection />
       {/* <ServicesSection /> */}
       <InstagramReelsSection />
-      <TheReFormStandardSection />
+      {/* <TheReFormStandardSection /> */}
       <FAQSection />
       <ConsultationCTASection />
     </>

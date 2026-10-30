@@ -191,13 +191,13 @@ export default function HomeServicesSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full h-[100dvh] bg-white overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 lg:pt-20 pb-4 sm:pb-6 lg:pb-10 select-none"
+      className="home-services-section relative w-full h-[100dvh] bg-white overflow-hidden flex flex-col justify-between pt-14 sm:pt-16 lg:pt-20 pb-4 sm:pb-6 lg:pb-10 select-none"
     >
       {/* Background radial luxury glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#E8B884] opacity-[0.035] blur-[140px] rounded-full pointer-events-none" />
 
       {/* Header Bar: Positioned below floating navbar with ample clearance */}
-      <div className="w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center sm:flex-row sm:items-end justify-between gap-5 sm:gap-3 relative z-20 mt-6 sm:mt-0 mb-8 sm:mb-8 lg:mb-10">
+      <div className="home-services-header w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center sm:flex-row sm:items-end justify-between gap-5 sm:gap-3 relative z-20 mt-6 sm:mt-0 mb-8 sm:mb-8 lg:mb-10">
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left w-full sm:w-auto">
           <div className="flex items-center justify-center sm:justify-start gap-3 mb-1.5 sm:mb-2 w-full">
             <div className="w-6 sm:w-8 h-[1px] bg-[#E8B884]" />
@@ -232,13 +232,13 @@ export default function HomeServicesSection() {
       </div>
 
       {/* Stage Container: Holds the 2x2 group grids and cleanly clips vertical transitions */}
-      <div className="relative w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 h-[460px] sm:h-[580px] lg:h-[680px] xl:h-[780px] overflow-hidden z-10 my-auto">
+      <div className="home-services-stage relative w-full max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8 h-[460px] sm:h-[580px] lg:h-[680px] xl:h-[780px] overflow-hidden z-10 my-auto">
         {serviceGroups.map((group, groupIndex) => (
           <div
             key={groupIndex}
-            className={`service-group-${groupIndex + 1} absolute inset-0 w-full h-full will-change-[transform,opacity] transform-gpu px-4 sm:px-6 lg:px-8`}
+            className={`service-group-${groupIndex + 1} home-services-group absolute inset-0 w-full h-full will-change-[transform,opacity] transform-gpu px-4 sm:px-6 lg:px-8`}
           >
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 h-full w-full">
+            <div className="home-services-grid grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6 h-full w-full">
               {group.map((service, idx) => (
                 <Link
                   key={service.num}
@@ -249,7 +249,7 @@ export default function HomeServicesSection() {
                       window.lenis.scrollTo(0, { immediate: true })
                     }
                   }}
-                  className={`group relative h-full cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden bg-[#181818] border border-white/15 hover:border-[#E8B884]/80 transition-all duration-300 hover:shadow-[0_12px_36px_rgba(232,184,132,0.18)] flex flex-col justify-between p-3 sm:p-4 lg:p-5 ${group.length === 3 && idx === 2 ? 'col-span-2 mx-auto w-[calc(50%-0.375rem)] sm:w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.75rem)]' : 'w-full'}`}
+                  className={`home-services-card group relative h-full cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden bg-[#181818] border border-white/15 hover:border-[#E8B884]/80 transition-all duration-300 hover:shadow-[0_12px_36px_rgba(232,184,132,0.18)] flex flex-col justify-between p-3 sm:p-4 lg:p-5 ${group.length === 3 && idx === 2 ? 'home-services-card-third col-span-2 mx-auto w-[calc(50%-0.375rem)] sm:w-[calc(50%-0.5rem)] lg:w-[calc(50%-0.75rem)]' : 'w-full'}`}
                 >
                   {/* Service Background Image - Full brightness & natural vibrant color */}
                   <img
@@ -279,10 +279,10 @@ export default function HomeServicesSection() {
 
                   {/* Bottom Bar: Title + Subtitle */}
                   <div className="relative z-10">
-                    <h3 className="font-serif text-xs sm:text-base lg:text-lg font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] group-hover:text-[#E8B884] transition-colors duration-300 leading-snug line-clamp-1">
+                    <h3 className="home-services-card-title font-serif text-xs sm:text-base lg:text-lg font-bold text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] group-hover:text-[#E8B884] transition-colors duration-300 leading-snug line-clamp-1">
                       {service.title}
                     </h3>
-                    <p className="text-[10px] sm:text-xs text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] font-medium mt-0.5 sm:mt-1 line-clamp-1">
+                    <p className="home-services-card-subtitle text-[10px] sm:text-xs text-white/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] font-medium mt-0.5 sm:mt-1 line-clamp-1">
                       {service.subtitle}
                     </p>
                   </div>

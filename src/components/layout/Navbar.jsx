@@ -12,9 +12,8 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(true)
+  const [hidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const hasScrolledInitial = useRef(false)
   const location = useLocation()
   
   const { scrollY } = useScroll()
@@ -23,47 +22,13 @@ export default function Navbar() {
     // Check initial scroll position on mount
     const currentScrollY = window.scrollY
     setScrolled(currentScrollY > 60)
-    
-    if (currentScrollY > 50) {
-      hasScrolledInitial.current = true
-      if (currentScrollY > 250) {
-        setHidden(true)
-      } else {
-        setHidden(false)
-      }
-    } else {
-      setHidden(true)
-    }
   }, [])
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious()
-    
-    if (latest > 50) {
-      hasScrolledInitial.current = true
-    }
-    
     // Determine if scrolled past threshold for styling
     setScrolled(prev => {
       const isScrolled = latest > 60
       if (prev !== isScrolled) return isScrolled
-      return prev
-    })
-
-    // Visibility logic based on scroll direction and position
-    setHidden(prev => {
-      // 1. Hide at the very top ON INITIAL LOAD ONLY
-      if (!hasScrolledInitial.current && latest <= 50) return true
-      
-      // 2. Show when scrolling up
-      if (latest < previous) return false
-      
-      // 3. When scrolling down, reveal initially, then hide after threshold
-      if (latest > previous) {
-        if (latest <= 250) return false
-        return true
-      }
-      
       return prev
     })
   })

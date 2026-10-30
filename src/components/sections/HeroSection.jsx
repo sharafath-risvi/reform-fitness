@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ScrollIndicator from '../ui/ScrollIndicator'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,6 +14,10 @@ const heroVideos = [
   { id: 'v3', src: '/homeherovideos/video3.mp4' },
   { id: 'v4', src: '/homeherovideos/video4.mp4' },
 ]
+
+// Introductory large-to-small transition is hidden per client request;
+// existing animation code and video assets are preserved below.
+const ENABLE_INTRO_ANIMATION = false
 
 export default function HeroSection() {
   const containerRef = useRef(null)
@@ -41,15 +46,15 @@ export default function HeroSection() {
   const panelVid4Ref = useRef(null)
 
   useEffect(() => {
-    // Autoplay all videos reliably without audio
+    // Autoplay all active videos reliably without audio
     const allVideos = [
-      centerVid1Ref.current,
-      centerVid2Ref.current,
-      bgVid1Ref.current,
-      bgVid2Ref.current,
       panelVid1Ref.current,
+      centerVid2Ref.current,
       panelVid3Ref.current,
       panelVid4Ref.current,
+      ...(ENABLE_INTRO_ANIMATION
+        ? [centerVid1Ref.current, bgVid1Ref.current, bgVid2Ref.current]
+        : []),
     ].filter(Boolean)
 
     allVideos.forEach((video) => {
@@ -71,41 +76,113 @@ export default function HeroSection() {
         ScrollTrigger.refresh()
       }
     }
-    if (centerVid1Ref.current) {
-      if (centerVid1Ref.current.readyState >= 2) {
+    const primaryVideo = ENABLE_INTRO_ANIMATION ? centerVid1Ref.current : panelVid1Ref.current
+    if (primaryVideo) {
+      if (primaryVideo.readyState >= 2) {
         safeRefresh()
       } else {
-        centerVid1Ref.current.addEventListener('loadeddata', safeRefresh, { once: true })
+        primaryVideo.addEventListener('loadeddata', safeRefresh, { once: true })
       }
     }
 
-    // Keep blurred backgrounds synchronized with their corresponding foreground videos
-    const syncInterval = setInterval(() => {
-      if (centerVid1Ref.current && bgVid1Ref.current) {
-        if (Math.abs(centerVid1Ref.current.currentTime - bgVid1Ref.current.currentTime) > 0.15) {
-          bgVid1Ref.current.currentTime = centerVid1Ref.current.currentTime
-        }
-      }
-      if (centerVid2Ref.current && bgVid2Ref.current) {
-        if (Math.abs(centerVid2Ref.current.currentTime - bgVid2Ref.current.currentTime) > 0.15) {
-          bgVid2Ref.current.currentTime = centerVid2Ref.current.currentTime
-        }
-      }
-    }, 500)
+    // Keep blurred backgrounds synchronized with their corresponding foreground videos when intro is enabled
+    const syncInterval = ENABLE_INTRO_ANIMATION
+      ? setInterval(() => {
+          if (centerVid1Ref.current && bgVid1Ref.current) {
+            if (Math.abs(centerVid1Ref.current.currentTime - bgVid1Ref.current.currentTime) > 0.15) {
+              bgVid1Ref.current.currentTime = centerVid1Ref.current.currentTime
+            }
+          }
+          if (centerVid2Ref.current && bgVid2Ref.current) {
+            if (Math.abs(centerVid2Ref.current.currentTime - bgVid2Ref.current.currentTime) > 0.15) {
+              bgVid2Ref.current.currentTime = centerVid2Ref.current.currentTime
+            }
+          }
+        }, 500)
+      : null
 
     const ctx = gsap.context(() => {
+      if (!ENABLE_INTRO_ANIMATION) {
+        // Start directly in the final four-video arrangement with the introductory sequence hidden
+        gsap.set([bgBlur1Ref.current, bgBlur2Ref.current, initialContentRef.current, centerCardVideo1WrapperRef.current], {
+          autoAlpha: 0,
+          display: 'none',
+        })
+
+        gsap.set(panel1Ref.current, {
+          autoAlpha: 1,
+          xPercent: 0,
+          scale: 1,
+          rotateY: 0,
+          left: '0vw',
+          width: '25vw',
+          height: '100%',
+          zIndex: 10,
+        })
+
+        gsap.set(centerCardRef.current, {
+          autoAlpha: 1,
+          left: '25vw',
+          top: '0%',
+          xPercent: 0,
+          yPercent: 0,
+          width: '25vw',
+          height: '100%',
+          borderRadius: '0px',
+          boxShadow: '0 0px 0px rgba(0,0,0,0)',
+          zIndex: 12,
+        })
+
+        gsap.set(centerCardVideo2WrapperRef.current, {
+          autoAlpha: 1,
+          rotateX: 0,
+          rotateY: 0,
+          rotateZ: 0,
+          xPercent: 0,
+          yPercent: 0,
+          z: 0,
+          scale: 1,
+          borderRadius: '0px',
+          boxShadow: '0 0px 0px rgba(0,0,0,0)',
+        })
+
+        gsap.set(panel3Ref.current, {
+          autoAlpha: 1,
+          xPercent: 0,
+          scale: 1,
+          rotateY: 0,
+          left: '50vw',
+          width: '25vw',
+          height: '100%',
+          zIndex: 10,
+        })
+
+        gsap.set(panel4Ref.current, {
+          autoAlpha: 1,
+          xPercent: 0,
+          scale: 1,
+          rotateY: 0,
+          left: '75vw',
+          width: '25vw',
+          height: '100%',
+          zIndex: 10,
+        })
+
+        gsap.set(secondaryContentRef.current, { zIndex: 25 })
+        gsap.fromTo(
+          secondaryContentRef.current,
+          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' }
+        )
+
+        return
+      }
+
       const mm = gsap.matchMedia()
 
       // Desktop & Tablet (>= 768px):
-      // Stage 1: Fullscreen Video 1 with initial content
-      // Stage 2: Video 1 contracts to centered 9:16 card + matching blurred Video 1 background
-      // Stage 3: Simultaneous diagonal movement in 3D:
-      //          Video 2 moves center -> bottom-left ↙ while rotating away
-      //          Video 3 enters bottom-right -> center ↖ while rotating toward viewer
-      // Stage 4: Centered video physically glides to Panel 2 while Panels 1, 3, 4 enter into a continuous 4-video row
-      // Stage 5: Short heading reveals centered directly OVER the four videos
+      // Preserved introductory animation sequence (Stages 1 -> 5)
       mm.add('(min-width: 768px)', () => {
-        // Initial setup for Desktop
         gsap.set(centerCardRef.current, {
           width: '100vw',
           height: '100vh',
@@ -153,7 +230,6 @@ export default function HeroSection() {
         gsap.set(bgBlur1Ref.current, { opacity: 0, zIndex: 1 })
         gsap.set(bgBlur2Ref.current, { opacity: 0, zIndex: 2 })
 
-        // Initial setup for Panels 1, 3, 4
         gsap.set(panel1Ref.current, {
           autoAlpha: 0,
           xPercent: -40,
@@ -197,8 +273,6 @@ export default function HeroSection() {
           },
         })
 
-        // STAGE 1 -> STAGE 2:
-        // 1. Initial content fades out smoothly
         tl.to(
           initialContentRef.current,
           {
@@ -210,7 +284,6 @@ export default function HeroSection() {
           0
         )
 
-        // 2. Large video contracts into centered 9:16 card (37.125vh x 66vh, preserving native 9:16 aspect ratio)
         tl.to(
           centerCardRef.current,
           {
@@ -234,26 +307,19 @@ export default function HeroSection() {
           0.05
         )
 
-        // 3. Blurred background of Video 1 emerges simultaneously
         tl.to(
           bgBlur1Ref.current,
           {
             opacity: 1,
-            duration: 0.40,
+            duration: 0.4,
             ease: 'power2.out',
           },
           0.08
         )
 
-        // HOLD STAGE 2: Visitor experiences centered Video 1 over blurred Video 1
         tl.addLabel('stage2_hold')
         tl.to({}, { duration: 0.25 })
 
-        // =========================================================
-        // STAGE 2 -> STAGE 3: SIMULTANEOUS DIAGONAL MOVEMENT IN 3D
-        // Video 2: Center -> Bottom-Left (negative X, positive Y) ↙
-        // Video 3: Bottom-Right -> Center (positive X/Y -> 0, 0) ↖
-        // =========================================================
         tl.addLabel('stage3_transition')
         tl.to(
           centerCardVideo1WrapperRef.current,
@@ -266,7 +332,7 @@ export default function HeroSection() {
             z: -180,
             scale: 0.88,
             opacity: 0,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'stage3_transition'
@@ -282,7 +348,7 @@ export default function HeroSection() {
             z: 0,
             scale: 1,
             opacity: 1,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'stage3_transition'
@@ -291,7 +357,7 @@ export default function HeroSection() {
           bgBlur1Ref.current,
           {
             opacity: 0,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'stage3_transition'
@@ -300,19 +366,15 @@ export default function HeroSection() {
           bgBlur2Ref.current,
           {
             opacity: 1,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'stage3_transition'
         )
 
-        // HOLD STAGE 3: Visitor clearly sees sharp centered Video 3 over matching blurred Video 3
         tl.addLabel('stage3_hold')
-        tl.to({}, { duration: 0.30 })
+        tl.to({}, { duration: 0.3 })
 
-        // STAGE 3 -> STAGE 4:
-        // Center video visibly travels into Panel 2 position (left: 37.5vw, width: 25vw, height: 100vh)
-        // while Panels 1, 3, and 4 enter smoothly, and the blurred background naturally fades away.
         tl.addLabel('stage4_transition')
         tl.to(
           centerCardRef.current,
@@ -383,12 +445,9 @@ export default function HeroSection() {
           'stage4_transition'
         )
 
-        // HOLD STAGE 4: Four equal video panels cleanly established in one row
         tl.addLabel('stage4_hold')
         tl.to({}, { duration: 0.25 })
 
-        // STAGE 4 -> STAGE 5:
-        // Short heading reveals centered directly OVER the four videos
         tl.addLabel('stage5_transition')
         tl.to(
           secondaryContentRef.current,
@@ -401,7 +460,6 @@ export default function HeroSection() {
           'stage5_transition'
         )
 
-        // HOLD STAGE 5: Heading readable over the four panels before unpinning
         tl.addLabel('stage5_hold')
         tl.to({}, { duration: 0.35 })
 
@@ -457,7 +515,6 @@ export default function HeroSection() {
         gsap.set(bgBlur1Ref.current, { opacity: 0, zIndex: 1 })
         gsap.set(bgBlur2Ref.current, { opacity: 0, zIndex: 2 })
 
-        // Initial setup for Panels 1, 3, 4
         gsap.set(panel1Ref.current, {
           autoAlpha: 0,
           xPercent: -40,
@@ -501,7 +558,6 @@ export default function HeroSection() {
           },
         })
 
-        // Stage 1 -> 2:
         tlMobile.to(
           initialContentRef.current,
           {
@@ -549,9 +605,6 @@ export default function HeroSection() {
         tlMobile.addLabel('m_stage2_hold')
         tlMobile.to({}, { duration: 0.25 })
 
-        // =========================================================
-        // Stage 2 -> 3: SIMULTANEOUS DIAGONAL MOVEMENT (Mobile)
-        // =========================================================
         tlMobile.addLabel('m_stage3_transition')
         tlMobile.to(
           centerCardVideo1WrapperRef.current,
@@ -564,7 +617,7 @@ export default function HeroSection() {
             z: -150,
             scale: 0.88,
             opacity: 0,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'm_stage3_transition'
@@ -580,7 +633,7 @@ export default function HeroSection() {
             z: 0,
             scale: 1,
             opacity: 1,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'm_stage3_transition'
@@ -589,7 +642,7 @@ export default function HeroSection() {
           bgBlur1Ref.current,
           {
             opacity: 0,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'm_stage3_transition'
@@ -598,16 +651,15 @@ export default function HeroSection() {
           bgBlur2Ref.current,
           {
             opacity: 1,
-            duration: 0.60,
+            duration: 0.6,
             ease: 'power1.inOut',
           },
           'm_stage3_transition'
         )
 
         tlMobile.addLabel('m_stage3_hold')
-        tlMobile.to({}, { duration: 0.30 })
+        tlMobile.to({}, { duration: 0.3 })
 
-        // Stage 3 -> 4:
         tlMobile.addLabel('m_stage4_transition')
         tlMobile.to(
           centerCardRef.current,
@@ -651,7 +703,7 @@ export default function HeroSection() {
             duration: 0.65,
             ease: 'power2.inOut',
           },
-          'm_stage4_transition'
+          'stage4_transition'
         )
         tlMobile.to(
           panel3Ref.current,
@@ -679,9 +731,8 @@ export default function HeroSection() {
         )
 
         tlMobile.addLabel('m_stage4_hold')
-        tlMobile.to({}, { duration: 0.20 })
+        tlMobile.to({}, { duration: 0.2 })
 
-        // Stage 4 -> 5:
         tlMobile.addLabel('m_stage5_transition')
         tlMobile.to(
           secondaryContentRef.current,
@@ -695,14 +746,14 @@ export default function HeroSection() {
         )
 
         tlMobile.addLabel('m_stage5_hold')
-        tlMobile.to({}, { duration: 0.30 })
+        tlMobile.to({}, { duration: 0.3 })
 
         return () => {}
       })
     }, containerRef)
 
     return () => {
-      clearInterval(syncInterval)
+      if (syncInterval) clearInterval(syncInterval)
       ctx.revert()
     }
   }, [])
@@ -713,21 +764,20 @@ export default function HeroSection() {
       className="relative h-screen min-h-[640px] sm:min-h-[720px] w-full flex items-center justify-center overflow-hidden bg-[#111]"
     >
       {/* ========================================================= */}
-      {/* 1. BLURRED FULL-SCREEN BACKGROUNDS (STAGES 2 & 3)         */}
+      {/* 1. BLURRED FULL-SCREEN BACKGROUNDS (HIDDEN BY DEFAULT)    */}
       {/* ========================================================= */}
       {/* Background 1: Blurred Video 1 */}
       <div
         ref={bgBlur1Ref}
-        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-0 will-change-[opacity] z-[1]"
+        className="hidden absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-0 will-change-[opacity] z-[1]"
       >
         <video
           ref={bgVid1Ref}
           src={heroVideos[0].src}
-          autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover filter blur-[20px] scale-110 pointer-events-none"
         />
       </div>
@@ -735,23 +785,22 @@ export default function HeroSection() {
       {/* Background 2: Blurred Video 2 */}
       <div
         ref={bgBlur2Ref}
-        className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-0 will-change-[opacity] z-[2]"
+        className="hidden absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-0 will-change-[opacity] z-[2]"
       >
         <video
           ref={bgVid2Ref}
           src={heroVideos[1].src}
-          autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover filter blur-[20px] scale-110 pointer-events-none"
         />
       </div>
 
       {/* ========================================================= */}
-      {/* 2. THE FOUR VIDEO PANELS                                   */}
-      {/* Panel 1, Center Card (Panel 2), Panel 3, Panel 4           */}
+      {/* 2. THE FOUR VIDEO PANELS (IMMEDIATELY IN FINAL LAYOUT)    */}
+      {/* Panel 1, Center Card (Panel 2), Panel 3, Panel 4          */}
       {/* ========================================================= */}
 
       {/* Panel 1 (Video 1) - Left column (0vw to 25vw) */}
@@ -772,31 +821,36 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Panel 2: CENTERED VIDEO CARD (Stages 1, 2, 3) -> Becomes Column 2 (25vw to 50vw) in Stage 4 */}
+      {/* Panel 2 (Video 2) - Column 2 (25vw to 50vw) */}
       <div
         ref={centerCardRef}
-        className="absolute pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform]"
-        style={{ perspective: 1400, transformStyle: 'preserve-3d' }}
+        className="absolute top-0 bottom-0 pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform]"
+        style={{
+          left: '25vw',
+          width: '25vw',
+          height: '100%',
+          perspective: 1400,
+          transformStyle: 'preserve-3d',
+        }}
       >
-        {/* Video 1 Wrapper (Sharp Video 1: Active during Stage 1 & 2, moves center -> bottom-left in Stage 3) */}
+        {/* Preserved Video 1 Wrapper from introductory animation (hidden) */}
         <div
           ref={centerCardVideo1WrapperRef}
-          className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none will-change-[transform,opacity]"
+          className="hidden absolute inset-0 w-full h-full overflow-hidden pointer-events-none opacity-0 will-change-[transform,opacity]"
           style={{ backfaceVisibility: 'hidden', transformStyle: 'preserve-3d' }}
         >
           <video
             ref={centerVid1Ref}
             src={heroVideos[0].src}
-            autoPlay
             muted
             loop
             playsInline
-            preload="auto"
+            preload="none"
             className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
           />
         </div>
 
-        {/* Video 2 Wrapper (Sharp Video 2: Enters bottom-right -> center in Stage 3, becomes Panel 2 in Stage 4) */}
+        {/* Video 2 Wrapper - Active in Panel 2 */}
         <div
           ref={centerCardVideo2WrapperRef}
           className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none will-change-[transform,opacity]"
@@ -852,11 +906,23 @@ export default function HeroSection() {
       </div>
 
       {/* ========================================================= */}
-      {/* 3. STAGE 1: INITIAL HERO CONTENT (OVER FULLSCREEN VIDEO 1) */}
+      {/* 2B. SUBTLE DARK OVERLAY / GRADIENT (BETWEEN VIDEOS & TEXT) */}
+      {/* ========================================================= */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[18]"
+        style={{
+          zIndex: 18,
+          background:
+            'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.45) 100%)',
+        }}
+      />
+
+      {/* ========================================================= */}
+      {/* 3. PRESERVED STAGE 1 INITIAL HERO CONTENT (HIDDEN)        */}
       {/* ========================================================= */}
       <div
         ref={initialContentRef}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 sm:px-8 max-w-4xl mx-auto pointer-events-none will-change-[opacity,transform] z-20"
+        className="hidden opacity-0 absolute inset-0 flex-col items-center justify-center text-center px-6 sm:px-8 max-w-4xl mx-auto pointer-events-none will-change-[opacity,transform] z-20"
       >
         <div
           className="flex flex-col items-center p-6 sm:p-8 rounded-3xl pointer-events-auto"
@@ -865,28 +931,24 @@ export default function HeroSection() {
               'radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 60%, transparent 80%)',
           }}
         >
-          {/* Brand Tagline */}
           <div className="mb-3 sm:mb-5 flex flex-col items-center">
             <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.4em] uppercase font-semibold drop-shadow-md">
               ReForm Fitness
             </span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[4.6rem] text-white mb-4 sm:mb-6 leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)] font-extrabold max-w-3xl">
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-[4.6rem] text-white mb-4 sm:mb-6 leading-[1.08] drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)] font-extrabold max-w-3xl">
             The Art of
             <br />
             <em className="text-white/95 italic font-extrabold">
               <span className="text-[#E8B884] font-extrabold">Transformation</span>.
             </em>
-          </h1>
+          </h2>
 
-          {/* Description */}
           <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mb-6 sm:mb-8 font-light drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
             A premium personal training and wellness experience. We don't just change your body—we rebuild your entire foundation through science, rehabilitation, and lifestyle mastery.
           </p>
 
-          {/* Call-to-Action Button */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center">
             <Link to="/about" className="btn-primary group">
               <span>Explore Our Philosophy</span>
@@ -900,27 +962,47 @@ export default function HeroSection() {
       </div>
 
       {/* ========================================================= */}
-      {/* 4. STAGE 5: SHORT HEADING OVER THE FOUR VIDEOS            */}
+      {/* 4. HERO INTRODUCTION CONTENT OVER THE FOUR VIDEOS         */}
       {/* ========================================================= */}
       <div
         ref={secondaryContentRef}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none will-change-[opacity,transform] z-25"
+        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none will-change-[opacity,transform] z-[25]"
+        style={{ zIndex: 25 }}
       >
-        <div className="flex flex-col items-center w-full max-w-5xl mx-auto px-4">
+        <div
+          className="flex flex-col items-center w-full max-w-5xl mx-auto px-6 py-8 sm:px-10 sm:py-10 rounded-3xl pointer-events-auto"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.25) 60%, transparent 85%)',
+          }}
+        >
           {/* Brand Tagline */}
           <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.4em] uppercase font-semibold mb-3 sm:mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
-            The ReForm Standard
+            ReForm Fitness
           </span>
 
-          {/* Short Main Headline - Exactly Two Lines */}
-          <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4.2rem] text-white leading-[1.12] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] font-extrabold w-full max-w-5xl">
-            <span className="block">Elevating the Benchmark</span>
+          {/* Main Introduction Heading */}
+          <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl lg:text-[3.5rem] xl:text-[4rem] text-white leading-[1.14] tracking-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] font-extrabold w-full max-w-4xl mb-4 sm:mb-6">
+            <span className="block">Personal Training</span>
             <span className="block mt-1 sm:mt-2">
-              of <em className="text-[#E8B884] italic font-extrabold">Personal Excellence.</em>
+              <em className="text-[#E8B884] italic font-extrabold">Designed Around You</em>
             </span>
-          </h2>
+          </h1>
+
+          {/* Supporting 2-3 Line Description */}
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/95 leading-relaxed max-w-2xl font-light drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+            Expert personal training tailored to your goals, lifestyle and fitness journey. Build strength, improve your health and achieve lasting results.
+          </p>
         </div>
       </div>
+
+      {/* ========================================================= */}
+      {/* 5. SUBTLE SCROLL INDICATOR                                */}
+      {/* ========================================================= */}
+      <ScrollIndicator
+        variant="dark"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-[30]"
+      />
     </section>
   )
 }

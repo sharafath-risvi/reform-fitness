@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ScrollIndicator from '../ui/ScrollIndicator'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -33,12 +34,14 @@ const cardsData = [
 ]
 
 export default function WhyChooseUsSection() {
+  const sectionRef = useRef(null)
   const containerRef = useRef(null)
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       let mm = gsap.matchMedia()
 
+      // Desktop (>= 1024px): Original creative 3D fan-out layout — UNCHANGED
       const buildTimeline = (isMobile) => {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -112,67 +115,148 @@ export default function WhyChooseUsSection() {
       }
 
       mm.add("(min-width: 1024px)", () => buildTimeline(false))
-      mm.add("(max-width: 1023px)", () => buildTimeline(true))
 
-    }, containerRef)
+      // Mobile (< 1024px): Clean vertical row-by-row entrance
+      mm.add("(max-width: 1023px)", () => {
+        gsap.utils.toArray('.why-mobile-row').forEach((row) => {
+          gsap.fromTo(
+            row,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.65,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: row,
+                start: 'top 88%',
+                toggleActions: 'play none none none',
+                invalidateOnRefresh: true,
+              },
+            }
+          )
+        })
+      })
+
+    }, sectionRef)
     
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={containerRef} className="relative w-full h-screen bg-white overflow-hidden flex flex-col items-center justify-center">
-      
-      {/* Editorial Header */}
-      <div className="absolute top-0 left-0 w-full pt-12 lg:pt-16 px-8 flex flex-col items-center z-20 pointer-events-none">
-        <div className="inline-flex items-center gap-4 mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-[1px] bg-[#E8B884]" />
-          </div>
-          <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
-            WHY CHOOSE US
-          </span>
-        </div>
+    <div ref={sectionRef} className="w-full bg-white">
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* DESKTOP LAYOUT (lg+) — UNCHANGED                          */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <section ref={containerRef} className="hidden lg:flex relative w-full h-screen bg-white overflow-hidden flex-col items-center justify-center">
         
-        <h2 className="text-4xl lg:text-6xl leading-[1.05] font-serif text-center drop-shadow-sm font-bold">
-          <span className="text-[#231F20]">Built</span>{' '}
-          <span className="text-[#E8B884] italic">Different</span>
-        </h2>
-      </div>
-
-      <div 
-        className="card-group relative flex items-center justify-center w-full h-full mt-[8vh] will-change-transform"
-        style={{ perspective: '2000px', transformStyle: 'preserve-3d' }}
-      >
-        <div 
-          className="relative flex items-center justify-center scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-100" 
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          {cardsData.map((card, index) => {
-            const offsetFromCenter = index - 2;
-            const zIndex = 10 - Math.abs(offsetFromCenter);
-            return (
-              <div
-                key={index}
-                className="card-item group absolute w-[300px] h-[420px] sm:w-[320px] sm:h-[460px] rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-white will-change-transform"
-                style={{ zIndex }}
-              >
-                <img src={card.img} alt={card.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                <div className="absolute inset-0 border border-white/20 group-hover:border-white/50 transition-colors duration-500 rounded-[2.5rem]" />
-                
-                <div className="absolute bottom-0 left-0 w-full p-8 text-white flex flex-col items-center text-center pb-10">
-                   <h3 className="font-serif text-3xl mb-1 tracking-wide font-bold">
-                     {card.title}
-                   </h3>
-                   <span className="text-sm font-light tracking-[0.2em] uppercase text-[#E8B884]">
-                     {card.subtitle}
-                   </span>
-                </div>
-              </div>
-            )
-          })}
+        {/* Editorial Header */}
+        <div className="absolute top-0 left-0 w-full pt-12 lg:pt-16 px-8 flex flex-col items-center z-20 pointer-events-none">
+          <div className="inline-flex items-center gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-[1px] bg-[#E8B884]" />
+            </div>
+            <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
+              WHY CHOOSE US
+            </span>
+          </div>
+          
+          <h2 className="text-4xl lg:text-6xl leading-[1.05] font-serif text-center drop-shadow-sm font-bold">
+            <span className="text-[#231F20]">Built</span>{' '}
+            <span className="text-[#E8B884] italic">Different</span>
+          </h2>
         </div>
-      </div>
-    </section>
+
+        <div 
+          className="card-group relative flex items-center justify-center w-full h-full mt-[8vh] will-change-transform"
+          style={{ perspective: '2000px', transformStyle: 'preserve-3d' }}
+        >
+          <div 
+            className="relative flex items-center justify-center scale-[0.45] sm:scale-[0.6] md:scale-75 lg:scale-100" 
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {cardsData.map((card, index) => {
+              const offsetFromCenter = index - 2;
+              const zIndex = 10 - Math.abs(offsetFromCenter);
+              return (
+                <div
+                  key={index}
+                  className="card-item group absolute w-[300px] h-[420px] sm:w-[320px] sm:h-[460px] rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] bg-white will-change-transform"
+                  style={{ zIndex }}
+                >
+                  <img src={card.img} alt={card.title} className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 border border-white/20 group-hover:border-white/50 transition-colors duration-500 rounded-[2.5rem]" />
+                  
+                  <div className="absolute bottom-0 left-0 w-full p-8 text-white flex flex-col items-center text-center pb-10">
+                     <h3 className="font-serif text-3xl mb-1 tracking-wide font-bold">
+                       {card.title}
+                     </h3>
+                     <span className="text-sm font-light tracking-[0.2em] uppercase text-[#E8B884]">
+                       {card.subtitle}
+                     </span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        <ScrollIndicator
+          variant="light"
+          className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20"
+        />
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* MOBILE LAYOUT (< lg) — Clean vertical row-by-row layout   */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <section className="lg:hidden w-full bg-white py-14 sm:py-16 px-4 sm:px-6 overflow-hidden">
+        {/* Header */}
+        <div className="flex flex-col items-center text-center mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-3 mb-3">
+            <div className="w-6 h-[1px] bg-[#E8B884]" />
+            <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
+              WHY CHOOSE US
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl leading-[1.08] font-serif font-bold">
+            <span className="text-[#231F20]">Built</span>{' '}
+            <span className="text-[#E8B884] italic">Different</span>
+          </h2>
+        </div>
+
+        {/* Vertical Row-by-Row Items */}
+        <div className="flex flex-col gap-5 sm:gap-6 max-w-xl mx-auto w-full">
+          {cardsData.map((card, index) => (
+            <div
+              key={index}
+              className="why-mobile-row relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden shadow-md bg-[#181818]"
+            >
+              <img
+                src={card.img}
+                alt={`${card.title} ${card.subtitle}`}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              <div className="absolute inset-0 border border-white/15 rounded-2xl pointer-events-none" />
+
+              <div className="absolute bottom-0 left-0 w-full p-5 sm:p-6 text-white flex flex-col items-center text-center">
+                <h3 className="font-serif text-2xl sm:text-3xl mb-1 tracking-wide font-bold">
+                  {card.title}
+                </h3>
+                <span className="text-xs sm:text-sm font-light tracking-[0.2em] uppercase text-[#E8B884]">
+                  {card.subtitle}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <ScrollIndicator variant="light" className="mt-10" />
+      </section>
+    </div>
   )
 }

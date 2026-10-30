@@ -1,6 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import ScrollIndicator from '../ui/ScrollIndicator'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -63,82 +65,177 @@ const journeySteps = [
 
 export default function CustomerJourneySection() {
   const sectionRef = useRef(null)
+  const mobileCarouselRef = useRef(null)
+  const mobileCardRefs = useRef([])
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0)
+
+  const scrollToMobileStage = (index) => {
+    const clamped = Math.max(0, Math.min(journeySteps.length - 1, index))
+    setMobileActiveIndex(clamped)
+    const container = mobileCarouselRef.current
+    const card = mobileCardRefs.current[clamped]
+    if (container && card) {
+      const targetLeft = card.offsetLeft - container.offsetLeft - 16
+      container.scrollTo({
+        left: Math.max(0, targetLeft),
+        behavior: 'smooth',
+      })
+    }
+  }
+
+  const handleMobilePrev = () => {
+    scrollToMobileStage(mobileActiveIndex - 1)
+  }
+
+  const handleMobileNext = () => {
+    scrollToMobileStage(mobileActiveIndex + 1)
+  }
+
+  const handleMobileScroll = () => {
+    const container = mobileCarouselRef.current
+    if (!container) return
+    const scrollLeft = container.scrollLeft
+    let closestIdx = 0
+    let minDistance = Infinity
+
+    mobileCardRefs.current.forEach((card, idx) => {
+      if (!card) return
+      const cardStart = card.offsetLeft - container.offsetLeft - 16
+      const dist = Math.abs(scrollLeft - cardStart)
+      if (dist < minDistance) {
+        minDistance = dist
+        closestIdx = idx
+      }
+    })
+
+    if (closestIdx !== mobileActiveIndex) {
+      setMobileActiveIndex(closestIdx)
+    }
+  }
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       let activeIndex = -1
       
-      const updateStage = (index) => {
-        if (activeIndex === index) return
+      const updateStage = (index, immediate = false) => {
+        if (activeIndex === index && !immediate) return
         const prev = activeIndex
         activeIndex = index
-        
-        if (prev !== -1) {
-          gsap.to(`.stage-badge-${prev}`, { opacity: 0, y: -10, duration: 0.6, ease: 'power2.inOut', overwrite: 'auto' })
-          gsap.to(`.stage-title-${prev}`, { opacity: 0, y: -15, filter: 'blur(4px)', duration: 0.6, ease: 'power2.inOut', overwrite: 'auto' })
-          gsap.to(`.stage-desc-${prev}`, { opacity: 0, y: -10, duration: 0.6, ease: 'power2.inOut', overwrite: 'auto' })
-          gsap.to(`.film-frame-${prev}`, { scale: 0.9, borderColor: 'transparent', boxShadow: 'none', duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-          gsap.to(`.film-img-${prev}`, { filter: 'blur(4px)', duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-          gsap.to(`.film-overlay-${prev}`, { opacity: 0.5, duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-        }
-        
-        gsap.fromTo(`.stage-badge-${index}`, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1, overwrite: 'auto' })
-        gsap.fromTo(`.stage-title-${index}`, { opacity: 0, y: 20, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out', delay: 0.15, overwrite: 'auto' })
-        gsap.fromTo(`.stage-desc-${index}`, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2, overwrite: 'auto' })
-        
-        const total = journeySteps.length
-        const progressPercent = (index / (total - 1)) * 100
-        gsap.to('.progress-dot', { left: `${progressPercent}%`, duration: 0.8, ease: 'power3.inOut', overwrite: 'auto' })
-        
-        const stageNum = (index + 1).toString().padStart(2, '0')
-        const el = document.querySelector('.active-stage-num')
-        if (el && el.textContent !== stageNum) {
-           gsap.to(el, { opacity: 0, y: -5, duration: 0.2, overwrite: 'auto', onComplete: () => {
-               el.textContent = stageNum
-               gsap.fromTo(el, { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.3 })
-           }})
+
+        // Ensure all non-active stages cleanly hide without overlapping tweens
+        journeySteps.forEach((_, idx) => {
+          if (idx !== index) {
+            const badgeSel = `.stage-badge-${idx}`
+            const titleSel = `.stage-title-${idx}`
+            const descSel = `.stage-desc-${idx}`
+            const frameSel = `.film-frame-${idx}`
+            const imgSel = `.film-img-${idx}`
+            const overlaySel = `.film-overlay-${idx}`
+
+            gsap.killTweensOf([badgeSel, titleSel, descSel, frameSel, imgSel, overlaySel])
+
+            if (idx === prev && !immediate) {
+              gsap.to(badgeSel, { autoAlpha: 0, y: -10, duration: 0.4, ease: 'power2.inOut', overwrite: true })
+              gsap.to(titleSel, { autoAlpha: 0, y: -15, filter: 'blur(4px)', duration: 0.4, ease: 'power2.inOut', overwrite: true })
+              gsap.to(descSel, { autoAlpha: 0, y: -10, duration: 0.4, ease: 'power2.inOut', overwrite: true })
+              gsap.to(frameSel, { scale: 0.92, borderColor: 'transparent', boxShadow: 'none', duration: 0.6, ease: 'power2.out', overwrite: true })
+              gsap.to(imgSel, { filter: 'blur(4px)', duration: 0.6, ease: 'power2.out', overwrite: true })
+              gsap.to(overlaySel, { opacity: 0.5, duration: 0.6, ease: 'power2.out', overwrite: true })
+            } else {
+              gsap.set([badgeSel, titleSel, descSel], { autoAlpha: 0, y: 15 })
+              gsap.set(frameSel, { scale: 0.92, borderColor: 'transparent', boxShadow: 'none' })
+              gsap.set(imgSel, { filter: 'blur(4px)' })
+              gsap.set(overlaySel, { opacity: 0.5 })
+            }
+          }
+        })
+
+        const activeBadge = `.stage-badge-${index}`
+        const activeTitle = `.stage-title-${index}`
+        const activeDesc = `.stage-desc-${index}`
+        const activeFrame = `.film-frame-${index}`
+        const activeImg = `.film-img-${index}`
+        const activeOverlay = `.film-overlay-${index}`
+
+        gsap.killTweensOf([activeBadge, activeTitle, activeDesc, activeFrame, activeImg, activeOverlay])
+
+        if (immediate) {
+          gsap.set(activeBadge, { autoAlpha: 1, y: 0 })
+          gsap.set(activeTitle, { autoAlpha: 1, y: 0, filter: 'blur(0px)' })
+          gsap.set(activeDesc, { autoAlpha: 1, y: 0 })
+          gsap.set(activeFrame, { scale: 1, borderColor: 'rgba(232, 184, 132, 0.4)', boxShadow: '0 0 50px rgba(232, 184, 132, 0.15)' })
+          gsap.set(activeImg, { filter: 'blur(0px)' })
+          gsap.set(activeOverlay, { opacity: 0 })
+        } else {
+          gsap.fromTo(activeBadge, { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power3.out', delay: 0.05, overwrite: true })
+          gsap.fromTo(activeTitle, { autoAlpha: 0, y: 20, filter: 'blur(6px)' }, { autoAlpha: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: 'power3.out', delay: 0.08, overwrite: true })
+          gsap.fromTo(activeDesc, { autoAlpha: 0, y: 15 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.12, overwrite: true })
+
+          gsap.to(activeFrame, { scale: 1, borderColor: 'rgba(232, 184, 132, 0.4)', boxShadow: '0 0 50px rgba(232, 184, 132, 0.15)', duration: 0.65, ease: 'power2.out', overwrite: true })
+          gsap.to(activeImg, { filter: 'blur(0px)', duration: 0.65, ease: 'power2.out', overwrite: true })
+          gsap.to(activeOverlay, { opacity: 0, duration: 0.65, ease: 'power2.out', overwrite: true })
         }
 
-        gsap.to(`.film-frame-${index}`, { scale: 1, borderColor: 'rgba(232, 184, 132, 0.4)', boxShadow: '0 0 50px rgba(232, 184, 132, 0.15)', duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-        gsap.to(`.film-img-${index}`, { filter: 'blur(0px)', duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
-        gsap.to(`.film-overlay-${index}`, { opacity: 0, duration: 0.8, ease: 'power2.out', overwrite: 'auto' })
+        const total = journeySteps.length
+        const progressPercent = (index / (total - 1)) * 100
+        gsap.to('.progress-dot', { left: `${progressPercent}%`, duration: immediate ? 0 : 0.6, ease: 'power3.inOut', overwrite: 'auto' })
+
+        const stageNum = (index + 1).toString().padStart(2, '0')
+        const el = sectionRef.current?.querySelector('.active-stage-num')
+        if (el && el.textContent !== stageNum) {
+          if (immediate) {
+            el.textContent = stageNum
+            gsap.set(el, { opacity: 1, y: 0 })
+          } else {
+            gsap.to(el, {
+              opacity: 0,
+              y: -5,
+              duration: 0.18,
+              overwrite: 'auto',
+              onComplete: () => {
+                el.textContent = stageNum
+                gsap.fromTo(el, { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.25 })
+              },
+            })
+          }
+        }
       }
 
       let mm = gsap.matchMedia()
 
-      // Desktop: original sticky scroll experience — UNCHANGED
-      mm.add("(min-width: 1024px)", () => {
+      // Desktop: sticky scroll experience with synchronized stage updates — UNCHANGED
+      mm.add('(min-width: 1024px)', () => {
+        updateStage(0, true)
+
         journeySteps.forEach((_, i) => {
           ScrollTrigger.create({
             trigger: `.film-frame-${i}`,
-            start: 'top 55%',
-            end: 'bottom 45%',
+            start: 'top 62%',
+            end: 'bottom 38%',
             onEnter: () => updateStage(i),
             onEnterBack: () => updateStage(i),
             invalidateOnRefresh: true,
           })
-          gsap.fromTo(`.film-img-${i}`,
+          gsap.fromTo(
+            `.film-img-${i}`,
             { yPercent: -5, scale: 1 },
-            { yPercent: 5, scale: 1.05, ease: 'none', scrollTrigger: { trigger: `.film-frame-${i}`, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } }
-          )
-        })
-      })
-
-      // Mobile: fade each card in as it scrolls into view
-      mm.add("(max-width: 1023px)", () => {
-        document.querySelectorAll('.mobile-stage-card').forEach((card) => {
-          gsap.fromTo(card,
-            { opacity: 0, y: 30 },
             {
-              opacity: 1, y: 0, duration: 0.7, ease: 'power2.out',
-              scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none', invalidateOnRefresh: true }
+              yPercent: 5,
+              scale: 1.05,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: `.film-frame-${i}`,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: true,
+                invalidateOnRefresh: true,
+              },
             }
           )
         })
       })
-
     }, sectionRef)
-    
+
     return () => ctx.revert()
   }, [])
 
@@ -151,57 +248,87 @@ export default function CustomerJourneySection() {
       <div className="hidden lg:flex flex-row w-full max-w-[1800px] mx-auto">
         
         {/* Left Column — Sticky */}
-        <div className="w-[40%] sticky top-0 h-[100dvh] pl-24 pr-16 flex flex-col justify-center z-20 pointer-events-none">
+        <div className="w-[42%] sticky top-0 h-[100dvh] pl-16 xl:pl-24 pr-10 xl:pr-14 flex flex-col justify-center z-20 pointer-events-none">
           <div className="absolute top-1/2 left-0 w-[150%] h-[50vh] -translate-y-1/2 bg-[#E8B884] opacity-[0.03] blur-[100px] rounded-full pointer-events-none z-[-1]" />
           <div className="relative z-10 pointer-events-auto flex flex-col items-start w-full">
             <div className="flex flex-col items-start relative ml-2">
-               <div className="absolute left-[11px] top-6 w-[1px] h-40 bg-gradient-to-b from-[#E8B884]/40 to-transparent" />
+               <div className="absolute left-[11px] top-6 w-[1px] h-24 bg-gradient-to-b from-[#E8B884]/40 to-transparent" />
                <div className="inline-flex items-center gap-4 relative z-10 w-fit">
                  <div className="w-6 h-[1px] bg-[#E8B884]" />
-                 <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
+                 <span className="text-[0.65rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
                    PATH TO TRANSFORMATION
                  </span>
                </div>
             </div>
-            <h2 className="text-7xl mt-12 leading-[1.05] font-serif drop-shadow-xl ml-8 font-bold">
-              <span className="text-white block">Your</span>
-              <span className="text-[#E8B884] block italic">Journey</span>
+
+            {/* Small Section Heading: Your Journey */}
+            <h2 className="text-2xl xl:text-3xl mt-4 leading-[1.1] font-serif drop-shadow-xl ml-8 font-bold">
+              <span className="text-white">Your </span>
+              <span className="text-[#E8B884] italic">Journey</span>
             </h2>
-            <div className="relative h-56 w-full mt-12 ml-8 pointer-events-auto">
+
+            {/* Synchronized Changing Stage Content — Larger & Clearly Readable */}
+            <div className="relative min-h-[280px] xl:min-h-[310px] w-full mt-8 ml-8 pointer-events-auto">
               {journeySteps.map((step, i) => (
-                <div key={i} className={`stage-text-${i} absolute top-0 left-0 w-full pointer-events-none z-10`}>
-                  <div className={`stage-badge-${i} inline-flex items-center gap-2 px-3 py-1 border border-[#E8B884]/30 rounded-full bg-[#E8B884]/5 mb-6 opacity-0 will-change-transform`}>
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#E8B884]" />
-                    <span className="text-[0.55rem] tracking-[0.2em] uppercase text-[#E8B884] font-semibold">STAGE {step.step}</span>
+                <div
+                  key={i}
+                  className={`stage-text-${i} absolute top-0 left-0 w-full pointer-events-none z-10`}
+                >
+                  <div
+                    className={`stage-badge-${i} inline-flex items-center gap-2.5 px-3.5 py-1.5 border border-[#E8B884]/35 rounded-full bg-[#E8B884]/10 mb-5 will-change-transform ${
+                      i === 0 ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <div className="w-2 h-2 rounded-full bg-[#E8B884]" />
+                    <span className="text-xs tracking-[0.22em] uppercase text-[#E8B884] font-semibold">
+                      STAGE {step.step}
+                    </span>
                   </div>
-                  <h3 className={`stage-title-${i} text-5xl text-white mb-4 leading-[1.1] font-serif drop-shadow-lg opacity-0 will-change-transform font-bold`}>
+                  <h3
+                    className={`stage-title-${i} text-5xl xl:text-6xl 2xl:text-[4rem] text-white mb-5 leading-[1.08] font-serif drop-shadow-lg will-change-transform font-bold ${
+                      i === 0 ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
                     {step.title.split(' ').map((word, idx, arr) => (
-                      <span key={idx} className={idx === arr.length - 1 ? 'italic text-[#E8B884]/90' : ''}>
-                        {word}{idx < arr.length - 1 && <br />}
+                      <span key={idx} className={idx === arr.length - 1 ? 'italic text-[#E8B884]/95' : ''}>
+                        {word}
+                        {idx < arr.length - 1 && <br />}
                       </span>
                     ))}
                   </h3>
-                  <p className={`stage-desc-${i} text-[#D8D8D8] text-[1.05rem] leading-[1.6] font-light max-w-[340px] font-sans tracking-wide opacity-0 will-change-transform`}>
+                  <p
+                    className={`stage-desc-${i} text-[#EFEFEF] text-lg xl:text-xl leading-[1.65] font-light max-w-[430px] font-sans tracking-wide will-change-transform ${
+                      i === 0 ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
                     {step.desc}
                   </p>
                 </div>
               ))}
             </div>
-            <div className="mt-8 ml-8 flex flex-col items-start gap-3 pointer-events-auto w-48">
-               <div className="text-[#E8B884] font-serif text-[0.8rem] tracking-widest flex items-center">
-                 <span className="active-stage-num min-w-[20px] inline-block">01</span>
-                 <span className="text-white/30 ml-1">/ {journeySteps.length.toString().padStart(2, '0')}</span>
+
+            {/* Stage Progress Counter & Bar */}
+            <div className="mt-6 ml-8 flex flex-col items-start gap-3 pointer-events-auto w-56">
+               <div className="text-[#E8B884] font-serif text-sm tracking-widest flex items-center">
+                 <span className="active-stage-num min-w-[22px] inline-block font-bold">01</span>
+                 <span className="text-white/40 ml-1">/ {journeySteps.length.toString().padStart(2, '0')}</span>
                </div>
                <div className="flex items-center relative h-3 w-full">
                  <div className="absolute top-1/2 left-0 w-full h-[1px] -translate-y-1/2 bg-white/20" />
-                 <div className="progress-dot absolute top-1/2 left-0 w-2 h-2 rounded-full bg-[#E8B884] -translate-y-1/2 shadow-[0_0_8px_#E8B884] will-change-[left]" style={{ left: '0%' }} />
+                 <div className="progress-dot absolute top-1/2 left-0 w-2.5 h-2.5 rounded-full bg-[#E8B884] -translate-y-1/2 shadow-[0_0_8px_#E8B884] will-change-[left]" style={{ left: '0%' }} />
                </div>
             </div>
+
+            {/* Subtle Scroll Indicator */}
+            <ScrollIndicator
+              variant="dark"
+              className="mt-8 ml-8 !justify-start"
+            />
           </div>
         </div>
 
         {/* Right Column — Film Strip */}
-        <div className="w-[60%] flex flex-col py-[25vh] items-center gap-0 pb-[25vh] z-10">
+        <div className="w-[58%] flex flex-col py-[22vh] items-center gap-0 pb-[25vh] z-10">
           {journeySteps.map((step, i) => (
             <div key={i} className="film-frame-wrapper flex flex-col items-center w-full">
               {i > 0 && (
@@ -212,7 +339,7 @@ export default function CustomerJourneySection() {
               )}
               <div className={`film-frame film-frame-${i} w-[75%] max-w-[700px] aspect-[4/5] relative rounded-[2rem] overflow-hidden will-change-transform border border-transparent`}>
                  <img src={step.image} className={`film-img film-img-${i} absolute inset-0 w-full h-full object-cover will-change-transform transform-gpu`} alt={step.title} loading="lazy" decoding="async" />
-                 <div className={`film-overlay film-overlay-${i} absolute inset-0 bg-[#0D0D0D] opacity-50 pointer-events-none`} />
+                 <div className={`film-overlay film-overlay-${i} absolute inset-0 bg-[#0D0D0D] ${i === 0 ? 'opacity-0' : 'opacity-50'} pointer-events-none`} />
               </div>
             </div>
           ))}
@@ -220,73 +347,137 @@ export default function CustomerJourneySection() {
       </div>
 
       {/* ══════════════════════════════════════════════════════════ */}
-      {/* MOBILE LAYOUT (< lg) — Clean vertical storytelling        */}
+      {/* MOBILE LAYOUT (< lg) — Horizontal Carousel with Arrows     */}
       {/* ══════════════════════════════════════════════════════════ */}
-      <div className="lg:hidden w-full">
+      <div className="lg:hidden w-full py-14 sm:py-16 overflow-hidden">
         
-        {/* Header */}
-        <div className="px-4 sm:px-6 pt-16 sm:pt-20 pb-10">
-          <div className="inline-flex items-center gap-3 mb-6 w-fit">
-            <div className="w-5 h-[1px] bg-[#E8B884]" />
-            <span className="text-[0.6rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
-              PATH TO TRANSFORMATION
+        {/* Header + Top Stage Counter */}
+        <div className="px-4 sm:px-6 mb-6 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-2xl sm:text-3xl leading-[1.1] font-serif font-bold">
+              <span className="text-white">Your </span>
+              <span className="text-[#E8B884] italic">Journey</span>
+            </h2>
+          </div>
+
+          {/* Stage Counter */}
+          <div className="text-[#E8B884] font-serif text-sm tracking-widest flex items-center pb-0.5">
+            <span className="font-bold">
+              {(mobileActiveIndex + 1).toString().padStart(2, '0')}
+            </span>
+            <span className="text-white/40 ml-1">
+              / {journeySteps.length.toString().padStart(2, '0')}
             </span>
           </div>
-          <h2 className="text-4xl sm:text-5xl leading-[1.05] font-serif font-bold">
-            <span className="text-white block">Your</span>
-            <span className="text-[#E8B884] block italic">Journey</span>
-          </h2>
         </div>
 
-        {/* Stages — vertical document flow, all 9 visible */}
-        <div className="flex flex-col">
-          {journeySteps.map((step, i) => (
-            <div key={i} className="mobile-stage-card px-4 sm:px-6 pb-10 sm:pb-14">
-              
-              {/* Connector between stages */}
-              {i > 0 && (
-                <div className="flex ml-[9px] mb-8 opacity-40">
-                  <div className="w-[1px] h-8 bg-gradient-to-b from-[#E8B884] to-transparent" />
+        {/* Horizontal Carousel Wrapper */}
+        <div className="relative w-full">
+          {/* Horizontal Scroll Track — 1 card visible at a time + peek of next card */}
+          <div
+            ref={mobileCarouselRef}
+            onScroll={handleMobileScroll}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-4 px-4 sm:px-6 pb-4 scroll-smooth"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {journeySteps.map((step, i) => (
+              <div
+                key={i}
+                ref={(el) => (mobileCardRefs.current[i] = el)}
+                className="snap-start shrink-0 w-[84vw] sm:w-[76vw] max-w-[400px] rounded-2xl bg-[#161616] border border-white/10 overflow-hidden shadow-xl flex flex-col"
+              >
+                {/* Image Container */}
+                <div className="w-full aspect-[4/3] relative overflow-hidden">
+                  <img
+                    src={step.image}
+                    alt={step.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-transparent to-black/30" />
+
+                  {/* Stage Badge overlaid on top-left */}
+                  <div className="absolute top-3.5 left-3.5 inline-flex items-center gap-2 px-3 py-1 border border-[#E8B884]/40 rounded-full bg-black/65 backdrop-blur-md">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#E8B884]" />
+                    <span className="text-[0.65rem] tracking-[0.2em] uppercase text-[#E8B884] font-semibold">
+                      STAGE {step.step}
+                    </span>
+                  </div>
                 </div>
-              )}
 
-              {/* Stage Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-[#E8B884]/30 rounded-full bg-[#E8B884]/5 mb-4">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E8B884]" />
-                <span className="text-[0.55rem] tracking-[0.2em] uppercase text-[#E8B884] font-semibold">
-                  STAGE {step.step}
-                </span>
+                {/* Card Text Content */}
+                <div className="p-5 sm:p-6 flex flex-col flex-1 justify-between">
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl text-white mb-2.5 leading-[1.15] font-serif font-bold">
+                      {step.title.split(' ').map((word, idx, arr) => (
+                        <span
+                          key={idx}
+                          className={idx === arr.length - 1 ? 'italic text-[#E8B884]/95' : ''}
+                        >
+                          {word}
+                          {idx < arr.length - 1 ? ' ' : ''}
+                        </span>
+                      ))}
+                    </h3>
+                    <p className="text-[#E2E2E2] text-base leading-[1.6] font-light tracking-wide">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              {/* Title */}
-              <h3 className="text-[1.5rem] sm:text-[1.75rem] text-white mb-3 leading-[1.15] font-serif font-bold">
-                {step.title.split(' ').map((word, idx, arr) => (
-                  <span key={idx} className={idx === arr.length - 1 ? 'italic text-[#E8B884]/90' : ''}>
-                    {word}{idx < arr.length - 1 ? ' ' : ''}
-                  </span>
-                ))}
-              </h3>
-
-              {/* Description */}
-              <p className="text-[#B8B8B8] text-[0.9rem] leading-[1.7] font-light tracking-wide mb-5 max-w-xs">
-                {step.desc}
-              </p>
-
-              {/* Image */}
-              <div className="w-full aspect-[4/3] relative rounded-xl overflow-hidden border border-white/10">
-                <img
-                  src={step.image}
-                  alt={step.title}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/50 to-transparent" />
-              </div>
-            </div>
-          ))}
+            ))}
+            {/* End spacer so the last card can snap cleanly */}
+            <div className="shrink-0 w-4 sm:w-6" aria-hidden="true" />
+          </div>
         </div>
 
+        {/* Bottom Controls: Pagination Dots + Left/Right Navigation Arrows */}
+        <div className="px-4 sm:px-6 mt-5 flex flex-col items-center gap-5">
+          {/* Progress Dots */}
+          <div className="flex items-center justify-center gap-2">
+            {journeySteps.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => scrollToMobileStage(idx)}
+                aria-label={`Go to stage ${idx + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  idx === mobileActiveIndex
+                    ? 'w-6 bg-[#E8B884]'
+                    : 'w-2 bg-white/25 hover:bg-white/45'
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Left and Right Navigation Arrows Side-by-Side at the Bottom */}
+          <div className="flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={handleMobilePrev}
+              disabled={mobileActiveIndex === 0}
+              aria-label="Previous journey stage"
+              className="w-12 h-12 rounded-full bg-[#E8B884] border border-[#E8B884] text-[#111] shadow-[0_4px_20px_rgba(0,0,0,0.5)] flex items-center justify-center transition-transform duration-200 active:scale-95"
+            >
+              <ChevronLeft size={22} strokeWidth={2.2} />
+            </button>
+
+            <button
+              type="button"
+              onClick={handleMobileNext}
+              disabled={mobileActiveIndex === journeySteps.length - 1}
+              aria-label="Next journey stage"
+              className="w-12 h-12 rounded-full bg-[#E8B884] border border-[#E8B884] text-[#111] shadow-[0_4px_20px_rgba(0,0,0,0.5)] flex items-center justify-center transition-transform duration-200 active:scale-95"
+            >
+              <ChevronRight size={22} strokeWidth={2.2} />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   )
