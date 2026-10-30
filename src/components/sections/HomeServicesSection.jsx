@@ -272,7 +272,7 @@ export default function HomeServicesSection() {
                     <span className="text-[11px] sm:text-xs font-mono tracking-widest text-[#E8B884] font-bold px-2 py-0.5 rounded-md bg-black/45 backdrop-blur-md border border-white/10 shadow-sm">
                       {service.num}
                     </span>
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-[#E8B884] group-hover:bg-[#E8B884] group-hover:text-black group-hover:border-[#E8B884] transition-all duration-300 shadow-md">
+                    <div className="home-services-card-arrow w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 rounded-full bg-black/45 backdrop-blur-md border border-white/20 flex items-center justify-center text-[#E8B884] group-hover:bg-[#E8B884] group-hover:text-black group-hover:border-[#E8B884] transition-all duration-300 shadow-md">
                       <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </div>

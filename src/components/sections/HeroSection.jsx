@@ -906,15 +906,11 @@ export default function HeroSection() {
       </div>
 
       {/* ========================================================= */}
-      {/* 2B. SUBTLE DARK OVERLAY / GRADIENT (BETWEEN VIDEOS & TEXT) */}
+      {/* 2B. FULL-HERO DARK OVERLAY (OVERALL HERO SECTION)         */}
       {/* ========================================================= */}
       <div
-        className="absolute inset-0 pointer-events-none z-[18]"
-        style={{
-          zIndex: 18,
-          background:
-            'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.45) 100%)',
-        }}
+        className="absolute inset-0 bg-black/60 pointer-events-none z-[18]"
+        style={{ zIndex: 18 }}
       />
 
       {/* ========================================================= */}
@@ -969,13 +965,7 @@ export default function HeroSection() {
         className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none will-change-[opacity,transform] z-[25]"
         style={{ zIndex: 25 }}
       >
-        <div
-          className="flex flex-col items-center w-full max-w-5xl mx-auto px-6 py-8 sm:px-10 sm:py-10 rounded-3xl pointer-events-auto"
-          style={{
-            background:
-              'radial-gradient(ellipse at center, rgba(0, 0, 0, 0.52) 0%, rgba(0, 0, 0, 0.25) 60%, transparent 85%)',
-          }}
-        >
+        <div className="flex flex-col items-center w-full max-w-5xl mx-auto px-6 py-8 sm:px-10 sm:py-10 rounded-3xl pointer-events-auto">
           {/* Brand Tagline */}
           <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.4em] uppercase font-semibold mb-3 sm:mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
             ReForm Fitness

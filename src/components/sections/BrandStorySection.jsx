@@ -6,7 +6,6 @@ import ScrollIndicator from '../ui/ScrollIndicator'
 gsap.registerPlugin(ScrollTrigger)
 
 const bgImages = [
-  "/Reform_images/DSC06270.webp",
   "/Reform_images/trainers.png", 
 ]
 
@@ -47,12 +46,11 @@ export default function BrandStorySection() {
             invalidateOnRefresh: true,
           }
         })
-        tlStory.to('.bg-img-0 img', { scale: 1, duration: 3.5, ease: 'none' }, 0)
-        tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 }, 0)
+        tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 })
         tlStory.to('.block-1 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.5, ease: 'power3.out' }, "<")
         tlStory.to({}, { duration: 1 }) 
         tlStory.to('.block-1', { opacity: 0, y: -40, duration: 1 })
-        tlStory.to('.bg-img-0', { opacity: 0, duration: 1.5 }, "<")
+        tlStory.to('.bg-white-layer', { opacity: 0, duration: 1.5 }, "<")
         tlStory.to('.bg-img-1', { opacity: 1, duration: 1.5 }, "<")
         tlStory.to('.bg-img-1 img', { scale: 1, duration: 5, ease: 'none' }, "<")
         tlStory.to('.block-2', { opacity: 1, y: 0, duration: 1 }, "-=4")
@@ -76,12 +74,11 @@ export default function BrandStorySection() {
             invalidateOnRefresh: true,
           }
         })
-        tlStory.to('.bg-img-0 img', { scale: 1, duration: 2.8, ease: 'none' }, 0)
-        tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 }, 0)
+        tlStory.to('.block-1', { opacity: 1, y: 0, duration: 1 })
         tlStory.to('.block-1 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.04, duration: 1.2, ease: 'power3.out' }, "<")
         tlStory.to({}, { duration: 0.8 })
         tlStory.to('.block-1', { opacity: 0, y: -40, duration: 0.8 })
-        tlStory.to('.bg-img-0', { opacity: 0, duration: 1 }, "<")
+        tlStory.to('.bg-white-layer', { opacity: 0, duration: 1 }, "<")
         tlStory.to('.bg-img-1', { opacity: 1, duration: 1 }, "<")
         tlStory.to('.block-2', { opacity: 1, y: 0, duration: 0.8 }, ">")
         tlStory.to('.block-2 .word', { y: 0, opacity: 1, filter: 'blur(0px)', stagger: 0.03, duration: 1, ease: 'power3.out' }, "<")
@@ -105,15 +102,12 @@ export default function BrandStorySection() {
       {/* CHAPTERS SECTION                           */}
       {/* ========================================== */}
       <section ref={storyRef} className="relative bg-[#0D0D0D] h-screen overflow-hidden">
-        {/* Chapter 01 background image with dark overlay */}
-        <div className="bg-layer bg-img-0 absolute inset-0 z-0 opacity-100 overflow-hidden">
-           <img src={bgImages[0]} className="w-full h-full object-cover object-[center_48%] lg:object-[center_58%] scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
-           <div className="absolute inset-0 bg-black/60" />
-        </div>
+        {/* White background layer for Chapter 01 */}
+        <div className="bg-white-layer absolute inset-0 bg-white z-0 pointer-events-none" />
 
         {/* Chapter 02 background image with dark overlay */}
         <div className="bg-layer bg-img-1 absolute inset-0 z-0 opacity-0 overflow-hidden">
-           <img src={bgImages[1]} className="w-full h-full object-cover object-[center_48%] lg:object-[center_58%] scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
+           <img src={bgImages[0]} className="w-full h-full object-cover object-[center_48%] lg:object-[center_58%] scale-110 will-change-transform transform-gpu" loading="lazy" decoding="async" />
            <div className="absolute inset-0 bg-black/60" />
         </div>
 
@@ -125,13 +119,13 @@ export default function BrandStorySection() {
                 CHAPTER 01
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-7xl text-white mb-8 lg:mb-10 leading-tight font-serif font-bold">
+            <h2 className="text-3xl sm:text-4xl lg:text-7xl text-[#231F20] mb-8 lg:mb-10 leading-tight font-serif font-bold">
               <SplitText text="More Than A Gym." />
             </h2>
-            <p className="text-sm sm:text-base lg:text-2xl text-white/90 leading-relaxed font-light mb-4 lg:mb-6">
+            <p className="text-sm sm:text-base lg:text-2xl text-[#231F20]/70 leading-relaxed font-light mb-4 lg:mb-6">
               <SplitText text="ReForm Fitness was founded on a simple truth: typical gyms fail most people. They offer equipment, but no guidance. They offer quick fixes, but no lasting change." />
             </p>
-            <p className="text-sm sm:text-base lg:text-2xl text-white/90 leading-relaxed font-light">
+            <p className="text-sm sm:text-base lg:text-2xl text-[#231F20]/70 leading-relaxed font-light">
               <SplitText text="Our trainers bring professional fitness guidance directly to you. Train in the comfort of your home or at a location that suits your lifestyle. Personalised coaching, wherever your fitness journey takes you." />
             </p>
           </div>

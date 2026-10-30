@@ -15,11 +15,11 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <BrandStorySection />
       <div className="relative bg-white">
         <AboutFounders />
         <ScrollIndicator variant="light" className="pb-12 -mt-6" />
       </div>
-      <BrandStorySection />
       <HomeServicesSection />
       <CustomerJourneySection />
       <WhyChooseUsSection />

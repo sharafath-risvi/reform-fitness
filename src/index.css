@@ -682,11 +682,20 @@ html.lenis {
   }
 
   .home-services-card-title {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    line-height: 1.25;
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    white-space: normal;
   }
 
   .home-services-card-subtitle {
-    font-size: 0.6875rem;
+    display: none;
+  }
+
+  .home-services-card-arrow {
+    display: none;
   }
 }
 
@@ -807,18 +816,18 @@ html.lenis {
   .whatsapp-float {
     bottom: 1.15rem;
     right: 1.15rem;
-    height: 46px;
-    padding: 0 0.85rem 0 1rem;
-    gap: 0.45rem;
+    height: 40px;
+    padding: 0 0.7rem 0 0.85rem;
+    gap: 0.35rem;
   }
 
   .whatsapp-float-icon {
-    width: 23px;
-    height: 23px;
+    width: 19px;
+    height: 19px;
   }
 
   .whatsapp-float-text {
-    font-size: 0.78rem;
+    font-size: 0.7rem;
   }
 }
 

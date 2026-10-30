@@ -154,9 +154,6 @@ export default function InstagramReelsSection() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
                 loading="lazy"
               />
-              
-              {/* Gradient Overlay (Darker at bottom for text readability) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111]/90 via-[#111]/20 to-transparent opacity-70 group-hover:opacity-85 transition-opacity duration-500" />
 
               {/* Top Icons */}
               <div className="absolute top-6 right-6 flex items-center gap-2 transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-500">
@@ -167,28 +164,6 @@ export default function InstagramReelsSection() {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                   </svg>
                 </div>
-              </div>
-
-              {/* Bottom Content */}
-              <div className="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                
-                {/* Category Pill */}
-                <div className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[0.65rem] tracking-[0.2em] uppercase font-semibold rounded-full mb-4 w-max group-hover:bg-[#E8B884] group-hover:border-[#E8B884] group-hover:text-[#111] transition-all duration-500">
-                  {reel.category}
-                </div>
-                
-                <h3 className="font-serif text-white text-2xl lg:text-3xl font-bold leading-[1.1] mb-4">
-                  {reel.title}
-                </h3>
-                
-                {/* Play Indicator / Divider Line */}
-                <div className="flex items-center gap-4 text-white/70 group-hover:text-[#E8B884] transition-colors duration-500">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full border border-current">
-                    <Play size={12} fill="currentColor" className="ml-0.5" />
-                  </div>
-                  <div className="h-[1px] flex-grow bg-white/20 group-hover:bg-[#E8B884]/40 transition-colors duration-500" />
-                </div>
-
               </div>
             </a>
           ))}

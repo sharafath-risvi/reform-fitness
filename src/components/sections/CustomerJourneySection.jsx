@@ -391,11 +391,11 @@ export default function CustomerJourneySection() {
                 className="snap-start shrink-0 w-[84vw] sm:w-[76vw] max-w-[400px] rounded-2xl bg-[#161616] border border-white/10 overflow-hidden shadow-xl flex flex-col"
               >
                 {/* Image Container */}
-                <div className="w-full aspect-[4/3] relative overflow-hidden">
+                <div className="w-full aspect-[3/4] relative overflow-hidden">
                   <img
                     src={step.image}
                     alt={step.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
                     loading="lazy"
                     decoding="async"
                   />
