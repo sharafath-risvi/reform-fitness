@@ -103,69 +103,125 @@ export default function HeroSection() {
 
     const ctx = gsap.context(() => {
       if (!ENABLE_INTRO_ANIMATION) {
-        // Start directly in the final four-video arrangement with the introductory sequence hidden
+        // Start directly in the final video arrangement with the introductory sequence hidden
         gsap.set([bgBlur1Ref.current, bgBlur2Ref.current, initialContentRef.current, centerCardVideo1WrapperRef.current], {
           autoAlpha: 0,
           display: 'none',
         })
 
-        gsap.set(panel1Ref.current, {
-          autoAlpha: 1,
-          xPercent: 0,
-          scale: 1,
-          rotateY: 0,
-          left: '0vw',
-          width: '25vw',
-          height: '100%',
-          zIndex: 10,
+        const mmStatic = gsap.matchMedia()
+
+        // Desktop (>= 768px): Four-video arrangement
+        mmStatic.add('(min-width: 768px)', () => {
+          gsap.set(panel1Ref.current, {
+            autoAlpha: 1,
+            display: 'block',
+            xPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            left: '0vw',
+            width: '25vw',
+            height: '100%',
+            zIndex: 10,
+          })
+
+          gsap.set(centerCardRef.current, {
+            autoAlpha: 1,
+            display: 'block',
+            left: '25vw',
+            top: '0%',
+            xPercent: 0,
+            yPercent: 0,
+            width: '25vw',
+            height: '100%',
+            borderRadius: '0px',
+            boxShadow: '0 0px 0px rgba(0,0,0,0)',
+            zIndex: 12,
+          })
+
+          gsap.set(centerCardVideo2WrapperRef.current, {
+            autoAlpha: 1,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            xPercent: 0,
+            yPercent: 0,
+            z: 0,
+            scale: 1,
+            borderRadius: '0px',
+            boxShadow: '0 0px 0px rgba(0,0,0,0)',
+          })
+
+          gsap.set(panel3Ref.current, {
+            autoAlpha: 1,
+            display: 'block',
+            xPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            left: '50vw',
+            width: '25vw',
+            height: '100%',
+            zIndex: 10,
+          })
+
+          gsap.set(panel4Ref.current, {
+            autoAlpha: 1,
+            display: 'block',
+            xPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            left: '75vw',
+            width: '25vw',
+            height: '100%',
+            zIndex: 10,
+          })
         })
 
-        gsap.set(centerCardRef.current, {
-          autoAlpha: 1,
-          left: '25vw',
-          top: '0%',
-          xPercent: 0,
-          yPercent: 0,
-          width: '25vw',
-          height: '100%',
-          borderRadius: '0px',
-          boxShadow: '0 0px 0px rgba(0,0,0,0)',
-          zIndex: 12,
-        })
+        // Mobile (< 768px): Two-video arrangement (Videos 1 & 2 side-by-side, Videos 3 & 4 hidden)
+        mmStatic.add('(max-width: 767px)', () => {
+          gsap.set(panel1Ref.current, {
+            autoAlpha: 1,
+            display: 'block',
+            xPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            left: '0vw',
+            width: '50vw',
+            height: '100%',
+            zIndex: 10,
+          })
 
-        gsap.set(centerCardVideo2WrapperRef.current, {
-          autoAlpha: 1,
-          rotateX: 0,
-          rotateY: 0,
-          rotateZ: 0,
-          xPercent: 0,
-          yPercent: 0,
-          z: 0,
-          scale: 1,
-          borderRadius: '0px',
-          boxShadow: '0 0px 0px rgba(0,0,0,0)',
-        })
+          gsap.set(centerCardRef.current, {
+            autoAlpha: 1,
+            display: 'block',
+            left: '50vw',
+            top: '0%',
+            xPercent: 0,
+            yPercent: 0,
+            width: '50vw',
+            height: '100%',
+            borderRadius: '0px',
+            boxShadow: '0 0px 0px rgba(0,0,0,0)',
+            zIndex: 12,
+          })
 
-        gsap.set(panel3Ref.current, {
-          autoAlpha: 1,
-          xPercent: 0,
-          scale: 1,
-          rotateY: 0,
-          left: '50vw',
-          width: '25vw',
-          height: '100%',
-          zIndex: 10,
-        })
+          gsap.set(centerCardVideo2WrapperRef.current, {
+            autoAlpha: 1,
+            rotateX: 0,
+            rotateY: 0,
+            rotateZ: 0,
+            xPercent: 0,
+            yPercent: 0,
+            z: 0,
+            scale: 1,
+            borderRadius: '0px',
+            boxShadow: '0 0px 0px rgba(0,0,0,0)',
+          })
 
-        gsap.set(panel4Ref.current, {
-          autoAlpha: 1,
-          xPercent: 0,
-          scale: 1,
-          rotateY: 0,
-          left: '75vw',
-          width: '25vw',
-          height: '100%',
-          zIndex: 10,
+          gsap.set([panel3Ref.current, panel4Ref.current], {
+            autoAlpha: 0,
+            display: 'none',
+          })
         })
 
         gsap.set(secondaryContentRef.current, { zIndex: 25 })
@@ -803,11 +859,11 @@ export default function HeroSection() {
       {/* Panel 1, Center Card (Panel 2), Panel 3, Panel 4          */}
       {/* ========================================================= */}
 
-      {/* Panel 1 (Video 1) - Left column (0vw to 25vw) */}
+      {/* Panel 1 (Video 1) - Left column (0vw to 50vw on mobile, 0vw to 25vw on desktop) */}
       <div
         ref={panel1Ref}
-        className="absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
-        style={{ left: '0vw', width: '25vw', height: '100%' }}
+        className="absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity] w-[50vw] md:w-[25vw]"
+        style={{ left: '0vw', height: '100%' }}
       >
         <video
           ref={panelVid1Ref}
@@ -821,13 +877,11 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Panel 2 (Video 2) - Column 2 (25vw to 50vw) */}
+      {/* Panel 2 (Video 2) - Right column on mobile (50vw to 100vw), Column 2 on desktop (25vw to 50vw) */}
       <div
         ref={centerCardRef}
-        className="absolute top-0 bottom-0 pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform]"
+        className="absolute top-0 bottom-0 pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform] w-[50vw] md:w-[25vw] left-[50vw] md:left-[25vw]"
         style={{
-          left: '25vw',
-          width: '25vw',
           height: '100%',
           perspective: 1400,
           transformStyle: 'preserve-3d',
@@ -869,10 +923,10 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Panel 3 (Video 3) - Column 3 (50vw to 75vw) */}
+      {/* Panel 3 (Video 3) - Column 3 (50vw to 75vw) - Hidden on mobile */}
       <div
         ref={panel3Ref}
-        className="absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
+        className="hidden md:block absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
         style={{ left: '50vw', width: '25vw', height: '100%' }}
       >
         <video
@@ -887,10 +941,10 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Panel 4 (Video 4) - Right column (75vw to 100vw) */}
+      {/* Panel 4 (Video 4) - Right column (75vw to 100vw) - Hidden on mobile */}
       <div
         ref={panel4Ref}
-        className="absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
+        className="hidden md:block absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
         style={{ left: '75vw', width: '25vw', height: '100%' }}
       >
         <video
@@ -908,8 +962,14 @@ export default function HeroSection() {
       {/* ========================================================= */}
       {/* 2B. FULL-HERO DARK OVERLAY (OVERALL HERO SECTION)         */}
       {/* ========================================================= */}
+      {/* Desktop full-hero dark overlay */}
       <div
-        className="absolute inset-0 bg-black/60 pointer-events-none z-[18]"
+        className="hidden md:block absolute inset-0 bg-black/60 pointer-events-none z-[18]"
+        style={{ zIndex: 18 }}
+      />
+      {/* Mobile dark overlay with gradient between videos and foreground content - lighter at top/middle to keep videos clearly visible */}
+      <div
+        className="md:hidden absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 via-45% to-black/70 pointer-events-none z-[18]"
         style={{ zIndex: 18 }}
       />
 
@@ -962,10 +1022,11 @@ export default function HeroSection() {
       {/* ========================================================= */}
       <div
         ref={secondaryContentRef}
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none will-change-[opacity,transform] z-[25]"
+        className="absolute inset-0 flex flex-col justify-end md:justify-center items-center px-5 sm:px-8 pointer-events-none will-change-[opacity,transform] z-[25] pb-24 min-[360px]:pb-28 min-[390px]:pb-32 min-[430px]:pb-36 md:pb-0"
         style={{ zIndex: 25 }}
       >
-        <div className="flex flex-col items-center w-full max-w-5xl mx-auto px-6 py-8 sm:px-10 sm:py-10 rounded-3xl pointer-events-auto">
+        {/* DESKTOP CONTENT (Centered layout, strictly untouched) */}
+        <div className="hidden md:flex flex-col items-center text-center w-full max-w-5xl mx-auto px-6 py-8 sm:px-10 sm:py-10 rounded-3xl pointer-events-auto">
           {/* Brand Tagline */}
           <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.4em] uppercase font-semibold mb-3 sm:mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
             ReForm Fitness
@@ -984,6 +1045,54 @@ export default function HeroSection() {
             Expert personal training tailored to your goals, lifestyle and fitness journey. Build strength, improve your health and achieve lasting results.
           </p>
         </div>
+
+        {/* MOBILE CONTENT (Left-aligned, high-visibility & lower-positioned to showcase background videos) */}
+        <div className="flex md:hidden flex-col items-start text-left w-full max-w-sm mx-auto pointer-events-auto px-1">
+          {/* Eyebrow Tagline */}
+          <div className="inline-flex items-center gap-2 mb-2">
+            <span className="w-5 h-[2px] bg-[#E8B884] shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" />
+            <span
+              className="text-[0.7rem] min-[360px]:text-[0.76rem] tracking-[0.28em] uppercase text-[#E8B884] font-bold drop-shadow-[0_2px_10px_rgba(0,0,0,1)]"
+              style={{ WebkitTextStroke: '0.3px #E8B884' }}
+            >
+              REFORM FITNESS
+            </span>
+          </div>
+
+          {/* Main Heading */}
+          <h1 className="font-serif text-[1.7rem] min-[360px]:text-[1.95rem] min-[390px]:text-[2.2rem] min-[430px]:text-[2.45rem] text-white leading-[1.08] tracking-tight mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,1)]">
+            <span
+              className="block font-serif font-extrabold text-white"
+              style={{ WebkitTextStroke: '0.6px #ffffff' }}
+            >
+              Personal Training
+            </span>
+            <span className="block mt-0.5">
+              <em
+                className="text-[#E8B884] italic font-serif font-extrabold"
+                style={{ WebkitTextStroke: '0.65px #E8B884' }}
+              >
+                Designed Around You
+              </em>
+            </span>
+          </h1>
+
+          {/* Supporting Paragraph */}
+          <p className="text-[0.84rem] min-[360px]:text-[0.9rem] min-[390px]:text-[0.95rem] text-white font-medium leading-[1.5] mb-4 min-[360px]:mb-5 max-w-[325px] min-[380px]:max-w-[345px] drop-shadow-[0_2px_14px_rgba(0,0,0,1)]">
+            Expert personal training tailored to your goals, lifestyle and fitness journey. Build strength, improve your health and achieve lasting results.
+          </p>
+
+          {/* Hero Action Button */}
+          <div className="w-auto">
+            <Link
+              to="/consultation"
+              className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full bg-[#E8B884] text-[#231F20] text-[0.7rem] min-[360px]:text-[0.74rem] font-semibold tracking-wider uppercase shadow-[0_4px_16px_rgba(232,184,132,0.25)] hover:bg-white hover:text-black transition-all duration-300 active:scale-95"
+            >
+              <span>Book a Consultation</span>
+              <ArrowUpRight size={13} strokeWidth={2.2} />
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* ========================================================= */}
@@ -991,7 +1100,7 @@ export default function HeroSection() {
       {/* ========================================================= */}
       <ScrollIndicator
         variant="dark"
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-[30]"
+        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-[30]"
       />
     </section>
   )
