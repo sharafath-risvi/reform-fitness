@@ -181,7 +181,8 @@ export default function Navbar() {
                 className="mt-8 pb-8"
               >
                 <Link
-                  to="/consultation"
+                  to="/contact#contact-section"
+                  onClick={() => setMenuOpen(false)}
                   className="w-full flex items-center justify-center gap-3 py-5 bg-[#E8B884] hover:bg-green-brand text-[#231F20] hover:text-white transition-colors duration-500 text-sm font-semibold tracking-[0.2em] uppercase rounded-sm"
                 >
                   <span>Book Consultation</span>

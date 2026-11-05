@@ -180,6 +180,7 @@ export default function ContactPage() {
 
       {/* SECTION 03: GET IN TOUCH (SPLIT LAYOUT - DARK) */}
       <section id="contact-section" className="relative px-6 lg:px-24 py-16 lg:py-32 w-full bg-[#0a0a0a] text-white">
+        <div id="get-in-touch" className="absolute -top-20 pointer-events-none" />
         <div className="max-w-[1800px] mx-auto flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
           {/* Left Side: Info Blocks (40%) */}

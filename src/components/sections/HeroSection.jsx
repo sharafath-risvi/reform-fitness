@@ -1085,7 +1085,7 @@ export default function HeroSection() {
           {/* Hero Action Button */}
           <div className="w-auto">
             <Link
-              to="/consultation"
+              to="/contact#contact-section"
               className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full bg-[#E8B884] text-[#231F20] text-[0.7rem] min-[360px]:text-[0.74rem] font-semibold tracking-wider uppercase shadow-[0_4px_16px_rgba(232,184,132,0.25)] hover:bg-white hover:text-black transition-all duration-300 active:scale-95"
             >
               <span>Book a Consultation</span>

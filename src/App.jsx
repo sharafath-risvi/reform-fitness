@@ -76,17 +76,25 @@ function ScrollToTop() {
   const { pathname, hash } = useLocation()
 
   useLayoutEffect(() => {
-    // Preserve intentional in-page anchor navigation (e.g. /contact#location)
+    // Preserve intentional in-page anchor navigation (e.g. /contact#contact-section)
     if (hash) {
-      const element = document.querySelector(hash)
-      if (element) {
-        if (window.lenis) {
-          window.lenis.scrollTo(element, { offset: -80 })
-        } else {
-          element.scrollIntoView({ behavior: 'smooth' })
+      const scrollToHash = () => {
+        const element = document.querySelector(hash)
+        if (element) {
+          if (window.lenis) {
+            window.lenis.scrollTo(element, { offset: -80 })
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' })
+          }
         }
       }
-      return
+      scrollToHash()
+      const t1 = setTimeout(scrollToHash, 60)
+      const t2 = setTimeout(scrollToHash, 250)
+      return () => {
+        clearTimeout(t1)
+        clearTimeout(t2)
+      }
     }
 
     // Immediately reset scroll position to the top
