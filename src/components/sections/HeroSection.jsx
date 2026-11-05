@@ -177,7 +177,7 @@ export default function HeroSection() {
           })
         })
 
-        // Mobile (< 768px): Two-video arrangement (Videos 1 & 2 side-by-side, Videos 3 & 4 hidden)
+        // Mobile (< 768px): Two-video arrangement (Videos 1 & 3 side-by-side, Videos 2 & 4 hidden)
         mmStatic.add('(max-width: 767px)', () => {
           gsap.set(panel1Ref.current, {
             autoAlpha: 1,
@@ -191,34 +191,19 @@ export default function HeroSection() {
             zIndex: 10,
           })
 
-          gsap.set(centerCardRef.current, {
+          gsap.set(panel3Ref.current, {
             autoAlpha: 1,
             display: 'block',
-            left: '50vw',
-            top: '0%',
             xPercent: 0,
-            yPercent: 0,
+            scale: 1,
+            rotateY: 0,
+            left: '50vw',
             width: '50vw',
             height: '100%',
-            borderRadius: '0px',
-            boxShadow: '0 0px 0px rgba(0,0,0,0)',
-            zIndex: 12,
+            zIndex: 10,
           })
 
-          gsap.set(centerCardVideo2WrapperRef.current, {
-            autoAlpha: 1,
-            rotateX: 0,
-            rotateY: 0,
-            rotateZ: 0,
-            xPercent: 0,
-            yPercent: 0,
-            z: 0,
-            scale: 1,
-            borderRadius: '0px',
-            boxShadow: '0 0px 0px rgba(0,0,0,0)',
-          })
-
-          gsap.set([panel3Ref.current, panel4Ref.current], {
+          gsap.set([centerCardRef.current, panel4Ref.current], {
             autoAlpha: 0,
             display: 'none',
           })
@@ -877,11 +862,13 @@ export default function HeroSection() {
         />
       </div>
 
-      {/* Panel 2 (Video 2) - Right column on mobile (50vw to 100vw), Column 2 on desktop (25vw to 50vw) */}
+      {/* Panel 2 (Video 2) - Desktop only (25vw to 50vw), hidden on mobile */}
       <div
         ref={centerCardRef}
-        className="absolute top-0 bottom-0 pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform] w-[50vw] md:w-[25vw] left-[50vw] md:left-[25vw]"
+        className="hidden md:block absolute top-0 bottom-0 pointer-events-none z-[12] will-change-[width,height,border-radius,box-shadow,left,top,transform]"
         style={{
+          left: '25vw',
+          width: '25vw',
           height: '100%',
           perspective: 1400,
           transformStyle: 'preserve-3d',
@@ -923,11 +910,11 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Panel 3 (Video 3) - Column 3 (50vw to 75vw) - Hidden on mobile */}
+      {/* Panel 3 (Video 3) - Right column on mobile (50vw to 100vw), Column 3 on desktop (50vw to 75vw) */}
       <div
         ref={panel3Ref}
-        className="hidden md:block absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity]"
-        style={{ left: '50vw', width: '25vw', height: '100%' }}
+        className="absolute top-0 bottom-0 overflow-hidden pointer-events-none z-[10] will-change-[transform,opacity] w-[50vw] md:w-[25vw] left-[50vw]"
+        style={{ height: '100%' }}
       >
         <video
           ref={panelVid3Ref}
@@ -1022,7 +1009,7 @@ export default function HeroSection() {
       {/* ========================================================= */}
       <div
         ref={secondaryContentRef}
-        className="absolute inset-0 flex flex-col justify-end md:justify-center items-center px-5 sm:px-8 pointer-events-none will-change-[opacity,transform] z-[25] pb-24 min-[360px]:pb-28 min-[390px]:pb-32 min-[430px]:pb-36 md:pb-0"
+        className="absolute inset-0 flex flex-col justify-end md:justify-center items-center px-5 sm:px-8 pointer-events-none will-change-[opacity,transform] z-[25] pb-12 min-[360px]:pb-14 min-[390px]:pb-16 min-[430px]:pb-20 md:pb-0"
         style={{ zIndex: 25 }}
       >
         {/* DESKTOP CONTENT (Centered layout, strictly untouched) */}
@@ -1078,30 +1065,21 @@ export default function HeroSection() {
           </h1>
 
           {/* Supporting Paragraph */}
-          <p className="text-[0.84rem] min-[360px]:text-[0.9rem] min-[390px]:text-[0.95rem] text-white font-medium leading-[1.5] mb-4 min-[360px]:mb-5 max-w-[325px] min-[380px]:max-w-[345px] drop-shadow-[0_2px_14px_rgba(0,0,0,1)]">
+          <p className="text-[0.84rem] min-[360px]:text-[0.9rem] min-[390px]:text-[0.95rem] text-white font-medium leading-[1.5] max-w-[325px] min-[380px]:max-w-[345px] drop-shadow-[0_2px_14px_rgba(0,0,0,1)]">
             Expert personal training tailored to your goals, lifestyle and fitness journey. Build strength, improve your health and achieve lasting results.
           </p>
-
-          {/* Hero Action Button */}
-          <div className="w-auto">
-            <Link
-              to="/contact#contact-section"
-              className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-full bg-[#E8B884] text-[#231F20] text-[0.7rem] min-[360px]:text-[0.74rem] font-semibold tracking-wider uppercase shadow-[0_4px_16px_rgba(232,184,132,0.25)] hover:bg-white hover:text-black transition-all duration-300 active:scale-95"
-            >
-              <span>Book a Consultation</span>
-              <ArrowUpRight size={13} strokeWidth={2.2} />
-            </Link>
-          </div>
         </div>
       </div>
 
       {/* ========================================================= */}
-      {/* 5. SUBTLE SCROLL INDICATOR                                */}
+      {/* 5. SUBTLE SCROLL INDICATOR (DESKTOP ONLY)                 */}
       {/* ========================================================= */}
-      <ScrollIndicator
-        variant="dark"
-        className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 z-[30]"
-      />
+      <div className="hidden md:block">
+        <ScrollIndicator
+          variant="dark"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[30]"
+        />
+      </div>
     </section>
   )
 }
