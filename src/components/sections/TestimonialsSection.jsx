@@ -125,9 +125,13 @@ export default function TestimonialsSection() {
   const isHoveredRef = useRef(false)
   const isUserScrollingRef = useRef(false)
   const resumeTimerRef = useRef(null)
+  const touchStartXRef = useRef(0)
+  const touchStartYRef = useRef(0)
+  const userScrollStartTimeRef = useRef(null)
 
   // -------------------------------------------------------------
   // ROW 1: Continuous Smooth Horizontal Marquee Animation
+  // Works reliably across desktop and mobile touch devices
   // -------------------------------------------------------------
   useEffect(() => {
     const el = marqueeRef.current
@@ -135,17 +139,14 @@ export default function TestimonialsSection() {
 
     // Initialize scroll position in the middle set for seamless bidirectional scrolling
     const initScroll = () => {
-      if (el.scrollWidth > el.clientWidth) {
+      if (el.scrollWidth > el.clientWidth && el.scrollLeft === 0) {
         el.scrollLeft = el.scrollWidth / 3
       }
     }
 
-    // Run after layout paint
-    const timer = setTimeout(initScroll, 50)
-
-    // Respect user reduced-motion preference
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (mediaQuery.matches) return () => clearTimeout(timer)
+    // Run after layout paint & resize
+    const timer = setTimeout(initScroll, 60)
+    window.addEventListener('resize', initScroll)
 
     let animationFrameId
     let lastTime = performance.now()
@@ -155,15 +156,35 @@ export default function TestimonialsSection() {
       const delta = (currentTime - lastTime) / 16.667
       lastTime = currentTime
 
-      if (!isHoveredRef.current && !isUserScrollingRef.current && el) {
-        el.scrollLeft += speed * Math.min(delta, 2.5)
+      if (el) {
+        // Guarantee initial offset if not yet set
+        if (el.scrollLeft === 0 && el.scrollWidth > el.clientWidth) {
+          el.scrollLeft = el.scrollWidth / 3
+        }
 
-        const oneSetWidth = el.scrollWidth / 3
-        if (oneSetWidth > 0) {
-          if (el.scrollLeft >= oneSetWidth * 2) {
-            el.scrollLeft -= oneSetWidth
-          } else if (el.scrollLeft <= 0) {
-            el.scrollLeft += oneSetWidth
+        // Safety watchdog: ensure mobile touch never gets stuck paused permanently
+        if (isUserScrollingRef.current) {
+          if (!userScrollStartTimeRef.current) {
+            userScrollStartTimeRef.current = currentTime
+          } else if (currentTime - userScrollStartTimeRef.current > 2000) {
+            isUserScrollingRef.current = false
+            userScrollStartTimeRef.current = null
+          }
+        } else {
+          userScrollStartTimeRef.current = null
+        }
+
+        // Auto-scroll when not actively hovered (desktop) or dragged (mobile)
+        if (!isHoveredRef.current && !isUserScrollingRef.current) {
+          el.scrollLeft += speed * Math.min(delta, 2.5)
+
+          const oneSetWidth = el.scrollWidth / 3
+          if (oneSetWidth > 0) {
+            if (el.scrollLeft >= oneSetWidth * 2) {
+              el.scrollLeft -= oneSetWidth
+            } else if (el.scrollLeft <= 0) {
+              el.scrollLeft += oneSetWidth
+            }
           }
         }
       }
@@ -175,23 +196,52 @@ export default function TestimonialsSection() {
 
     return () => {
       clearTimeout(timer)
+      window.removeEventListener('resize', initScroll)
       cancelAnimationFrame(animationFrameId)
       if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
     }
   }, [])
+
+  // Touch handlers that distinguish vertical page scrolling from deliberate horizontal swipe
+  const handleTouchStart = (e) => {
+    if (!e.touches || e.touches.length === 0) return
+    touchStartXRef.current = e.touches[0].clientX
+    touchStartYRef.current = e.touches[0].clientY
+  }
+
+  const handleTouchMove = (e) => {
+    if (!e.touches || e.touches.length === 0) return
+    const dx = Math.abs(e.touches[0].clientX - touchStartXRef.current)
+    const dy = Math.abs(e.touches[0].clientY - touchStartYRef.current)
+    // Only pause the marquee when the user explicitly swipes horizontally on the cards
+    if (dx > 10 && dx > dy) {
+      isUserScrollingRef.current = true
+      userScrollStartTimeRef.current = performance.now()
+    }
+  }
+
+  const handleTouchEndOrCancel = () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isUserScrollingRef.current = false
+      userScrollStartTimeRef.current = null
+    }, 1000)
+  }
 
   // Manual arrow navigation for Written Testimonials
   const handleScrollReviews = (direction) => {
     const el = marqueeRef.current
     if (!el) return
     isUserScrollingRef.current = true
-    const scrollAmount = direction === 'left' ? -380 : 380
+    userScrollStartTimeRef.current = performance.now()
+    const scrollAmount = direction === 'left' ? -340 : 340
     el.scrollBy({ left: scrollAmount, behavior: 'smooth' })
 
     if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
     resumeTimerRef.current = setTimeout(() => {
       isUserScrollingRef.current = false
-    }, 1500)
+      userScrollStartTimeRef.current = null
+    }, 1200)
   }
 
   // Manual arrow navigation for Video Testimonials
@@ -289,16 +339,11 @@ export default function TestimonialsSection() {
           onMouseLeave={() => {
             isHoveredRef.current = false
           }}
-          onTouchStart={() => {
-            isUserScrollingRef.current = true
-          }}
-          onTouchEnd={() => {
-            if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
-            resumeTimerRef.current = setTimeout(() => {
-              isUserScrollingRef.current = false
-            }, 2000)
-          }}
-          className="flex overflow-x-auto no-scrollbar px-6 sm:px-10 lg:px-16 py-4 cursor-grab active:cursor-grabbing"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEndOrCancel}
+          onTouchCancel={handleTouchEndOrCancel}
+          className="flex overflow-x-auto no-scrollbar px-4 sm:px-10 lg:px-16 py-4 cursor-grab active:cursor-grabbing"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {infiniteReviews.map((review, idx) => (
@@ -413,7 +458,7 @@ export default function TestimonialsSection() {
         {/* Video Cards Grid / Carousel */}
         <div
           ref={videoScrollRef}
-          className="flex overflow-x-auto no-scrollbar scroll-smooth pb-4 pt-2 -mx-2 px-2 lg:justify-center"
+          className="flex overflow-x-auto no-scrollbar scroll-smooth pb-4 pt-2 px-4 sm:px-2 sm:-mx-2 lg:justify-center"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {videoTestimonials.map((video) => {
@@ -421,7 +466,7 @@ export default function TestimonialsSection() {
             return (
               <div
                 key={video.id}
-                className="w-[280px] min-[380px]:w-[310px] sm:w-[340px] lg:w-[360px] flex-shrink-0 mr-5 sm:mr-7 last:mr-0 aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden relative bg-[#0D0D0D] border border-[#EDE9E4] hover:border-[#E8B884] shadow-[0_12px_35px_rgba(0,0,0,0.08)] group transition-all duration-300"
+                className="w-[84vw] min-[380px]:w-[86vw] max-w-[360px] sm:w-[340px] lg:w-[360px] flex-shrink-0 mr-4 sm:mr-7 last:mr-0 aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden relative bg-[#0D0D0D] border border-[#EDE9E4] hover:border-[#E8B884] shadow-[0_12px_35px_rgba(0,0,0,0.08)] group transition-all duration-300"
               >
                 {/* HTML5 Video Element — plays strictly inside card, no zoom/lightbox */}
                 <video
