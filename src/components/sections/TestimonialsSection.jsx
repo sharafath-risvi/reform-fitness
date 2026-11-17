@@ -436,8 +436,8 @@ export default function TestimonialsSection() {
             </p>
           </div>
 
-          {/* Row 2 Navigation Controls */}
-          <div className="flex items-center gap-3 self-start md:self-end">
+          {/* Row 2 Navigation Controls (Desktop) */}
+          <div className="hidden sm:flex items-center gap-3 self-end">
             <button
               onClick={() => handleScrollVideos('left')}
               className="w-12 h-12 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] hover:bg-[#E8B884] hover:text-[#231F20] hover:border-[#E8B884] flex items-center justify-center text-[#231F20] transition-all duration-300 active:scale-95 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
@@ -479,8 +479,8 @@ export default function TestimonialsSection() {
                   preload="metadata"
                   controls={isPlaying}
                   onEnded={() => handleVideoEnded(video.id)}
-                  className="w-full h-full bg-black"
-                  style={{ objectFit: video.isLandscape ? 'contain' : 'cover' }}
+                  className="w-full h-full bg-black object-contain [&:fullscreen]:object-contain [&:-webkit-full-screen]:object-contain"
+                  style={{ objectFit: 'contain' }}
                 />
 
                 {/* Overlay – Play button only, no text overlays */}
@@ -506,6 +506,24 @@ export default function TestimonialsSection() {
               </div>
             )
           })}
+        </div>
+
+        {/* Mobile Navigation Arrows (under video carousel) */}
+        <div className="flex sm:hidden items-center justify-center gap-3 mt-4">
+          <button
+            onClick={() => handleScrollVideos('left')}
+            className="w-11 h-11 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] active:bg-[#E8B884] active:text-[#231F20] flex items-center justify-center text-[#231F20] transition-all duration-200 shadow-sm"
+            aria-label="Previous video"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={() => handleScrollVideos('right')}
+            className="w-11 h-11 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] active:bg-[#E8B884] active:text-[#231F20] flex items-center justify-center text-[#231F20] transition-all duration-200 shadow-sm"
+            aria-label="Next video"
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
     </section>
