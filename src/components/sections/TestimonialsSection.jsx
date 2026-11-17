@@ -1,156 +1,466 @@
-import { useEffect, useRef } from 'react'
-import { Star, Quote } from 'lucide-react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { Star, Quote, Play, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
 
-const testimonials = [
-  { name: 'Kavya R.', program: 'Body Transformation', rating: 5, text: 'ReForm Fitness changed my entire relationship with health. It\'s not about weight — it\'s about how you feel, how you move, and how you live. I\'ve never felt better in my life.', location: 'Bangalore' },
-  { name: 'Suresh M.', program: 'Rehabilitation', rating: 5, text: 'After my knee surgery, I was terrified of exercise. My trainer at ReForm understood every limitation and built me back stronger than before. Truly outstanding expertise.', location: 'Chennai' },
-  { name: 'Anita K.', program: "Women's Fitness", rating: 5, text: 'Dealing with PCOS is not easy, but my trainer understood my hormonal needs. Within 3 months my symptoms improved dramatically. I\'m stronger than I\'ve ever been.', location: 'Hyderabad' },
-  { name: 'Rajan P.', program: 'Senior Fitness', rating: 5, text: 'At 68, I thought my best years were behind me. ReForm proved me wrong. I walk 5 km daily, my joint pain is gone, and I feel 20 years younger.', location: 'Mumbai' },
-  { name: 'Meera S.', program: 'Home Personal Training', rating: 5, text: 'As a working mother, going to a gym was impossible. Having my trainer come home was life-changing. Professional, flexible, and incredibly effective.', location: 'Pune' },
-  { name: 'Vikram T.', program: 'Muscle Building', rating: 5, text: 'Not just a trainer — a coach, a mentor, and a motivator. The scientific approach to progressive training gave me results I\'d been chasing for years.', location: 'Delhi' },
+// All 14 authentic client reviews provided by user
+const writtenTestimonials = [
+  {
+    id: 1,
+    name: 'Francesca Gianoli',
+    initials: 'FG',
+    text: "Highly recommended! They are professional, motivating, and genuinely committed to helping you achieve your goals. They know how to push you beyond your comfort zone while adapting the training to your individual needs and abilities. Every session is challenging, enjoyable, and purposeful. If you're looking for someone who will support you, keep you accountable, and help you become stronger and more confident, you're in great hands!",
+  },
+  {
+    id: 2,
+    name: 'Sreenidhi',
+    initials: 'SN',
+    text: "I've been training with Reform Fitness for about 3 months and the results are fascinating! The trainer is very well equipped, very knowledgeable and extremely motivating! I'm receiving many compliments on the way I look, all thanks to them :)",
+  },
+  {
+    id: 3,
+    name: 'Anita Banghard',
+    initials: 'AB',
+    text: "Absolutely fantastic team! Great variety of exercise solutions provided, with a real focus on working towards improving health, focus, stability and fitness. Highly recommended!",
+  },
+  {
+    id: 4,
+    name: 'Amit Soni',
+    initials: 'AS',
+    text: "Akash is a very good trainer. He really understands how to get the best out of his clients. If you are serious about your fitness goals then he's the guy to help you achieve them.",
+  },
+  {
+    id: 5,
+    name: 'Tanishka Bhise',
+    initials: 'TB',
+    text: "I have had a great experience in my fitness journey with Reform Fitness. I started not long ago, but have already seen great results in my fitness and overall energy. The trainers are professional, supportive and knowledgeable.",
+  },
+  {
+    id: 6,
+    name: 'Nicci Probert',
+    initials: 'NP',
+    text: "Excellent personal training service. I've been training with them for 7 months now. The team is professional and knowledgeable. The workouts are well-structured, challenging and focused on my fitness goals.",
+  },
+  {
+    id: 7,
+    name: 'Blanche Dabreo',
+    initials: 'BD',
+    text: "Me and my friend have been training with Nisha. She is really good with her Zumba sessions, keeps us energised and makes exercise fun. All the best to the wonderful team.",
+  },
+  {
+    id: 8,
+    name: 'Gunjan Garg',
+    initials: 'GG',
+    text: "Akash is a great trainer. It's been an year I am working out with him. His involvement is 100 percent.",
+  },
+  {
+    id: 9,
+    name: 'Shabrina Sharmin',
+    initials: 'SS',
+    text: "Nishaji is a good trainer, hardworking and very helpful. She is good at training me.",
+  },
+  {
+    id: 10,
+    name: 'Camilla',
+    initials: 'CA',
+    text: "I trained very well with Akash since 2024 and I saw the results! Very nice and professional.",
+  },
+  {
+    id: 11,
+    name: 'Mohammed Chowdhury',
+    initials: 'MC',
+    text: "Nisha is a great yoga trainer.",
+  },
+  {
+    id: 12,
+    name: 'Jay',
+    initials: 'JA',
+    text: "Best transformation training ✌️",
+  },
+  {
+    id: 13,
+    name: 'naturalcurlbyfida',
+    initials: 'NF',
+    text: "Amazing team.",
+  },
+  {
+    id: 14,
+    name: 'AKSHAY VIJAY.P',
+    initials: 'AV',
+    text: "My experience with Reform Fitness Specialist has been excellent. They gave me the motivation and push I needed to get serious about my fitness journey. What I particularly appreciate is their approach: rather than simply providing random ...",
+  },
 ]
 
-const marqueeItems = [...testimonials, ...testimonials, ...testimonials] // Triple for seamless looping
+// Video testimonials:
+// - vid-2 and vid-3 are portrait (9:16) — shown first and second
+// - vid-1 (IMG_3221_comp.mp4) is genuinely landscape (1280×720, 16:9) — shown third in landscape card
+const videoTestimonials = [
+  {
+    id: 'vid-2',
+    src: '/videotestimonal/IMG_4287_comp.mp4',
+    isLandscape: false,
+  },
+  {
+    id: 'vid-3',
+    src: '/videotestimonal/IMG_9076.MP4',
+    isLandscape: false,
+  },
+  {
+    id: 'vid-1',
+    src: '/videotestimonal/IMG_3221_comp.mp4',
+    isLandscape: true,
+  },
+]
 
-function TestimonialCard({ t }) {
-  return (
-    <div className="flex-shrink-0 w-[350px] lg:w-[450px] bg-white border border-[#EDE9E4] p-8 mx-4 hover:border-[#E8B884]/40 hover:shadow-2xl transition-all duration-500 group cursor-default">
-      <Quote size={24} className="text-green-brand/40 mb-6 group-hover:scale-110 transition-transform origin-left" />
-      <p className="text-[1.1rem] text-[#231F20]/90 leading-relaxed mb-8 italic" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-        "{t.text}"
-      </p>
-      <div className="flex items-center gap-1 mb-6">
-        {Array.from({ length: t.rating }).map((_, i) => (
-          <Star key={i} size={14} fill="#E8B884" className="text-[#E8B884]" />
-        ))}
-      </div>
-      <div className="flex items-center justify-between border-t border-[#EDE9E4] pt-4">
-        <div>
-          <div className="text-sm font-semibold text-[#231F20]">{t.name}</div>
-          <div className="text-[0.65rem] tracking-wider uppercase text-[#231F20]/40 mt-1">{t.program}</div>
-        </div>
-        <div className="text-[0.65rem] tracking-widest uppercase text-[#2B6F6F] font-semibold">{t.location}</div>
-      </div>
-    </div>
-  )
-}
+// Tripled list for infinite seamless marquee loop
+const infiniteReviews = [
+  ...writtenTestimonials,
+  ...writtenTestimonials,
+  ...writtenTestimonials,
+]
 
 export default function TestimonialsSection() {
-  const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const row1Ref = useRef(null)
-  const row2Ref = useRef(null)
+  const marqueeRef = useRef(null)
+  const videoScrollRef = useRef(null)
+  const videoRefs = useRef({})
+  const [activeVideoId, setActiveVideoId] = useState(null)
+  const isHoveredRef = useRef(false)
+  const isUserScrollingRef = useRef(false)
+  const resumeTimerRef = useRef(null)
 
+  // -------------------------------------------------------------
+  // ROW 1: Continuous Smooth Horizontal Marquee Animation
+  // -------------------------------------------------------------
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Header Reveal
-      gsap.fromTo(headerRef.current.children,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: {
-            trigger: headerRef.current,
-            start: 'top 85%',
+    const el = marqueeRef.current
+    if (!el) return
+
+    // Initialize scroll position in the middle set for seamless bidirectional scrolling
+    const initScroll = () => {
+      if (el.scrollWidth > el.clientWidth) {
+        el.scrollLeft = el.scrollWidth / 3
+      }
+    }
+
+    // Run after layout paint
+    const timer = setTimeout(initScroll, 50)
+
+    // Respect user reduced-motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mediaQuery.matches) return () => clearTimeout(timer)
+
+    let animationFrameId
+    let lastTime = performance.now()
+    const speed = 0.55 // pixels per 16ms frame for an elegant, readable pace
+
+    const step = (currentTime) => {
+      const delta = (currentTime - lastTime) / 16.667
+      lastTime = currentTime
+
+      if (!isHoveredRef.current && !isUserScrollingRef.current && el) {
+        el.scrollLeft += speed * Math.min(delta, 2.5)
+
+        const oneSetWidth = el.scrollWidth / 3
+        if (oneSetWidth > 0) {
+          if (el.scrollLeft >= oneSetWidth * 2) {
+            el.scrollLeft -= oneSetWidth
+          } else if (el.scrollLeft <= 0) {
+            el.scrollLeft += oneSetWidth
           }
         }
-      )
-
-      // Marquee setup helper
-      const setupMarquee = (row, direction) => {
-        // Calculate the total width of one set of items
-        // We have 3 sets. We only need to animate from 0 to -1/3 (or -1/3 to 0) to loop perfectly.
-        const timeline = gsap.timeline({ repeat: -1, paused: false })
-        
-        if (direction === 'left') {
-          gsap.set(row, { xPercent: 0 })
-          timeline.to(row, {
-            xPercent: -33.333,
-            duration: 40,
-            ease: 'none',
-          })
-        } else {
-          gsap.set(row, { xPercent: -33.333 })
-          timeline.to(row, {
-            xPercent: 0,
-            duration: 40,
-            ease: 'none',
-          })
-        }
-        
-        return timeline
       }
 
-      const tl1 = setupMarquee(row1Ref.current, 'left')
-      const tl2 = setupMarquee(row2Ref.current, 'right')
+      animationFrameId = requestAnimationFrame(step)
+    }
 
-      // Scroll Velocity hook
-      ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        onUpdate: (self) => {
-          // self.getVelocity() gets pixels per second
-          const velocity = self.getVelocity()
-          // Scale velocity to a timeScale multiplier. Clamp it between -5 and 5.
-          let timeScale = 1 + Math.abs(velocity / 400)
-          timeScale = Math.min(Math.max(timeScale, 1), 4) // max 4x speed
-          
-          gsap.to([tl1, tl2], {
-            timeScale: timeScale,
-            duration: 0.5, // smoothly ramp up speed
-            overwrite: true,
-          })
-          
-          // Return to normal speed when scroll stops
-          clearTimeout(window.scrollTimeout)
-          window.scrollTimeout = setTimeout(() => {
-            gsap.to([tl1, tl2], {
-              timeScale: 1,
-              duration: 1,
-              overwrite: true,
-            })
-          }, 150)
-        }
-      })
-
-    }, sectionRef)
+    animationFrameId = requestAnimationFrame(step)
 
     return () => {
-      clearTimeout(window.scrollTimeout)
-      ctx.revert()
+      clearTimeout(timer)
+      cancelAnimationFrame(animationFrameId)
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
     }
   }, [])
 
+  // Manual arrow navigation for Written Testimonials
+  const handleScrollReviews = (direction) => {
+    const el = marqueeRef.current
+    if (!el) return
+    isUserScrollingRef.current = true
+    const scrollAmount = direction === 'left' ? -380 : 380
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+    resumeTimerRef.current = setTimeout(() => {
+      isUserScrollingRef.current = false
+    }, 1500)
+  }
+
+  // Manual arrow navigation for Video Testimonials
+  const handleScrollVideos = (direction) => {
+    const el = videoScrollRef.current
+    if (!el) return
+    const scrollAmount = direction === 'left' ? -340 : 340
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+  }
+
+  // -------------------------------------------------------------
+  // ROW 2: Video Playback Handler (Play one, pause all others)
+  // Strictly inline inside card, no zoom/modal
+  // -------------------------------------------------------------
+  const handlePlayVideo = useCallback((id) => {
+    Object.entries(videoRefs.current).forEach(([vId, videoEl]) => {
+      if (videoEl) {
+        if (vId === id) {
+          videoEl.play().catch(() => {})
+        } else {
+          videoEl.pause()
+        }
+      }
+    })
+    setActiveVideoId(id)
+  }, [])
+
+  const handleVideoEnded = (id) => {
+    if (activeVideoId === id) {
+      setActiveVideoId(null)
+    }
+  }
+
   return (
-    <section className="section-padding-sm bg-[#F8F6F4] overflow-hidden" ref={sectionRef}>
-      <div className="container-custom mb-16" ref={headerRef}>
-        <div className="text-center">
-          <span className="text-label text-[#2B6F6F] block mb-3 opacity-0">
-            Client Stories
-          </span>
-          <h2 className="font-serif text-headline text-[#231F20] opacity-0 font-bold">
-            What Our Clients Say
-          </h2>
+    <section className="relative py-20 sm:py-28 lg:py-36 bg-white text-[#231F20] overflow-hidden border-t border-[#EDE9E4] select-none">
+      {/* Luxury Ambient Glows (Light theme compatible) */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#E8B884] opacity-[0.06] blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 left-1/3 w-[600px] h-[400px] bg-[#2B6F6F] opacity-[0.04] blur-[150px] rounded-full pointer-events-none" />
+
+      {/* ========================================================= */}
+      {/* 1. SECTION INTRODUCTION (TOP)                             */}
+      {/* ========================================================= */}
+      <div className="max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16 mb-12 sm:mb-16 lg:mb-20">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl">
+            {/* Eyebrow Label */}
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-8 h-[1px] bg-[#E8B884]" />
+              <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.3em] uppercase font-semibold">
+                CLIENT EXPERIENCES
+              </span>
+            </div>
+
+            {/* Main Heading */}
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#231F20] font-bold tracking-tight mb-4 leading-[1.08]">
+              Real Stories.{' '}
+              <em className="text-[#E8B884] italic">Real Results.</em>
+            </h2>
+
+            {/* Supporting Paragraph */}
+            <p className="text-sm sm:text-base lg:text-lg text-[#231F20]/75 font-light leading-relaxed">
+              Discover what our clients say about their experiences, progress and transformations with ReForm Fitness.
+            </p>
+          </div>
+
+          {/* Row 1 Navigation Controls (Desktop) */}
+          <div className="hidden sm:flex items-center gap-3 self-end">
+            <button
+              onClick={() => handleScrollReviews('left')}
+              className="w-12 h-12 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] hover:bg-[#E8B884] hover:text-[#231F20] hover:border-[#E8B884] flex items-center justify-center text-[#231F20] transition-all duration-300 active:scale-95 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              aria-label="Previous reviews"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => handleScrollReviews('right')}
+              className="w-12 h-12 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] hover:bg-[#E8B884] hover:text-[#231F20] hover:border-[#E8B884] flex items-center justify-center text-[#231F20] transition-all duration-300 active:scale-95 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              aria-label="Next reviews"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Infinite Marquee Row 1 */}
-      <div className="w-[300vw] sm:w-[200vw] lg:w-[150vw] mb-8">
-        <div ref={row1Ref} className="flex will-change-transform">
-          {marqueeItems.map((t, i) => (
-            <TestimonialCard key={`r1-${i}`} t={t} />
+      {/* ========================================================= */}
+      {/* 2. ROW 1: WRITTEN TESTIMONIALS CAROUSEL                   */}
+      {/* ========================================================= */}
+      <div className="relative w-full mb-20 sm:mb-28 lg:mb-32">
+        <div
+          ref={marqueeRef}
+          onMouseEnter={() => {
+            isHoveredRef.current = true
+          }}
+          onMouseLeave={() => {
+            isHoveredRef.current = false
+          }}
+          onTouchStart={() => {
+            isUserScrollingRef.current = true
+          }}
+          onTouchEnd={() => {
+            if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current)
+            resumeTimerRef.current = setTimeout(() => {
+              isUserScrollingRef.current = false
+            }, 2000)
+          }}
+          className="flex overflow-x-auto no-scrollbar px-6 sm:px-10 lg:px-16 py-4 cursor-grab active:cursor-grabbing"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {infiniteReviews.map((review, idx) => (
+            <article
+              key={`${review.id}-${idx}`}
+              className="w-[260px] min-[380px]:w-[295px] sm:w-[340px] lg:w-[375px] flex-shrink-0 mr-3 sm:mr-5 bg-white border border-[#EDE9E4] hover:border-[#E8B884] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_rgba(232,184,132,0.15)] transition-all duration-300 flex flex-col justify-between group"
+            >
+              <div>
+                {/* Top: 5 Gold Stars & Decorative Quote */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: 5 }).map((_, sIdx) => (
+                      <Star
+                        key={sIdx}
+                        size={15}
+                        fill="#E8B884"
+                        className="text-[#E8B884]"
+                      />
+                    ))}
+                  </div>
+                  <Quote
+                    size={22}
+                    className="text-[#2B6F6F]/30 rotate-180 group-hover:text-[#2B6F6F] transition-colors duration-300"
+                  />
+                </div>
+
+                {/* Review Text - Slightly increased font size with comfortable line spacing */}
+                <p className="text-[#231F20]/85 text-[0.92rem] sm:text-[0.98rem] lg:text-[1.02rem] leading-[1.7] font-normal font-sans mb-6">
+                  "{review.text}"
+                </p>
+              </div>
+
+              {/* Bottom: Reviewer Identity */}
+              <div className="flex items-center gap-3 pt-4 border-t border-[#EDE9E4]">
+                <div className="w-10 h-10 rounded-full bg-[#E8B884]/20 border border-[#E8B884]/50 flex items-center justify-center text-[#231F20] font-bold text-xs tracking-wider shrink-0">
+                  {review.initials}
+                </div>
+                <div className="min-w-0">
+                  <span className="text-sm sm:text-[0.95rem] font-bold text-[#231F20] tracking-wide block truncate">
+                    {review.name}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[0.66rem] sm:text-[0.7rem] tracking-wider uppercase text-[#2B6F6F] font-semibold mt-0.5">
+                    <CheckCircle2 size={12} className="text-[#2B6F6F]" /> Verified Client
+                  </span>
+                </div>
+              </div>
+            </article>
           ))}
+        </div>
+
+        {/* Mobile Navigation Arrows (under carousel) */}
+        <div className="flex sm:hidden items-center justify-center gap-3 mt-4">
+          <button
+            onClick={() => handleScrollReviews('left')}
+            className="w-11 h-11 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] active:bg-[#E8B884] active:text-[#231F20] flex items-center justify-center text-[#231F20] transition-all duration-200 shadow-sm"
+            aria-label="Previous reviews"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={() => handleScrollReviews('right')}
+            className="w-11 h-11 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] active:bg-[#E8B884] active:text-[#231F20] flex items-center justify-center text-[#231F20] transition-all duration-200 shadow-sm"
+            aria-label="Next reviews"
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
 
-      {/* Infinite Marquee Row 2 (Reverse) */}
-      <div className="w-[300vw] sm:w-[200vw] lg:w-[150vw]">
-        <div ref={row2Ref} className="flex will-change-transform">
-          {[...marqueeItems].reverse().map((t, i) => (
-            <TestimonialCard key={`r2-${i}`} t={t} />
-          ))}
+      {/* ========================================================= */}
+      {/* 3. ROW 2: VIDEO TESTIMONIALS (CINEMATIC STORIES)          */}
+      {/* ========================================================= */}
+      <div className="max-w-[1800px] mx-auto px-6 sm:px-10 lg:px-16">
+        {/* Row 2 Subheader */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-12">
+          <div>
+            <div className="inline-flex items-center gap-3 mb-3">
+              <div className="w-6 h-[1px] bg-[#E8B884]" />
+              <span className="text-[0.65rem] sm:text-xs text-[#E8B884] tracking-[0.3em] uppercase font-semibold">
+                VIDEO TESTIMONIALS
+              </span>
+            </div>
+
+            <h3 className="font-serif text-2xl sm:text-4xl lg:text-5xl text-[#231F20] font-bold tracking-tight mb-2 leading-tight">
+              Hear It From <em className="text-[#E8B884] italic">Our Clients</em>
+            </h3>
+
+            <p className="text-sm sm:text-base text-[#231F20]/75 font-light">
+              Real people. Real experiences. Their words tell the story.
+            </p>
+          </div>
+
+          {/* Row 2 Navigation Controls */}
+          <div className="flex items-center gap-3 self-start md:self-end">
+            <button
+              onClick={() => handleScrollVideos('left')}
+              className="w-12 h-12 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] hover:bg-[#E8B884] hover:text-[#231F20] hover:border-[#E8B884] flex items-center justify-center text-[#231F20] transition-all duration-300 active:scale-95 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              aria-label="Previous video"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => handleScrollVideos('right')}
+              className="w-12 h-12 rounded-full border border-[#EDE9E4] bg-[#FAF9F7] hover:bg-[#E8B884] hover:text-[#231F20] hover:border-[#E8B884] flex items-center justify-center text-[#231F20] transition-all duration-300 active:scale-95 shadow-[0_2px_8px_rgba(0,0,0,0.04)]"
+              aria-label="Next video"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* Video Cards Grid / Carousel */}
+        <div
+          ref={videoScrollRef}
+          className="flex overflow-x-auto no-scrollbar scroll-smooth pb-4 pt-2 -mx-2 px-2 lg:justify-center"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {videoTestimonials.map((video) => {
+            const isPlaying = activeVideoId === video.id
+            return (
+              <div
+                key={video.id}
+                className="w-[280px] min-[380px]:w-[310px] sm:w-[340px] lg:w-[360px] flex-shrink-0 mr-5 sm:mr-7 last:mr-0 aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden relative bg-[#0D0D0D] border border-[#EDE9E4] hover:border-[#E8B884] shadow-[0_12px_35px_rgba(0,0,0,0.08)] group transition-all duration-300"
+              >
+                {/* HTML5 Video Element — plays strictly inside card, no zoom/lightbox */}
+                <video
+                  ref={(el) => {
+                    videoRefs.current[video.id] = el
+                  }}
+                  src={`${video.src}#t=0.001`}
+                  playsInline
+                  webkit-playsinline="true"
+                  preload="metadata"
+                  controls={isPlaying}
+                  onEnded={() => handleVideoEnded(video.id)}
+                  className="w-full h-full bg-black"
+                  style={{ objectFit: video.isLandscape ? 'contain' : 'cover' }}
+                />
+
+                {/* Overlay – Play button only, no text overlays */}
+                {!isPlaying && (
+                  <div
+                    onClick={() => handlePlayVideo(video.id)}
+                    className="absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity duration-300 cursor-pointer"
+                  >
+                    {/* Centre Play Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handlePlayVideo(video.id)
+                      }}
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#E8B884] text-[#231F20] flex items-center justify-center shadow-[0_0_35px_rgba(232,184,132,0.5)] group-hover:scale-110 group-hover:bg-white transition-all duration-300 focus:outline-none cursor-pointer"
+                      aria-label="Play testimonial video"
+                    >
+                      <Play size={26} className="fill-current ml-1" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
