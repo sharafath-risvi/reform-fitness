@@ -65,7 +65,7 @@ const allServices = [
     includes: ['Balance and coordination training', 'Joint strengthening exercises', 'Fall prevention techniques', 'Mobility and flexibility work', 'Low-impact cardio sessions', 'Functional daily movement training'],
     color: '#2B6F6F',
     ideal: 'Adults aged 55 and above',
-    img: '/services_images/seniorfitness.png'
+    img: '/services_images/seniorfitness.jpeg'
   },
   {
     icon: Activity,
@@ -85,7 +85,7 @@ const allServices = [
     includes: ['Breathing techniques (Pranayama)', 'Flexibility and mobility yoga', 'Meditation and mindfulness', 'Stress reduction sessions', 'Beginner to advanced levels', 'Private and group sessions'],
     color: '#2B6F6F',
     ideal: 'All fitness levels, those seeking mind-body balance',
-    img: '/services_images/yoga.png'
+    img: '/services_images/yoga.jpeg'
   },
   {
     icon: Music,
@@ -105,7 +105,7 @@ const allServices = [
     includes: ['Movement pattern assessment', 'Joint mobility protocols', 'Myofascial release techniques', 'Posture correction program', 'Flexibility progression plan', 'Pain reduction strategies'],
     color: '#2B6F6F',
     ideal: 'Desk workers, athletes, and chronic pain sufferers',
-    img: '/services_images/mobility&flexibility.png'
+    img: '/services_images/mobility&flexibility.jpeg'
   },
   {
     icon: Apple,

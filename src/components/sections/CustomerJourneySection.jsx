@@ -268,7 +268,7 @@ export default function CustomerJourneySection() {
             </h2>
 
             {/* Synchronized Changing Stage Content — Larger & Clearly Readable */}
-            <div className="relative min-h-[280px] xl:min-h-[310px] w-full mt-8 ml-8 pointer-events-auto">
+            <div className="relative min-h-[280px] xl:min-h-[310px] w-full max-w-[480px] xl:max-w-[520px] mt-8 ml-8 pointer-events-auto">
               {journeySteps.map((step, i) => (
                 <div
                   key={i}
@@ -285,7 +285,11 @@ export default function CustomerJourneySection() {
                     </span>
                   </div>
                   <h3
-                    className={`stage-title-${i} text-5xl xl:text-6xl 2xl:text-[4rem] text-white mb-5 leading-[1.08] font-serif drop-shadow-lg will-change-transform font-bold ${
+                    className={`stage-title-${i} ${
+                      step.step === '09'
+                        ? 'text-4xl xl:text-[3.15rem] 2xl:text-[3.65rem]'
+                        : 'text-5xl xl:text-6xl 2xl:text-[4rem]'
+                    } text-white mb-5 leading-[1.08] font-serif drop-shadow-lg will-change-transform font-bold ${
                       i === 0 ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
@@ -328,7 +332,7 @@ export default function CustomerJourneySection() {
         </div>
 
         {/* Right Column — Film Strip */}
-        <div className="w-[58%] flex flex-col py-[22vh] items-center gap-0 pb-[25vh] z-10">
+        <div className="w-[58%] flex flex-col py-[22vh] items-center lg:pl-6 xl:pl-10 gap-0 pb-[25vh] z-10">
           {journeySteps.map((step, i) => (
             <div key={i} className="film-frame-wrapper flex flex-col items-center w-full">
               {i > 0 && (
