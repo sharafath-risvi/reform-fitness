@@ -7,57 +7,57 @@ import ScrollIndicator from '../ui/ScrollIndicator'
 gsap.registerPlugin(ScrollTrigger)
 
 const journeySteps = [
-  { 
-    step: '01', 
-    title: 'Lead Enquiry', 
+  {
+    step: '01',
+    title: 'Lead Enquiry',
     desc: 'Every transformation begins with one conversation. We discuss your goals and lay the foundation.',
     image: '/images/leadenquiry.png'
   },
-  { 
-    step: '02', 
-    title: 'Fitness Assessment', 
+  {
+    step: '02',
+    title: 'Fitness Assessment',
     desc: 'We understand your body before we transform it. Precision metrics ensure safety.',
     image: '/images/fitnessassessment.jpeg'
   },
-  { 
-    step: '03', 
-    title: 'Health Screening', 
+  {
+    step: '03',
+    title: 'Health Screening',
     desc: 'Safety always comes before intensity. We evaluate mobility and potential limitations.',
     image: '/images/healthscreening.jpeg'
   },
-  { 
-    step: '04', 
-    title: 'Goal Discussion', 
+  {
+    step: '04',
+    title: 'Goal Discussion',
     desc: 'Clear, realistic milestones set the foundation for long-term success and motivation.',
     image: '/images/goaldiscussion.jpeg'
   },
-  { 
-    step: '05', 
-    title: 'Customized Program', 
+  {
+    step: '05',
+    title: 'Customized Program',
     desc: 'A science-backed, bespoke plan designed exclusively for your unique body type.',
     image: '/images/customizedprograms.jpeg'
   },
-  { 
-    step: '06', 
-    title: 'Training Begins', 
+  {
+    step: '06',
+    title: 'Training Begins',
     desc: 'Precision execution at our luxury facility, guided every step of the way.',
     image: '/Reform_images/stage6.png'
   },
-  { 
-    step: '07', 
-    title: 'Weekly Follow-up', 
+  {
+    step: '07',
+    title: 'Weekly Follow-up',
     desc: 'Continuous tracking and micro-adjustments to ensure you are always progressing.',
-    image: '/images/weeklyfollowup.png'
+    image: '/images/weeklyfollowup.jpeg'
   },
-  { 
-    step: '08', 
-    title: 'Monthly Review', 
+  {
+    step: '08',
+    title: 'Monthly Review',
     desc: 'Comprehensive evaluations to measure real physical change and strength gains.',
     image: '/images/monthlyreview.jpeg'
   },
-  { 
-    step: '09', 
-    title: 'Transformation', 
+  {
+    step: '09',
+    title: 'Transformation',
     desc: 'Sustainable habits formed for a lifelong impact. Welcome to the new you.',
     image: '/images/transformation.jpeg'
   }
@@ -116,7 +116,7 @@ export default function CustomerJourneySection() {
   useEffect(() => {
     let ctx = gsap.context(() => {
       let activeIndex = -1
-      
+
       const updateStage = (index, immediate = false) => {
         if (activeIndex === index && !immediate) return
         const prev = activeIndex
@@ -246,19 +246,19 @@ export default function CustomerJourneySection() {
       {/* DESKTOP LAYOUT (lg+) — sticky cinematic experience        */}
       {/* ══════════════════════════════════════════════════════════ */}
       <div className="hidden lg:flex flex-row w-full max-w-[1800px] mx-auto">
-        
+
         {/* Left Column — Sticky */}
         <div className="w-[42%] sticky top-0 h-[100dvh] pl-16 xl:pl-24 pr-10 xl:pr-14 flex flex-col justify-center z-20 pointer-events-none">
           <div className="absolute top-1/2 left-0 w-[150%] h-[50vh] -translate-y-1/2 bg-[#E8B884] opacity-[0.03] blur-[100px] rounded-full pointer-events-none z-[-1]" />
           <div className="relative z-10 pointer-events-auto flex flex-col items-start w-full">
             <div className="flex flex-col items-start relative ml-2">
-               <div className="absolute left-[11px] top-6 w-[1px] h-24 bg-gradient-to-b from-[#E8B884]/40 to-transparent" />
-               <div className="inline-flex items-center gap-4 relative z-10 w-fit">
-                 <div className="w-6 h-[1px] bg-[#E8B884]" />
-                 <span className="text-[0.65rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
-                   PATH TO TRANSFORMATION
-                 </span>
-               </div>
+              <div className="absolute left-[11px] top-6 w-[1px] h-24 bg-gradient-to-b from-[#E8B884]/40 to-transparent" />
+              <div className="inline-flex items-center gap-4 relative z-10 w-fit">
+                <div className="w-6 h-[1px] bg-[#E8B884]" />
+                <span className="text-[0.65rem] tracking-[0.3em] uppercase text-[#E8B884] font-semibold">
+                  PATH TO TRANSFORMATION
+                </span>
+              </div>
             </div>
 
             {/* Small Section Heading: Your Journey */}
@@ -275,9 +275,8 @@ export default function CustomerJourneySection() {
                   className={`stage-text-${i} absolute top-0 left-0 w-full pointer-events-none z-10`}
                 >
                   <div
-                    className={`stage-badge-${i} inline-flex items-center gap-2.5 px-3.5 py-1.5 border border-[#E8B884]/35 rounded-full bg-[#E8B884]/10 mb-5 will-change-transform ${
-                      i === 0 ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    className={`stage-badge-${i} inline-flex items-center gap-2.5 px-3.5 py-1.5 border border-[#E8B884]/35 rounded-full bg-[#E8B884]/10 mb-5 will-change-transform ${i === 0 ? 'opacity-100' : 'opacity-0'
+                      }`}
                   >
                     <div className="w-2 h-2 rounded-full bg-[#E8B884]" />
                     <span className="text-xs tracking-[0.22em] uppercase text-[#E8B884] font-semibold">
@@ -285,13 +284,11 @@ export default function CustomerJourneySection() {
                     </span>
                   </div>
                   <h3
-                    className={`stage-title-${i} ${
-                      step.step === '09'
+                    className={`stage-title-${i} ${step.step === '09'
                         ? 'text-4xl xl:text-[3.15rem] 2xl:text-[3.65rem]'
                         : 'text-5xl xl:text-6xl 2xl:text-[4rem]'
-                    } text-white mb-5 leading-[1.08] font-serif drop-shadow-lg will-change-transform font-bold ${
-                      i === 0 ? 'opacity-100' : 'opacity-0'
-                    }`}
+                      } text-white mb-5 leading-[1.08] font-serif drop-shadow-lg will-change-transform font-bold ${i === 0 ? 'opacity-100' : 'opacity-0'
+                      }`}
                   >
                     {step.title.split(' ').map((word, idx, arr) => (
                       <span key={idx} className={idx === arr.length - 1 ? 'italic text-[#E8B884]/95' : ''}>
@@ -301,9 +298,8 @@ export default function CustomerJourneySection() {
                     ))}
                   </h3>
                   <p
-                    className={`stage-desc-${i} text-[#EFEFEF] text-lg xl:text-xl leading-[1.65] font-light max-w-[430px] font-sans tracking-wide will-change-transform ${
-                      i === 0 ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    className={`stage-desc-${i} text-[#EFEFEF] text-lg xl:text-xl leading-[1.65] font-light max-w-[430px] font-sans tracking-wide will-change-transform ${i === 0 ? 'opacity-100' : 'opacity-0'
+                      }`}
                   >
                     {step.desc}
                   </p>
@@ -313,14 +309,14 @@ export default function CustomerJourneySection() {
 
             {/* Stage Progress Counter & Bar */}
             <div className="mt-6 ml-8 flex flex-col items-start gap-3 pointer-events-auto w-56">
-               <div className="text-[#E8B884] font-serif text-sm tracking-widest flex items-center">
-                 <span className="active-stage-num min-w-[22px] inline-block font-bold">01</span>
-                 <span className="text-white/40 ml-1">/ {journeySteps.length.toString().padStart(2, '0')}</span>
-               </div>
-               <div className="flex items-center relative h-3 w-full">
-                 <div className="absolute top-1/2 left-0 w-full h-[1px] -translate-y-1/2 bg-white/20" />
-                 <div className="progress-dot absolute top-1/2 left-0 w-2.5 h-2.5 rounded-full bg-[#E8B884] -translate-y-1/2 shadow-[0_0_8px_#E8B884] will-change-[left]" style={{ left: '0%' }} />
-               </div>
+              <div className="text-[#E8B884] font-serif text-sm tracking-widest flex items-center">
+                <span className="active-stage-num min-w-[22px] inline-block font-bold">01</span>
+                <span className="text-white/40 ml-1">/ {journeySteps.length.toString().padStart(2, '0')}</span>
+              </div>
+              <div className="flex items-center relative h-3 w-full">
+                <div className="absolute top-1/2 left-0 w-full h-[1px] -translate-y-1/2 bg-white/20" />
+                <div className="progress-dot absolute top-1/2 left-0 w-2.5 h-2.5 rounded-full bg-[#E8B884] -translate-y-1/2 shadow-[0_0_8px_#E8B884] will-change-[left]" style={{ left: '0%' }} />
+              </div>
             </div>
 
             {/* Subtle Scroll Indicator */}
@@ -342,8 +338,8 @@ export default function CustomerJourneySection() {
                 </div>
               )}
               <div className={`film-frame film-frame-${i} w-[75%] max-w-[700px] aspect-[4/5] relative rounded-[2rem] overflow-hidden will-change-transform border border-transparent`}>
-                 <img src={step.image} className={`film-img film-img-${i} absolute inset-0 w-full h-full object-cover will-change-transform transform-gpu`} alt={step.title} loading="lazy" decoding="async" />
-                 <div className={`film-overlay film-overlay-${i} absolute inset-0 bg-[#0D0D0D] ${i === 0 ? 'opacity-0' : 'opacity-50'} pointer-events-none`} />
+                <img src={step.image} className={`film-img film-img-${i} absolute inset-0 w-full h-full object-cover will-change-transform transform-gpu`} alt={step.title} loading="lazy" decoding="async" />
+                <div className={`film-overlay film-overlay-${i} absolute inset-0 bg-[#0D0D0D] ${i === 0 ? 'opacity-0' : 'opacity-50'} pointer-events-none`} />
               </div>
             </div>
           ))}
@@ -354,7 +350,7 @@ export default function CustomerJourneySection() {
       {/* MOBILE LAYOUT (< lg) — Horizontal Carousel with Arrows     */}
       {/* ══════════════════════════════════════════════════════════ */}
       <div className="lg:hidden w-full py-14 sm:py-16 overflow-hidden">
-        
+
         {/* Header + Top Stage Counter */}
         <div className="px-4 sm:px-6 mb-6 flex items-end justify-between gap-4">
           <div>
@@ -450,11 +446,10 @@ export default function CustomerJourneySection() {
                 type="button"
                 onClick={() => scrollToMobileStage(idx)}
                 aria-label={`Go to stage ${idx + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === mobileActiveIndex
+                className={`h-2 rounded-full transition-all duration-300 ${idx === mobileActiveIndex
                     ? 'w-6 bg-[#E8B884]'
                     : 'w-2 bg-white/25 hover:bg-white/45'
-                }`}
+                  }`}
               />
             ))}
           </div>
